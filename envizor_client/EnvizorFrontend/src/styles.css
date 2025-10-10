@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'mapbox-gl/dist/mapbox-gl.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+.mapboxgl-ctrl-logo, 
+.mapboxgl-ctrl-attrib {
+  display: none !important;
+}
+/* ===== Global Styles ===== */
+
+:root {
+  --primary: #2e7d32;
+  --secondary: #a5d6a7;
+  --background: #f5f5f5;
+  --surface: #ffffff;
+  --text: #1e1e1e;
+  --accent: #8d6e63;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button, mat-icon-button {
+  cursor: pointer;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 4px;
+}
+
