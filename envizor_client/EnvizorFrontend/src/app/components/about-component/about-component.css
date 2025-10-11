@@ -1,0 +1,240 @@
+section {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  padding: .8rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+section:hover {
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.about-container {
+  max-width: 1100px;
+  padding: 2rem;
+  color: var(--text);
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 0.3rem;
+}
+
+.page-subtitle {
+    font-weight: bold;
+  text-align: center;
+  color: #444;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+section {
+  margin-bottom: 3rem;
+}
+
+h2 {
+  color: var(--primary);
+  margin-bottom: 0.7rem;
+  font-size: 1.4rem;
+}
+
+p {
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.team-section {
+  margin-top: 3rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.team-member {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: var(--surface);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.team-member:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.member-photo {
+  width: 110px;
+  height: 110px;
+  border-radius: 15%;
+  object-fit: cover;
+  margin-right: 1.2rem;
+  border: 2px solid var(--primary);
+}
+
+.member-info h3 {
+  margin: 0;
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.member-info .role {
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0.3rem 0;
+}
+
+.member-info .contact {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.member-info .contact p {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.member-info .contact mat-icon {
+  color: var(--primary);
+  font-size: 20px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 20%;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.social-icons a:hover {
+  background: rgba(46, 125, 50, 0.18);
+  transform: translateY(-2px);
+}
+
+.social-icons mat-icon {
+  color: var(--primary);
+  width: 22px;
+  height: 22px;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.cta-section {
+  margin-top: 4rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1rem;
+  max-width: 600px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: var(--surface);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+  outline: none;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form button {
+  width: fit-content;
+  padding: 12px 28px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.contact-form button:hover {
+  background-color: #256628;
+}
+
+.cta-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.cta-content .contact-form {
+  flex: 1 1 55%;
+}
+
+.cta-content .cta-image {
+  flex: 1 1 40%;
+  display: flex;
+  justify-content: center;
+}
+
+.cta-content .cta-image img {
+  width: 80%;
+  max-width: 420px;
+  border-radius: 20px;
+  object-fit: cover;
+  margin-bottom: 4rem;
+}
+
+@media (max-width: 768px) {
+  .cta-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-content .contact-form {
+    width: 100%;
+  }
+
+  .cta-content .cta-image img {
+    max-width: 300px;
+  }
+}

@@ -1,0 +1,102 @@
+.faq-container {
+  padding: 2rem 3rem;
+  color: var(--text);
+  background-color: var(--background);
+  font-family: 'Inter', sans-serif;
+  min-height: calc(100vh - 64px);
+}
+
+.faq-title {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.faq-description {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* Category cards row */
+.faq-categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.category-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--surface);
+  border: 1px solid #e0e0e0;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-card:hover {
+  background-color: #e8f5e9;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.category-card mat-icon {
+  color: var(--primary);
+}
+
+.category-title {
+  color: var(--primary);
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+}
+
+.category-card.active {
+  background-color: #e8f5e9;
+  border-color: var(--primary);
+}
+
+/* Accordion styles */
+::ng-deep .mat-expansion-panel {
+  border-radius: 8px !important;
+  margin-bottom: 0.75rem;
+  background: var(--surface);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+::ng-deep .mat-expansion-panel-header {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.answer {
+  color: #555;
+  padding: 0.5rem 1rem 1rem 1rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .faq-container {
+    padding: 1.5rem;
+  }
+
+  .faq-title {
+    font-size: 1.6rem;
+  }
+
+  .faq-description {
+    font-size: 0.95rem;
+  }
+}

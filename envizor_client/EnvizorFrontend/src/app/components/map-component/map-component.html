@@ -2,21 +2,19 @@
 
 <div class="map-overlay">
   <button mat-icon-button (click)="toggleSidebar()">
-    <mat-icon>menu</mat-icon> <!-- now white -->
+    <mat-icon>menu</mat-icon>
   </button>
-  
+
   <div class="region-selector">
     <mat-form-field appearance="fill">
-      <mat-label>Select region</mat-label>
+      <mat-label>{{ 'map.overlay.selectRegion' | translate }}</mat-label>
       <mat-select (selectionChange)="zoomToRegion($event.value)">
-        <mat-option *ngFor="let region of regionNames" [value]="region">{{ region }}</mat-option>
+        <mat-option *ngFor="let region of regionKeys" [value]="region">
+          {{ ('map.regions.' + region) | translate }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 </div>
 
-<!-- Optional floating content (for future sidebar panels, etc.) -->
-<div class="content">
-  <!-- Example placeholder (future panels) -->
-  <!-- <div class="info-panel mat-elevation-z3">Panel content here</div> -->
-</div>
+<div class="content"></div>

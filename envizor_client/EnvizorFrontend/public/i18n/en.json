@@ -1,0 +1,79 @@
+{
+  "sidebar.map": "Map",
+  "sidebar.statistics": "Statistics",
+  "sidebar.blog": "Blog",
+  "sidebar.faq": "FAQ",
+  "sidebar.about": "About Us",
+  "sidebar.theme.light": "Light Mode",
+  "sidebar.theme.dark": "Dark Mode",
+  "sidebar.theme.tooltip.light": "Switch to Light Mode",
+  "sidebar.theme.tooltip.dark": "Switch to Dark Mode",
+
+  "map.overlay.selectRegion": "Select region",
+  "map.regions.wholeSerbia": "Whole Serbia",
+  "map.regions.vojvodina": "Vojvodina",
+  "map.regions.belgrade": "Belgrade",
+  "map.regions.westernSerbia": "Western Serbia",
+  "map.regions.sumadijaPomoravlje": "Šumadija and Pomoravlje",
+  "map.regions.easternSerbia": "Eastern Serbia",
+  "map.regions.southernSerbia": "Southern Serbia",
+
+  "faq.page.title": "Find answers to all your questions",
+  "faq.page.description": "Welcome to the <b>National Landfill Watch</b> help center. Here you can learn how to use our platform — from navigating the interactive map, exploring regional statistics, to reading the latest sustainability updates. Click on a question below to expand its answer.",
+  
+  "faq.categories.map.title": "Map Features",
+  "faq.categories.map.q1.question": "How do I use the interactive map?",
+  "faq.categories.map.q1.answer": "Use the region selector in the top-right corner to choose a part of Serbia. The map will automatically zoom to that area. Click on a landfill marker to view detailed information about it in a modal window.",
+  "faq.categories.map.q2.question": "What does “View Region Report” do?",
+  "faq.categories.map.q2.answer": "After selecting a region, you can click “View Region Report” to see analytics, emission data, and landfill insights for that area.",
+
+  "faq.categories.statistics.title": "Statistics Page",
+  "faq.categories.statistics.q1.question": "What can I find on the Statistics page?",
+  "faq.categories.statistics.q1.answer": "You can explore interactive charts, see landfill distribution, and download environmental or emission reports for any region or the whole country.",
+  "faq.categories.statistics.q2.question": "Can I export data?",
+  "faq.categories.statistics.q2.answer": "Yes — you can download reports in several formats directly from the Statistics page.",
+
+  "faq.categories.info.title": "Additional Information",
+  "faq.categories.info.q1.question": "Who built the National Landfill Watch platform?",
+  "faq.categories.info.q1.answer": "Our team of IT students and environmental enthusiasts designed and built the platform as part of a collaborative initiative to promote data-driven sustainability awareness. Learn more on the About Us page.",
+  "faq.categories.info.q2.question": "Where can I find news or ESG-related content?",
+  "faq.categories.info.q2.answer": "Visit the Blog section for updates, research insights, and ESG-related articles.",
+
+  "about.page.title": "About Us",
+  "about.page.subtitle": "Get to know the Envizor team",
+
+  "about.mission.title": "Our Mission, Vision, and Values",
+  "about.mission.text": "At Envizor, our mission is to bring environmental awareness closer to people through data-driven insights and technology. We believe in innovation, sustainability, and collaboration as the foundation for a cleaner and smarter future.",
+
+  "about.story.title": "The Project Story",
+  "about.story.text": "The National Landfill Watch project was created as part of a student competition among four teams. Our team, Envizor, combined a shared passion for environmental protection and software development to create a tool that visualizes landfill data across Serbia, providing insights into pollution and sustainability efforts.",
+
+  "about.team.title": "Meet the Envizor Team",
+  "about.team.member1.name": "Viktor Barić",
+  "about.team.member1.role": "Full-Stack Developer | Data Analyst",
+  "about.team.member1.phone": "+381 64 4224034",
+  "about.team.member1.email": "viktor3baric@gmail.com",
+
+  "about.team.member2.name": "Anđela Mrđa",
+  "about.team.member2.role": "Data Analyst | Machine Learning Engineer",
+  "about.team.member2.phone": "+387 66 542 569",
+  "about.team.member2.email": "mrdjaandjela353@gmail.com",
+
+  "about.team.member3.name": "Milica Mišan",
+  "about.team.member3.role": "UI/UX Designer | Front-End Developer",
+  "about.team.member3.phone": "+381 60 3246747",
+  "about.team.member3.email": "milica.misan123@gmail.com",
+
+  "about.team.member4.name": "Veljko Ranđelović",
+  "about.team.member4.role": "DevOps Engineer | Full-Stack Developer",
+  "about.team.member4.phone": "+381 64 3148087",
+  "about.team.member4.email": "veljkorandjelovic03@gmail.com",
+
+  "about.cta.title": "Get in Touch",
+  "about.cta.subtitle": "Interested in collaboration or learning more about Envizor? Send us a message below.",
+  "about.cta.form.name": "Your Name",
+  "about.cta.form.email": "Your Email",
+  "about.cta.form.subject": "Subject",
+  "about.cta.form.message": "Message",
+  "about.cta.form.button": "Send Message"
+}

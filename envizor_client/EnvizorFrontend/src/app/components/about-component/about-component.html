@@ -1,1 +1,69 @@
-<p>about-component works!</p>
+<div class="about-container">
+  <h1 class="page-title">{{ 'about.page.title' | translate }}</h1>
+  <p class="page-subtitle">{{ 'about.page.subtitle' | translate }}</p>
+
+  <!-- Mission -->
+  <section class="mission-section">
+    <h2>{{ 'about.mission.title' | translate }}</h2>
+    <p>{{ 'about.mission.text' | translate }}</p>
+  </section>
+
+  <!-- Story -->
+  <section class="story-section">
+    <h2>{{ 'about.story.title' | translate }}</h2>
+    <p>{{ 'about.story.text' | translate }}</p>
+  </section>
+
+  <!-- Team -->
+  <section class="team-section">
+    <h2>{{ 'about.team.title' | translate }}</h2>
+
+    <div class="team-grid">
+        <div class="team-member" *ngFor="let m of members">
+            <img [src]="m.img" alt="{{ m.name | translate }}" class="member-photo" />
+            <div class="member-info">
+                <h3>{{ m.name | translate }}</h3>
+                <p class="role">{{ m.role | translate }}</p>
+                <div class="contact">
+                    <p>
+                        <mat-icon>call</mat-icon>
+                        <span>{{ m.phone | translate }}</span>
+                    </p>
+                    <p>
+                        <mat-icon>mail</mat-icon>
+                        <span>{{ m.email | translate }}</span>
+                    </p>
+                </div>
+                <div class="social-icons">
+                    <a [href]="m.linkedin" target="_blank" aria-label="LinkedIn">
+                        <mat-icon svgIcon="linkedin"></mat-icon>
+                    </a>
+                    <a [href]="m.instagram" target="_blank" aria-label="Instagram">
+                        <mat-icon svgIcon="instagram"></mat-icon>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- Contact / Call to action -->
+  <section class="cta-section">
+    <h2>{{ 'about.cta.title' | translate }}</h2>
+    <p>{{ 'about.cta.subtitle' | translate }}</p>
+
+    <div class="cta-content">
+      <form class="contact-form">
+        <input type="text" placeholder="{{ 'about.cta.form.name' | translate }}" />
+        <input type="email" placeholder="{{ 'about.cta.form.email' | translate }}" />
+        <input type="text" placeholder="{{ 'about.cta.form.subject' | translate }}" />
+        <textarea placeholder="{{ 'about.cta.form.message' | translate }}"></textarea>
+        <button type="submit">{{ 'about.cta.form.button' | translate }}</button>
+      </form>
+
+      <div class="cta-image">
+        <img src="/images/logo-black-green-bigger.png" alt="Contact illustration" />
+      </div>
+    </div>
+  </section>
+</div>

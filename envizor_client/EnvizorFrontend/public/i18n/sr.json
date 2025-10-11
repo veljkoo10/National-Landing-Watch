@@ -1,0 +1,79 @@
+{
+  "sidebar.map": "Mapa",
+  "sidebar.statistics": "Statistika",
+  "sidebar.blog": "Blog",
+  "sidebar.faq": "Česta pitanja",
+  "sidebar.about": "O nama",
+  "sidebar.theme.light": "Svetli režim",
+  "sidebar.theme.dark": "Tamni režim",
+  "sidebar.theme.tooltip.light": "Prebaci na svetli režim",
+  "sidebar.theme.tooltip.dark": "Prebaci na tamni režim",
+
+  "map.overlay.selectRegion": "Izaberite region",
+  "map.regions.wholeSerbia": "Cela Srbija",
+  "map.regions.vojvodina": "Vojvodina",
+  "map.regions.belgrade": "Beograd",
+  "map.regions.westernSerbia": "Zapadna Srbija",
+  "map.regions.sumadijaPomoravlje": "Šumadija i Pomoravlje",
+  "map.regions.easternSerbia": "Istočna Srbija",
+  "map.regions.southernSerbia": "Južna Srbija",
+
+  "faq.page.title": "Pronađite odgovore na sva vaša pitanja",
+  "faq.page.description": "Dobrodošli u <b>centar za pomoć platforme National Landfill Watch</b>. Ovde možete saznati kako da koristite našu platformu — od navigacije interaktivnom mapom, istraživanja regionalne statistike, do čitanja najnovijih informacija o održivosti. Kliknite na pitanje ispod da biste videli odgovor.",
+
+  "faq.categories.map.title": "Funkcionalnosti mape",
+  "faq.categories.map.q1.question": "Kako da koristim interaktivnu mapu?",
+  "faq.categories.map.q1.answer": "Koristite birač regiona u gornjem desnom uglu da izaberete deo Srbije. Mapa će se automatski uvećati na taj region. Kliknite na marker deponije da biste videli detaljne informacije o njoj u modalnom prozoru.",
+  "faq.categories.map.q2.question": "Šta znači opcija „Pregledaj izveštaj regiona“?",
+  "faq.categories.map.q2.answer": "Nakon izbora regiona, možete kliknuti „Pregledaj izveštaj regiona“ da biste videli analitiku, podatke o emisijama i pregled deponija za to područje.",
+
+  "faq.categories.statistics.title": "Stranica Statistika",
+  "faq.categories.statistics.q1.question": "Šta mogu pronaći na stranici Statistika?",
+  "faq.categories.statistics.q1.answer": "Možete istražiti interaktivne grafikone, videti raspodelu deponija i preuzeti izveštaje o životnoj sredini ili emisijama za bilo koji region ili celu Srbiju.",
+  "faq.categories.statistics.q2.question": "Da li mogu da izvezem podatke?",
+  "faq.categories.statistics.q2.answer": "Da — možete preuzeti izveštaje u više formata direktno sa stranice Statistika.",
+
+  "faq.categories.info.title": "Dodatne informacije",
+  "faq.categories.info.q1.question": "Ko je kreirao platformu National Landfill Watch?",
+  "faq.categories.info.q1.answer": "Naš tim IT studenata i ekoloških entuzijasta osmislio je i izradio platformu kao deo zajedničke inicijative za podizanje svesti o održivosti zasnovane na podacima. Više informacija možete pronaći na stranici O nama.",
+  "faq.categories.info.q2.question": "Gde mogu pronaći vesti ili ESG sadržaj?",
+  "faq.categories.info.q2.answer": "Posetite odeljak Blog za novosti, istraživanja i članke vezane za ESG teme.",
+
+  "about.page.title": "O nama",
+  "about.page.subtitle": "Upoznajte Envizor tim",
+
+  "about.mission.title": "Naša misija, vizija i vrednosti",
+  "about.mission.text": "U timu Envizor, naša misija je da približimo svest o životnoj sredini ljudima kroz podatke i tehnologiju. Verujemo u inovacije, održivost i saradnju kao temelj za čistiju i pametniju budućnost.",
+
+  "about.story.title": "Priča o projektu",
+  "about.story.text": "Projekat National Landfill Watch nastao je u okviru studentskog takmičenja između četiri tima. Naš tim, Envizor, spojio je zajedničku strast prema zaštiti životne sredine i razvoju softvera kako bi kreirao alat koji vizualizuje podatke o deponijama širom Srbije i pruža uvid u zagađenje i napore ka održivosti.",
+
+  "about.team.title": "Upoznajte Envizor tim",
+  "about.team.member1.name": "Viktor Barić",
+  "about.team.member1.role": "Full-stack programer | Data analitičar",
+  "about.team.member1.phone": "+381 64 4224034",
+  "about.team.member1.email": "viktor3baric@gmail.com",
+
+  "about.team.member2.name": "Anđela Mrđa",
+  "about.team.member2.role": "Data analitičar | Inženjer za mašinsko učenje",
+  "about.team.member2.phone": "+387 66 542 569",
+  "about.team.member2.email": "mrdjaandjela353@gmail.com",
+
+  "about.team.member3.name": "Milica Mišan",
+  "about.team.member3.role": "UI/UX dizajner | Frontend programer",
+  "about.team.member3.phone": "+381 60 3246747",
+  "about.team.member3.email": "milica.misan123@gmail.com",
+
+  "about.team.member4.name": "Veljko Ranđelović",
+  "about.team.member4.role": "DevOps inženjer | Full-stack programer",
+  "about.team.member4.phone": "+381 64 3148087",
+  "about.team.member4.email": "veljkorandjelovic03@gmail.com",
+
+  "about.cta.title": "Kontaktirajte nas",
+  "about.cta.subtitle": "Zainteresovani ste za saradnju ili želite da saznate više o timu Envizor? Pošaljite nam poruku.",
+  "about.cta.form.name": "Vaše ime",
+  "about.cta.form.email": "Vaš email",
+  "about.cta.form.subject": "Naslov",
+  "about.cta.form.message": "Poruka",
+  "about.cta.form.button": "Pošalji poruku"
+}
