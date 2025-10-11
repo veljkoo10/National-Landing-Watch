@@ -1,0 +1,22 @@
+dataset_root: "./dataset_cls"
+
+classes:
+  - no_landfill
+  - illegal
+  - non_illegal
+
+imgsz: 640
+epochs: 30
+batch: 32
+workers: 8
+
+base_model: "yolov8n-cls.pt"
+project: "runs_clf"
+name: "clf_v1"
+
+thresholds:
+  # Ako je P(no_landfill) ≤ ovaj prag -> šaljemo sliku u segmentaciju.
+  max_p_no_landfill: 0.30
+
+device: "" # "" (auto), "0" (GPU0) ili "cpu"
+seed: 42

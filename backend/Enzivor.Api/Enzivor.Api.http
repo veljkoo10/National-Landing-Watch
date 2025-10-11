@@ -1,0 +1,6 @@
+@Enzivor.Api_HostAddress = http://localhost:5264
+
+GET {{Enzivor.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
