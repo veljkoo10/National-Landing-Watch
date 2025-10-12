@@ -84,18 +84,16 @@ mat-nav-list a:hover {
 }
 
 .language-picker {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  font-size: 0.9rem;
-  color: var(--text);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.language-picker select {
-  padding: 4px 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  outline: none;
-  background: var(--surface);
-  color: var(--text);
+.language-picker:hover {
+  border-color: var(--primary);
+  background-color: rgba(76, 175, 80, 0.08);
 }

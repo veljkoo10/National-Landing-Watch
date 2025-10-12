@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, effect, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -37,6 +37,7 @@ export class SidebarComponent {
 
   isSidebarOpen = false;
   isMapRoute = false;
+  isLandingPage = false;
   isDarkMode = false;
   selectedLang = this.translationService.getLanguage();
 
@@ -47,7 +48,18 @@ export class SidebarComponent {
       if (toggle !== undefined) this.toggleSidebar();
     });
 
-    // Detect route
+    // Close sidebar before entering map page or if it is on landing page
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationStart))
+      .subscribe((event: NavigationStart) => {
+        if (event.url.includes('/map') || event.url.includes('/landing')) {
+        this.isSidebarOpen = false;
+        } else {
+          this.isSidebarOpen = true;
+        }
+      });
+
+    // Detect route (for ngClass)
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
@@ -62,9 +74,21 @@ export class SidebarComponent {
     }
   }
 
+  ngOnInit(): void {
+    // Check initial route when component loads
+    const currentUrl = this.router.url;
+    this.isMapRoute = currentUrl.includes('/map');
+  }
+
+  navigateToMap() {
+    this.isSidebarOpen = false;
+    setTimeout(() => {
+        this.router.navigate(['/map']);
+      }, 400);
+  }
+
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
-    this.sidebarToggled.emit(this.isSidebarOpen);
   }
 
   // Language change

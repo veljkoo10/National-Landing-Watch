@@ -1,0 +1,57 @@
+<div class="landing-container">
+  <!-- Navbar -->
+  <nav class="landing-navbar">
+    <div class="navbar-left">
+      <img src="/images/logo-black-green.png" alt="Envizor Logo" class="navbar-logo" />
+      <span class="navbar-title">{{ 'landing.nav.title' | translate }}</span>
+    </div>
+
+    <div class="navbar-center">
+      <a class="nav-link" (click)="goToPage('/map')">{{ 'landing.nav.map' | translate }}</a>
+      <a class="nav-link" (click)="goToPage('/blog')">{{ 'landing.nav.blog' | translate }}</a>
+      <a class="nav-link" (click)="goToPage('/faq')">{{ 'landing.nav.faq' | translate }}</a>
+    </div>
+
+    <div class="navbar-right">
+      <!-- Language Picker -->
+      <select [(ngModel)]="selectedLang" (change)="changeLanguage(selectedLang)" class="lang-select">
+        <option value="en">EN</option>
+        <option value="sr">SR</option>
+      </select>
+
+      <!-- Dark-Light Toggle -->
+      <button mat-icon-button (click)="toggleTheme()" [matTooltip]="isDarkMode ? ('sidebar.theme.tooltip.light' | translate) : ('sidebar.theme.tooltip.dark' | translate)">
+        <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Section 1: Hero -->
+  <section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">{{ 'landing.hero.title' | translate }}</h1>
+        <p class="hero-description">{{ 'landing.hero.description' | translate }}</p>
+        <button class="hero-button" (click)="goToMap()">
+            <mat-icon>search</mat-icon>
+            {{ 'landing.hero.button' | translate }}
+        </button>
+    </div>
+
+    <div class="hero-globe">
+      <div id="globe"></div>
+    </div>
+  </section>
+
+  <!-- Section 2: Highlights -->
+  <section class="info-section">
+    <h2 class="info-title">{{ 'landing.info.title' | translate }}</h2>
+
+    <div class="info-grid">
+      <div class="info-card" *ngFor="let card of infoCards">
+        <mat-icon>{{ card.icon }}</mat-icon>
+        <h3>{{ card.title | translate }}</h3>
+        <p>{{ card.text | translate }}</p>
+      </div>
+    </div>
+  </section>
+</div>

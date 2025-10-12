@@ -1,4 +1,5 @@
 {
+  "sidebar.landing": "Home",
   "sidebar.map": "Map",
   "sidebar.statistics": "Statistics",
   "sidebar.blog": "Blog",
@@ -8,6 +9,29 @@
   "sidebar.theme.dark": "Dark Mode",
   "sidebar.theme.tooltip.light": "Switch to Light Mode",
   "sidebar.theme.tooltip.dark": "Switch to Dark Mode",
+
+  "landing.nav.title": "National Landfill Watch",
+  "landing.nav.map": "Map",
+  "landing.nav.blog": "Blog",
+  "landing.nav.faq": "FAQ",
+
+  "landing.hero.title": "National Landfill Watch",
+  "landing.hero.description": "A platform for monitoring landfills across Serbia using advanced satellite data. We analyze methane (CH₄) and carbon dioxide (CO₂) emissions to support cleaner and sustainable communities.",
+  "landing.hero.button": "Explore the Map",
+
+  "landing.info.title": "Sustainability Through Innovation",
+  "landing.info.card1.title": "Real-Time Monitoring",
+  "landing.info.card1.text": "Track methane and carbon dioxide levels from satellite sources.",
+  "landing.info.card2.title": "AI-Driven Analysis",
+  "landing.info.card2.text": "We use machine learning to detect changes in landfill activity.",
+  "landing.info.card3.title": "Eco Responsibility",
+  "landing.info.card3.text": "Our mission is to raise awareness and promote environmental transparency.",
+  "landing.info.card4.title": "Collaboration & Education",
+  "landing.info.card4.text": "We connect students, researchers, and NGOs to create impact together.",
+  "landing.info.card5.title": "Data Transparency",
+  "landing.info.card5.text": "Open access to landfill metrics enables citizens, scientists, and policymakers to act responsibly.",
+  "landing.info.card6.title": "Smart Sustainability",
+  "landing.info.card6.text": "We integrate modern technology to create long-term, data-driven environmental awareness.",
 
   "map.overlay.selectRegion": "Select region",
   "map.regions.wholeSerbia": "Whole Serbia",

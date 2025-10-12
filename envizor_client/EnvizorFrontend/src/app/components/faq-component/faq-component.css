@@ -67,9 +67,12 @@
 }
 
 /* Accordion styles */
+mat-expansion-panel {
+  margin-bottom: 0.75rem;
+}
+
 ::ng-deep .mat-expansion-panel {
   border-radius: 8px !important;
-  margin-bottom: 0.75rem;
   background: var(--surface);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }

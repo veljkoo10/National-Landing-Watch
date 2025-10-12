@@ -4,15 +4,17 @@ import {
   FaqComponent, 
   AboutComponent, 
   StatisticsComponent, 
-  BlogComponent 
+  BlogComponent,
+  LandingComponent
 } from './components';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/map', pathMatch: 'full' },
+  { path: '', redirectTo: '/landing', pathMatch: 'full' },
   { path: 'map', component: MapComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'about', component: AboutComponent },
   { path: 'statistics', component: StatisticsComponent },
   { path: 'blog', component: BlogComponent },
-  { path: '**', redirectTo: '/map' }
+  { path: 'landing', component: LandingComponent },
+  { path: '**', redirectTo: '/landing' }
 ];

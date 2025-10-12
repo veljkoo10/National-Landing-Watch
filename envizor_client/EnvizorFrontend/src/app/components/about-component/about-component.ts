@@ -48,7 +48,7 @@ export class AboutComponent {
       phone: 'about.team.member2.phone',
       email: 'about.team.member2.email',
       img: '/images/team/andjela.jpg',
-      linkedin: '#',
+      linkedin: 'https://www.linkedin.com/in/an%C4%91ela-mr%C4%91a-793885280?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
       instagram: 'https://www.instagram.com/_andjelamrdja_'
     },
     {
