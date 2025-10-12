@@ -1,1 +1,159 @@
-<p>statistics-component works!</p>
+<div class="stats-container">
+  <h1 class="page-title">{{ 'statistics.page.title' | translate }}</h1>
+  <p class="page-subtitle">{{ 'statistics.page.subtitle' | translate }}</p>
+
+  <!-- ========== SECTION 1: General charts ========== -->
+  <section class="card-section">
+    <h2 class="section-title">{{ 'statistics.section1.title' | translate }}</h2>
+    <p class="section-desc">{{ 'statistics.section1.desc' | translate }}</p>
+
+    <div class="charts-grid">
+      <div class="chart-box">
+        <h3>{{ 'statistics.section1.chart.regionWaste' | translate }}</h3>
+        <highcharts-chart
+          constructorType="chart"
+          [options]="chartRegionWaste"
+          style="width: 100%; height: 320px; display: block;"
+        ></highcharts-chart>
+      </div>
+
+      <div class="chart-box">
+        <h3>{{ 'statistics.section1.chart.species' | translate }}</h3>
+        <highcharts-chart
+          constructorType="chart"
+          [options]="chartSpeciesPie"
+          style="width: 100%; height: 320px; display: block;"
+        ></highcharts-chart>
+      </div>
+
+      <div class="chart-box chart-wide">
+        <h3>{{ 'statistics.section1.chart.emissionsTrend' | translate }}</h3>
+        <highcharts-chart
+          constructorType="chart"
+          [options]="chartEmissionsTrend"
+          style="width: 100%; height: 320px; display: block;"
+        ></highcharts-chart>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 2: Top categories / insights ========== -->
+  <section class="card-section">
+    <h2 class="section-title">{{ 'statistics.section2.title' | translate }}</h2>
+    <p class="section-desc">{{ 'statistics.section2.desc' | translate }}</p>
+
+    <div class="insights-grid">
+      <div class="insight-card">
+        <h3>{{ 'statistics.section2.topLandfills.title' | translate }}</h3>
+        <ol class="rank-list">
+          <li *ngFor="let t of topLargestLandfills">
+            <span class="rank-name">{{ t.name }}</span>
+            <span class="rank-region">{{ t.region }}</span>
+            <span class="rank-value">{{ t.totalWaste | number }} t</span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="insight-card">
+        <h3>{{ 'statistics.section2.mostPolluted.title' | translate }}</h3>
+
+        <ng-container *ngIf="mostPollutedRegion as mp">
+          <div class="polluted-row"><strong>{{ 'statistics.labels.region' | translate }}:</strong> {{ mp.region }}</div>
+          <div class="polluted-row"><strong>CH₄ / km²:</strong> {{ mp.ch4PerKm2 | number : '1.0-0' }} t/km²</div>
+          <div class="polluted-row"><strong>CO₂eq / km²:</strong> {{ mp.co2eqPerKm2 | number : '1.0-0' }} t/km²</div>
+          <div class="polluted-row"><strong>{{ 'statistics.labels.totalCh4' | translate }}:</strong> {{ mp.totalCh4 | number }} t</div>
+          <div class="polluted-row"><strong>{{ 'statistics.labels.totalCo2eq' | translate }}:</strong> {{ mp.totalCo2eq | number }} t</div>
+          <div class="polluted-row"><strong>{{ 'statistics.labels.population' | translate }}:</strong> {{ mp.population | number }}</div>
+          <div class="polluted-row"><strong>{{ 'statistics.labels.area' | translate }}:</strong> {{ mp.areaKm2 | number }} km²</div>
+        </ng-container>
+      </div>
+
+      <div class="insight-card">
+        <h3>{{ 'statistics.section2.otherAnalyses.title' | translate }}</h3>
+        <ul class="bullets">
+          <li>{{ 'statistics.section2.otherAnalyses.item1' | translate }}</li>
+          <li>{{ 'statistics.section2.otherAnalyses.item2' | translate }}</li>
+          <li>{{ 'statistics.section2.otherAnalyses.item3' | translate }}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 3: Predictions ========== -->
+  <section class="card-section">
+    <h2 class="section-title">{{ 'statistics.section3.title' | translate }}</h2>
+    <p class="section-desc">{{ 'statistics.section3.desc' | translate }}</p>
+
+    <div class="chart-box chart-wide">
+      <h3>{{ 'statistics.section3.chart.prediction' | translate }}</h3>
+      <highcharts-chart
+        constructorType="chart"
+        [options]="chartPrediction"
+        style="width: 100%; height: 340px; display: block;"
+      ></highcharts-chart>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 4: Table (search + paging) ========== -->
+  <section class="card-section">
+    <h2 class="section-title">{{ 'statistics.section4.title' | translate }}</h2>
+    <p class="section-desc">{{ 'statistics.section4.desc' | translate }}</p>
+
+    <div class="table-toolbar">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>{{ 'statistics.section4.search' | translate }}</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event.target.value)"
+          placeholder="{{ 'statistics.section4.searchPlaceholder' | translate }}"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
+
+        <ng-container matColumnDef="landfill">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'statistics.table.landfill' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.landfillName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="region">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'statistics.table.region' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.regionName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="year">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'statistics.table.year' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.year }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="volumeM3">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'statistics.table.volume' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.volumeM3 | number }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="wasteTons">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'statistics.table.waste' | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{ row.wasteTons | number }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ch4Tons">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>CH₄ (t)</th>
+          <td mat-cell *matCellDef="let row">{{ row.ch4Tons | number }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="co2eqTons">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>CO₂eq (t)</th>
+          <td mat-cell *matCellDef="let row">{{ row.co2eqTons | number }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons></mat-paginator>
+    </div>
+  </section>
+</div>

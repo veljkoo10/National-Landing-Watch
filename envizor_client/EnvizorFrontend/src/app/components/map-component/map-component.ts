@@ -62,7 +62,7 @@ export class MapComponent implements AfterViewInit {
       container: 'map',
       style: 'mapbox://styles/mapbox/satellite-streets-v12',
       center: [20.9, 43.9],
-      zoom: 3
+      zoom: 2
     });
 
     const landfills = [

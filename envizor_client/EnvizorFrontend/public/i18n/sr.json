@@ -42,6 +42,45 @@
   "map.regions.easternSerbia": "Istočna Srbija",
   "map.regions.southernSerbia": "Južna Srbija",
 
+  "statistics.page.title": "Statistika i uvidi",
+  "statistics.page.subtitle": "Istražite regionalni otpad, emisije i trendove",
+
+  "statistics.section1.title": "Opšti pregled",
+  "statistics.section1.desc": "Ključni indikatori po regionima, tipu deponija i godišnjim CH₄ trendovima.",
+  "statistics.section1.chart.regionWaste": "Ukupan otpad po regionima",
+  "statistics.section1.chart.species": "Tipovi deponija",
+  "statistics.section1.chart.emissionsTrend": "CH₄ emisije kroz vreme",
+
+  "statistics.section2.title": "Detaljna analiza: rang liste i uvidi",
+  "statistics.section2.desc": "Najveće deponije prema ukupnoj količini otpada i najugroženiji regioni.",
+  "statistics.section2.topLandfills.title": "Top 3 najveće deponije (po ukupnom otpadu)",
+  "statistics.section2.mostPolluted.title": "Najugroženiji region (CH₄ po km²)",
+  "statistics.section2.otherAnalyses.title": "Dodatne analize",
+  "statistics.section2.otherAnalyses.item1": "Najviši CO₂eq po km²",
+  "statistics.section2.otherAnalyses.item2": "Rast deponije od godine nastanka",
+  "statistics.section2.otherAnalyses.item3": "Emisije po glavi stanovnika (CH₄ / populacija)",
+
+  "statistics.section3.title": "Predikcije",
+  "statistics.section3.desc": "Rana projekcija CH₄ trendova (držač do ML modela).",
+  "statistics.section3.chart.prediction": "Projekcija CH₄ emisija",
+
+  "statistics.section4.title": "Tabela podataka",
+  "statistics.section4.desc": "Pretraga i filtriranje monitoring zapisa. Izvoz uskoro.",
+  "statistics.section4.search": "Pretraga",
+  "statistics.section4.searchPlaceholder": "Upišite deponiju, region ili godinu...",
+
+  "statistics.table.landfill": "Deponija",
+  "statistics.table.region": "Region",
+  "statistics.table.year": "Godina",
+  "statistics.table.volume": "Zapremina (m³)",
+  "statistics.table.waste": "Otpad (t)",
+
+  "statistics.labels.region": "Region",
+  "statistics.labels.totalCh4": "Ukupan CH₄",
+  "statistics.labels.totalCo2eq": "Ukupan CO₂eq",
+  "statistics.labels.population": "Populacija",
+  "statistics.labels.area": "Površina",
+
   "faq.page.title": "Pronađite odgovore na sva vaša pitanja",
   "faq.page.description": "Dobrodošli u <b>centar za pomoć platforme National Landfill Watch</b>. Ovde možete saznati kako da koristite našu platformu — od navigacije interaktivnom mapom, istraživanja regionalne statistike, do čitanja najnovijih informacija o održivosti. Kliknite na pitanje ispod da biste videli odgovor.",
 

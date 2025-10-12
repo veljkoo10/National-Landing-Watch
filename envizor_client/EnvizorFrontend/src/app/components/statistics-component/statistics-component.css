@@ -1,0 +1,124 @@
+.stats-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+  color: var(--text);
+}
+
+.page-title {
+  font-size: 1.8rem;
+  color: var(--primary);
+  margin-bottom: .2rem;
+}
+
+.page-subtitle {
+  color: #555;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* Section card look (coherent with About/FAQ) */
+.card-section {
+  background-color: rgba(255, 255, 255, 0.86);
+  border-radius: 20px;
+  padding: 1rem 1rem 1.2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,.03);
+  transition: box-shadow .2s ease, transform .2s ease;
+  margin-bottom: 1.2rem;
+}
+.card-section:hover {
+  box-shadow: 0 6px 14px rgba(0,0,0,.05);
+  transform: translateY(-2px);
+}
+
+.section-title {
+  color: var(--primary);
+  font-size: 1.25rem;
+  margin: 0 0 .4rem;
+}
+.section-desc {
+  margin: 0 0 1rem;
+  color: #444;
+  font-size: .95rem;
+}
+
+/* Charts grid */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.chart-box {
+  background: var(--surface);
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: .75rem;
+}
+.chart-box h3 {
+  margin: .2rem 0 .6rem;
+  font-size: 1rem;
+  color: #333;
+}
+.chart-wide {
+  grid-column: 1 / -1;
+}
+
+/* Insights cards */
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.insight-card {
+  background: var(--surface);
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: .9rem;
+}
+.insight-card h3 {
+  margin: 0 0 .6rem;
+  color: #333;
+}
+
+/* Rank list */
+.rank-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.rank-list li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: .6rem;
+  padding: .4rem .3rem;
+  border-bottom: 1px dashed #eee;
+}
+.rank-list li:last-child { border-bottom: none; }
+.rank-name { font-weight: 600; color: var(--primary); }
+.rank-region { color: #666; }
+.rank-value { font-weight: 600; }
+
+/* Polluted region details */
+.polluted-row {
+  display: flex;
+  gap: .5rem;
+  padding: .25rem 0;
+}
+
+/* Table area */
+.table-toolbar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: .6rem;
+}
+.filter-field {
+  width: 320px;
+}
+.table-wrapper {
+  background: var(--surface);
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: .4rem .4rem .2rem;
+}
+table { width: 100%; }
+th.mat-header-cell { font-weight: 700; }

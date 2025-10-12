@@ -42,6 +42,45 @@
   "map.regions.easternSerbia": "Eastern Serbia",
   "map.regions.southernSerbia": "Southern Serbia",
 
+  "statistics.page.title": "Statistics & Insights",
+  "statistics.page.subtitle": "Explore regional waste, emissions and trends",
+
+  "statistics.section1.title": "General Overview",
+  "statistics.section1.desc": "High-level indicators across regions, landfill types and yearly CH₄ trends.",
+  "statistics.section1.chart.regionWaste": "Total Waste by Region",
+  "statistics.section1.chart.species": "Landfill Types",
+  "statistics.section1.chart.emissionsTrend": "CH₄ Emissions Over Time",
+
+  "statistics.section2.title": "Deep Dive: Rankings & Highlights",
+  "statistics.section2.desc": "Top landfills by cumulative waste and most impacted regions.",
+  "statistics.section2.topLandfills.title": "Top 3 Largest Landfills (by total waste)",
+  "statistics.section2.mostPolluted.title": "Most Impacted Region (CH₄ per km²)",
+  "statistics.section2.otherAnalyses.title": "Additional insights",
+  "statistics.section2.otherAnalyses.item1": "Highest CO₂eq region per km²",
+  "statistics.section2.otherAnalyses.item2": "Landfill growth since year of creation",
+  "statistics.section2.otherAnalyses.item3": "Emissions per capita (CH₄ / population)",
+
+  "statistics.section3.title": "Predictions",
+  "statistics.section3.desc": "Early projection of CH₄ trends (placeholder until ML model integration).",
+  "statistics.section3.chart.prediction": "Projected CH₄ Emissions",
+
+  "statistics.section4.title": "Data Table",
+  "statistics.section4.desc": "Search and filter monitoring records. Export coming soon.",
+  "statistics.section4.search": "Search",
+  "statistics.section4.searchPlaceholder": "Type landfill, region, or year...",
+
+  "statistics.table.landfill": "Landfill",
+  "statistics.table.region": "Region",
+  "statistics.table.year": "Year",
+  "statistics.table.volume": "Volume (m³)",
+  "statistics.table.waste": "Waste (t)",
+  
+  "statistics.labels.region": "Region",
+  "statistics.labels.totalCh4": "Total CH₄",
+  "statistics.labels.totalCo2eq": "Total CO₂eq",
+  "statistics.labels.population": "Population",
+  "statistics.labels.area": "Area",
+
   "faq.page.title": "Find answers to all your questions",
   "faq.page.description": "Welcome to the <b>National Landfill Watch</b> help center. Here you can learn how to use our platform — from navigating the interactive map, exploring regional statistics, to reading the latest sustainability updates. Click on a question below to expand its answer.",
   
