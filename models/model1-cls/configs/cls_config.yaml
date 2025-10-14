@@ -1,22 +1,37 @@
-dataset_root: "./dataset_cls"
+# ===============================
+# 🧠 CONFIG FILE – Model 1 (Klasifikacija)
+# ===============================
 
+# 📂 Putanje do dataset-a
+data:
+  base_dir: "../dataset_cls"
+  train_dir: "../dataset_cls/train"
+  val_dir: "../dataset_cls/val"
+  test_dir: "../dataset_cls/test"
+
+# ⚙️ Parametri treninga
+training:
+  epochs: 15 # broj epoha
+  batch_size: 32 # broj slika po batch-u
+  learning_rate: 0.001 # brzina učenja
+  img_size: 224 # veličina slike (standard za ResNet)
+  num_workers: 2 # broj radnika za učitavanje podataka (0 ako treniraš na CPU)
+
+# 🧠 Model podešavanja
+model:
+  architecture: "resnet18" # može biti: resnet18, resnet34, mobilenet_v2, itd.
+  pretrained: true # koristi pretreniran model ili ne
+  freeze_base: true # zamrzni osnovne slojeve
+
+# 📁 Izlazni fajlovi
+output:
+  model_dir: "../outputs/runs"
+  model_name: "landfill_classifier.pth"
+  preds_dir: "../outputs/preds"
+  metrics_dir: "../outputs/metrics"
+
+# 📊 Klase (redosled mora biti isti kao u datasetu)
 classes:
-  - no_landfill
   - illegal
   - non_illegal
-
-imgsz: 640
-epochs: 30
-batch: 32
-workers: 8
-
-base_model: "yolov8n-cls.pt"
-project: "runs_clf"
-name: "clf_v1"
-
-thresholds:
-  # Ako je P(no_landfill) ≤ ovaj prag -> šaljemo sliku u segmentaciju.
-  max_p_no_landfill: 0.30
-
-device: "" # "" (auto), "0" (GPU0) ili "cpu"
-seed: 42
+  - no_landfill

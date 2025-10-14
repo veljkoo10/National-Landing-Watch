@@ -1,6 +1,12 @@
-ultralytics>=8.3.0
-torch
-torchvision
-torchaudio
-numpy
-opencv-python
+torch==2.2.0
+torchvision==0.17.0
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.4.2
+matplotlib==3.8.4
+Pillow==10.2.0
+pyyaml==6.0.1
+
+
+# da bismo sve instalirali iz requirements.txt fajla, koristimo komandu:
+# pip install -r requirements.txt
