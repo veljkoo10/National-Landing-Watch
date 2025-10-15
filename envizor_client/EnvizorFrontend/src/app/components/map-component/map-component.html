@@ -17,4 +17,43 @@
   </div>
 </div>
 
-<div class="content"></div>
+<!-- Region modal (top-right) -->
+<div class="region-info-modal" *ngIf="selectedRegionData as region">
+  <div class="region-header">
+    <h3>{{ ('map.regions.' + regionKeyMap[region.name]) | translate }}</h3>
+    <button mat-icon-button (click)="selectedRegionData = null">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="region-data">
+    <p><strong>{{ 'map.region.population' | translate }}:</strong> {{ region.population | number }}</p>
+    <p><strong>{{ 'map.region.area' | translate }}:</strong> {{ region.areaKm2 | number }} km²</p>
+    <p><strong>{{ 'map.region.landfills' | translate }}:</strong> {{ region.landfillCount }}</p>
+    <p><strong>{{ 'map.region.totalWaste' | translate }}:</strong> {{ region.totalWaste | number }} t</p>
+    <p><strong>{{ 'map.region.wastePerCapita' | translate }}:</strong> {{ (region.totalWaste / region.population) | number:'1.2-2' }} t/person</p>
+    <p><strong>{{ 'map.region.ch4' | translate }}:</strong> {{ region.ch4Tons | number }} t</p>
+    <p><strong>{{ 'map.region.co2' | translate }}:</strong> {{ region.co2Tons | number }} t</p>
+    <p><strong>{{ 'map.region.pollutionLevel' | translate }}:</strong>
+      <span [ngClass]="region.pollutionLevel">{{ ('map.pollution.' + region.pollutionLevel) | translate }}</span>
+    </p>
+  </div>
+</div>
+
+<!-- Bottom landfill cards -->
+<div class="landfill-cards-container" *ngIf="selectedLandfills.length > 0">
+  <div class="landfill-cards-scroll" (mousemove)="onCardsMouseMove($event)">
+    <div
+      class="landfill-card"
+      *ngFor="let lf of selectedLandfills"
+      (click)="onLandfillClick(lf)"
+      (mouseenter)="hoveredCard = lf.id"
+      (mouseleave)="hoveredCard = null"
+      [class.hovered]="hoveredCard === lf.id"
+    >
+      <h4>{{ 'map.landfill.id' | translate }}: {{ lf.id }}</h4>
+      <p><strong>{{ 'map.landfill.area' | translate }}:</strong> {{ lf.area | number }} m²</p>
+      <p><strong>{{ 'map.landfill.coords' | translate }}:</strong> {{ lf.lat.toFixed(3) }}, {{ lf.lng.toFixed(3) }}</p>
+    </div>
+  </div>
+</div>

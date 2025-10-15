@@ -95,18 +95,23 @@
   justify-content: space-between;
   gap: 2rem;
   flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 90%;
 }
 
 .hero-content {
   flex: 1 1 50%;
+  min-width: 320px;
 }
 
 .hero-title {
-  font-size: 4rem;
+  font-size: 3.2rem;
   font-weight: 700;
   color: var(--primary);
   margin-bottom: 1rem;
-  line-height: 1;
+  line-height: 1.1;
+  word-break: break-word;
 }
 
 .hero-description {
@@ -137,8 +142,12 @@
 
 .hero-globe {
   flex: 1 1 45%;
-  height: 600px;
+  height: 500px;
+  min-width: 320px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #globe {
@@ -147,6 +156,39 @@
   height: 100%;
   border-radius: 100%;
   padding: 0;
+}
+
+@media (max-width: 992px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    width: 90%;
+  }
+
+  .hero-content {
+    flex: 1 1 100%;
+    max-width: 600px;
+  }
+
+  .hero-globe {
+    flex: 1 1 100%;
+    height: 400px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-button {
+    font-size: 1rem;
+    padding: 0.9rem 1.5rem;
+  }
 }
 
 /* === Info Section === */

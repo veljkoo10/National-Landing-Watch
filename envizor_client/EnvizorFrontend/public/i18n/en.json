@@ -38,9 +38,26 @@
   "map.regions.vojvodina": "Vojvodina",
   "map.regions.belgrade": "Belgrade",
   "map.regions.westernSerbia": "Western Serbia",
-  "map.regions.sumadijaPomoravlje": "Šumadija and Pomoravlje",
+  "map.regions.sumadijaiPomoravlje": "Šumadija and Pomoravlje",
   "map.regions.easternSerbia": "Eastern Serbia",
   "map.regions.southernSerbia": "Southern Serbia",
+
+  "map.region.population": "Population",
+  "map.region.area": "Area",
+  "map.region.landfills": "Landfills",
+  "map.region.totalWaste": "Total Waste",
+  "map.region.wastePerCapita": "Waste per Capita",
+  "map.region.ch4": "Methane (CH₄)",
+  "map.region.co2": "Carbon Dioxide (CO₂)",
+  "map.region.pollutionLevel": "Pollution Level",
+
+  "map.pollution.low": "Low",
+  "map.pollution.medium": "Medium",
+  "map.pollution.high": "High",
+
+  "map.landfill.id": "Landfill ID",
+  "map.landfill.area": "Area",
+  "map.landfill.coords": "Coordinates",
 
   "statistics.page.title": "Statistics & Insights",
   "statistics.page.subtitle": "Explore regional waste, emissions and trends",

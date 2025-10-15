@@ -33,14 +33,31 @@
   "landing.info.card6.title": "Pametna održivost",
   "landing.info.card6.text": "Integracijom savremenih tehnologija stvaramo dugoročnu, podacima vođenu svest o zaštiti životne sredine.",
 
-  "map.overlay.selectRegion": "Izaberite region",
+  "map.overlay.selectRegion": "Izaberi region",
   "map.regions.wholeSerbia": "Cela Srbija",
   "map.regions.vojvodina": "Vojvodina",
   "map.regions.belgrade": "Beograd",
   "map.regions.westernSerbia": "Zapadna Srbija",
-  "map.regions.sumadijaPomoravlje": "Šumadija i Pomoravlje",
+  "map.regions.sumadijaiPomoravlje": "Šumadija i Pomoravlje",
   "map.regions.easternSerbia": "Istočna Srbija",
   "map.regions.southernSerbia": "Južna Srbija",
+
+  "map.region.population": "Stanovništvo",
+  "map.region.area": "Površina",
+  "map.region.landfills": "Deponije",
+  "map.region.totalWaste": "Ukupna količina otpada",
+  "map.region.wastePerCapita": "Otpad po osobi",
+  "map.region.ch4": "Metan (CH₄)",
+  "map.region.co2": "Ugljen-dioksid (CO₂)",
+  "map.region.pollutionLevel": "Nivo zagađenja",
+
+  "map.pollution.low": "Nizak",
+  "map.pollution.medium": "Srednji",
+  "map.pollution.high": "Visok",
+
+  "map.landfill.id": "ID deponije",
+  "map.landfill.area": "Površina",
+  "map.landfill.coords": "Koordinate",
 
   "statistics.page.title": "Statistika i uvidi",
   "statistics.page.subtitle": "Istražite regionalni otpad, emisije i trendove",
