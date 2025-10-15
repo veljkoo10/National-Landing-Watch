@@ -1,0 +1,31 @@
+# ===============================
+# ⚙️ CONFIG – Model 2 (YOLOv8 segmentacija)
+# ===============================
+
+# 📂 Putanje
+data:
+  data_yaml: "../dataset_seg/data.yaml" # YOLO data fajl (train/val/test + names)
+
+# 🧠 Model
+model:
+  pretrained: "yolov8n-seg.pt" # početni (n: mali, s: srednji, l/x: veći)
+  img_size: 640 # preporučeno 640 za YOLOv8
+  device: "auto" # "auto", 0 za CUDA, "cpu" za CPU
+
+# 🏋️ Trening
+training:
+  epochs: 50
+  batch_size: 8
+  workers: 2
+  conf: 0.25 # prag za prikaz detekcija (inference)
+  iou: 0.50
+
+# 💾 Izlaz
+output:
+  project_dir: "../outputs/runs"
+  run_name: "seg_v1"
+  best_weights_name: "seg_best.pt" # kopira se iz <run>/weights/best.pt u project_dir
+
+# 🏷️ Klase (moraju pratiti data.yaml → names)
+classes:
+  - landfill
