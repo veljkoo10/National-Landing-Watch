@@ -1,7 +1,6 @@
-
 export interface LandfillDto {
   id: number;
-  regionId: number;
+  regionKey: string;
   latitude: number;
   longitude: number;
   type: 'sanitary' | 'unsanitary' | 'wild';

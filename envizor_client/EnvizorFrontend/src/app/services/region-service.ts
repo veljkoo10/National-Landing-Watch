@@ -23,8 +23,13 @@ export class RegionService {
       totalWaste: 160000
     },
     {
-      id: 4, name: 'Sumadija i Pomoravlje', population: 1000000, areaKm2: 13000,
+      id: 4, name: 'Sumadija And Pomoravlje', population: 1000000, areaKm2: 13000,
       ch4Tons: 2000, co2Tons: 60000, landfillCount: 7, pollutionLevel: 'low',
+      totalWaste: 95000
+    },
+    {
+      id: 5, name: 'Kosovo And Metohija', population: 900000, areaKm2: 9000,
+      ch4Tons: 2000, co2Tons: 60000, landfillCount: 7, pollutionLevel: 'medium',
       totalWaste: 95000
     }
   ];

@@ -1,1 +1,17 @@
-<p>blog-component works!</p>
+<div class="blog-container">
+  <h1 class="blog-title">Environmental, Social & Governance (ESG) Insights</h1>
+  <p class="blog-subtitle">Discover global initiatives, scientific insights, and innovations shaping a sustainable planet.</p>
+
+  <div class="blog-grid">
+    <div class="blog-card" *ngFor="let blog of blogs">
+      <img [src]="blog.image" alt="{{ blog.title }}" class="blog-image" />
+      <div class="blog-content">
+        <h2>{{ blog.title }}</h2>
+        <p>{{ blog.description }}</p>
+        <a [href]="blog.link" target="_blank" rel="noopener" class="read-more">
+          Read More →
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

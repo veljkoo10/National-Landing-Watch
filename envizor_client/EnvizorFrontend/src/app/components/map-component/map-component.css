@@ -5,7 +5,6 @@
   position: relative;
 }
 
-/* Map fills entire host container */
 #map {
   position: absolute;
   inset: 0;
@@ -38,98 +37,120 @@
   transform: scale(1.05);
 }
 
-.map-overlay mat-icon {
-  color: #2e7d32 !important;
+.region-details span {
+  font-weight: bold;
 }
 
-.region-selector {
-  pointer-events: auto;
-  position: absolute;
-  border-style: none;
-  border-radius: 20%;
-  top: 1rem;
-  right: 1rem;
-  z-index: 3;
-  transition: background-color 0.25s ease, transform 0.1s ease;
-}
-
-.region-info-modal {
-  position: absolute;
-  top: 5.5rem;
-  right: 1rem;
-  width: 280px;
-  background-color: rgba(255, 255, 255, 0.98);
-  border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  padding: 0.6rem 1.4rem 0.7rem 1.4rem;
-  z-index: 5;
-  pointer-events: auto;
-  backdrop-filter: blur(8px);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  animation: fadeIn 0.4s ease forwards;
-}
-
-.region-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 1.05rem;
-  margin-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding-bottom: 0.3rem;
-}
-
-.region-header button {
-  background: transparent;
-  color: var(--primary);
-  border: none;
-  padding: 3px;
-}
-
-.region-header button:hover {
-  background-color: var(--primary);
-  color: #fff;
-  border-radius: 25%;
-}
-
-.region-data {
-  margin-top: 0.4rem;
-}
-
-.region-data p {
-  margin: 0.25rem 0;
-  font-size: 0.88rem;
-  color: #333;
-  display: flex;
-  justify-content: space-between;
-}
-
-.region-data strong {
-  color: var(--primary);
-  font-weight: 600;
-}
-
-.region-data span {
-  font-weight: 600;
-}
-
-.region-data .low {
+.low {
   color: #2e7d32;
 }
-.region-data .medium {
+
+.medium {
   color: #f9a825;
 }
-.region-data .high {
+
+.high {
   color: #c62828;
+}
+
+.map-right-sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.97);
+  z-index: 5;
+  padding: .2rem 1rem;
+  overflow-y: auto;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+.map-right-sidebar::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.map-right-sidebar {
+  scrollbar-width: none;
+}
+
+.region-selector-section {
+  padding: .5rem;
+}
+
+.region-label {
+  font-weight: 600;
+  color: #1b5e20;
+  margin-bottom: .5rem;
+  display: block;
+}
+
+.region-dropdown {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #a5d6a7;
+  background: white;
+  color: #2e7d32;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  appearance: none;
+  cursor: pointer;
+}
+
+.region-dropdown:hover {
+  border-color: #66bb6a;
+  background-color: #f1f8e9;
+}
+
+.region-dropdown:focus {
+  outline: none;
+  border-color: #43a047;
+  box-shadow: 0 0 5px rgba(67, 160, 71, 0.3);
+}
+
+.sidebar-section {
+  margin-bottom: 1rem;
+}
+
+.landfill-details {
+  margin-bottom: 1.4rem;
+}
+
+.sidebar-section h3 {
+  color: var(--primary);
+  margin-bottom: 0.4rem;
+  font-size: 1.05rem;
+}
+
+.sidebar-section p {
+  font-size: 0.85rem;
+  color: #333;
+  margin: 0.25rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebar-section strong {
+  /* color: var(--primary); */
+  font-weight: 600;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0.8rem 0;
 }
 
 .landfill-cards-container {
   position: absolute;
-  bottom: 1rem;
-  left: 0;
-  right: 0;
+  bottom: .3rem;
+  left: 10px;
+  right: 270px;
   z-index: 4;
   pointer-events: auto;
   overflow: hidden;
@@ -138,14 +159,12 @@
 
 .landfill-cards-scroll {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding-bottom: 0.3rem;
-  padding-top: .5rem;
+  scroll-snap-type: x mandatory;
+  padding: 0.6rem 0;
   cursor: grab;
-
-  /* Hide scrollbar */
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -154,13 +173,15 @@
 }
 
 .landfill-card {
-  flex: 0 0 200px;
+  scroll-snap-align: start;
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 12px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  padding: 0.6rem 0.9rem;
+  padding-left: 1rem;
   backdrop-filter: blur(6px);
   transition: transform 0.25s ease, background-color 0.25s ease;
+  min-width: 180px;
+  max-width: 240px;
 }
 
 .landfill-card:hover,
@@ -171,12 +192,12 @@
 
 .landfill-card h4 {
   color: var(--primary);
-  font-size: 0.95rem;
-  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
 }
 
 .landfill-card p {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   margin: 0.1rem 0;
   color: #333;
 }
@@ -185,17 +206,64 @@
   cursor: grabbing;
 }
 
-/* Fade-in animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive */
 @media (max-width: 600px) {
   .region-info-modal {
     width: 85%;
     right: 7.5%;
     top: 6.5rem;
+  }
+}
+
+.tooltip-container {
+  display: inline-flex;
+}
+
+.tooltip-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 13px;
+  vertical-align:bottom;
+  cursor: help;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.tooltip-icon:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* Floating tooltip box */
+.custom-tooltip {
+  text-align: center;
+  position: fixed;
+  z-index: 9999;
+  background-color: #fff;
+  color: #1b5e20;
+  border: 1px solid #a5d6a7;
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+  transform: translate(-50%, -100%);
+  white-space: normal;
+  max-width: 230px;
+  animation: tooltipFade 0.2s ease-out;
+}
+
+/* Tooltip fade-in animation */
+@keyframes tooltipFade {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -90%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -100%);
   }
 }
