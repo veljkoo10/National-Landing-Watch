@@ -1,26 +1,23 @@
-﻿using Enzivor.Api.Dtos;
+﻿using Enzivor.Api.Models.Dtos;
+using Enzivor.Api.Services.Interfaces;
 
-namespace Enzivor.Api.Services
+namespace Enzivor.Api.Services.Implementations
 {
-    public class LandfillProcessingService
+    public class LandfillProcessingService : ILandfillProcessingService
     {
-        // ovo je servis kojim spajamo ostale servise i pozivace se iz kontrolera
 
-        // Glavna metoda koja: 
-        // 1. cita CSV iz Python modela 
-        // 2. pretvara poligon iz piksela u geo-koordinate
-        // 3. računa povrsinu
-        // 4. vraca listu DTO objekata spremnih za bazu
+        private readonly ICsvPredictionReader _csvReader;
+        private readonly ICoordinateConverter _coordinateConverter;
+        private readonly ISurfaceCalculator _surfaceCalculator;
 
-        private readonly CsvPredictionReader _csvReader;
-        private readonly CoordinateConverter _coordinateConverter;
-        private readonly SurfaceCalculator _surfaceCalculator;
-
-        public LandfillProcessingService()
+        public LandfillProcessingService(
+            ICsvPredictionReader csvReader,
+            ICoordinateConverter coordinateConverter,
+            ISurfaceCalculator surfaceCalculator)
         {
-            _csvReader = new CsvPredictionReader();
-            _coordinateConverter = new CoordinateConverter();
-            _surfaceCalculator = new SurfaceCalculator();
+            _csvReader = csvReader;
+            _coordinateConverter = coordinateConverter;
+            _surfaceCalculator = surfaceCalculator;
         }
 
         public List<LandfillDto> ProcessLandfills(
@@ -32,10 +29,8 @@ namespace Enzivor.Api.Services
             int imageWidthPx,
             int imageHeightPx)
         {
-            // ucitava predikcije iz csv-a
             var predictions = _csvReader.ReadPredictions(csvPath);
 
-            // obradjuje svaku predikciju
             foreach (var dto in predictions)
             {
                 // konverzija piksela u geo-koordinate
@@ -49,12 +44,8 @@ namespace Enzivor.Api.Services
                     imageHeightPx
                 );
 
-                // racuna povrsinu
                 dto.SurfaceArea = _surfaceCalculator.CalculateSurfaceArea(dto);
 
-                // racunanje centralne tacke (pina na mapi)
-                // frontend moze jednostavno uraditi: 
-                // map.setView([landfill.centerLat, landfill.centerLon], zoomLevel);
                 dto.CenterLat = (dto.NorthWestLat + dto.SouthEastLat) / 2.0;
                 dto.CenterLon = (dto.NorthWestLon + dto.SouthEastLon) / 2.0;
             }

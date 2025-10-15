@@ -26,3 +26,65 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# .NET Core build artifacts
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.cache
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Entity Framework
+*.edmx.diagram
+*.edmx.sql
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+
+# SQLite files
+*.db
+*.db-shm
+*.db-wal
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Windows files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS files
+.DS_Store
+.AppleDouble
+.LSOverride

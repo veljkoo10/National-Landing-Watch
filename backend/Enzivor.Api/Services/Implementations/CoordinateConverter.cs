@@ -1,11 +1,11 @@
-﻿using Enzivor.Api.Dtos;
+﻿using Enzivor.Api.Models.Dtos;
+using Enzivor.Api.Services.Interfaces;
 using System.Globalization;
 
-namespace Enzivor.Api.Services
+namespace Enzivor.Api.Services.Implementations
 {
-    public class CoordinateConverter
+    public class CoordinateConverter : ICoordinateConverter
     {
-        // pretvara piksel koordinate u geo-koordinate koristeci poznate NW i SE tacke slike i dimenzije slike.
         public void ConvertPixelPolygonToGeoCoordinates(
            LandfillDto dto,
            double northWestLat,
@@ -17,8 +17,7 @@ namespace Enzivor.Api.Services
         {
             if (string.IsNullOrWhiteSpace(dto.PolygonCoordinates))
                 return;
-
-            // parsiranje stringa poligona: "x1,y1; x2,y2; ..."
+            
             var points = dto.PolygonCoordinates
                 .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                 .Select(p =>
@@ -34,9 +33,6 @@ namespace Enzivor.Api.Services
 
             if (points.Count == 0) return;
 
-            // linearna konverzija piksela u geografske koordinate
-            // pretpostavka: (0,0) je gornji lijevi ugao slike
-
             var latMin = double.MaxValue;
             var latMax = double.MinValue;
             var lonMin = double.MaxValue;
@@ -44,13 +40,10 @@ namespace Enzivor.Api.Services
 
             foreach (var (px, py) in points)
             {
-                // ratio piksela u odnosu na sirinu/visinu slike
                 var xRatio = px / imageWidthPx;
                 var yRatio = py / imageHeightPx;
 
-                // Latitude: veca vrijednost je sjevernije, ali y raste ka dole
                 var lat = northWestLat - yRatio * (northWestLat - southEastLat);
-                // Longitude: lijevo (NW) ka desno (SE)
                 var lon = northWestLon + xRatio * (southEastLon - northWestLon);
 
                 latMin = Math.Min(latMin, lat);
@@ -59,12 +52,12 @@ namespace Enzivor.Api.Services
                 lonMax = Math.Max(lonMax, lon);
             }
 
-            // Popuni DTO novim vrijednostima
-            dto.NorthWestLat = latMax; // najveca latituda je na sjeveru
-            dto.NorthWestLon = lonMin; // najmanja longituda je na zapadu
-            dto.SouthEastLat = latMin; // najmanja latituda je na jugu
-            dto.SouthEastLon = lonMax; // najveca longituda je na istoku
+            dto.NorthWestLat = latMax;
+            dto.NorthWestLon = lonMin;
+            dto.SouthEastLat = latMin; 
+            dto.SouthEastLon = lonMax;
         }
     }
 }
+
 

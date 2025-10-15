@@ -11,12 +11,52 @@
       "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:services\\landfillprocessingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\dtos\\landfilldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:dtos\\landfilldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\services\\csvpredictionreader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:services\\csvpredictionreader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\models\\landfill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:models\\landfill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\models\\dtos\\processlandfillsrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:models\\dtos\\processlandfillsrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\models\\dtos\\landfillsitedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:models\\dtos\\landfillsitedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\data\\dbseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:data\\dbseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\models\\domain\\landfilldetection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:models\\domain\\landfilldetection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\models\\domain\\landfillsite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:models\\domain\\landfillsite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\models\\enums\\curationstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:models\\enums\\curationstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\models\\enums\\landfillcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:models\\enums\\landfillcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\models\\dtos\\landfilldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:models\\dtos\\landfilldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\services\\surfacecalculator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,14 +65,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\services\\coordinateconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:services\\coordinateconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\services\\csvpredictionreader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:services\\csvpredictionreader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -46,8 +78,73 @@
       "DocumentGroups": [
         {
           "DockedWidth": 585,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProcessLandfillsRequest.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Dtos\\ProcessLandfillsRequest.cs",
+              "RelativeDocumentMoniker": "Models\\Dtos\\ProcessLandfillsRequest.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Dtos\\ProcessLandfillsRequest.cs",
+              "RelativeToolTip": "Models\\Dtos\\ProcessLandfillsRequest.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAzwAsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T19:16:57.818Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LandfillSiteDto.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Dtos\\LandfillSiteDto.cs",
+              "RelativeDocumentMoniker": "Models\\Dtos\\LandfillSiteDto.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Dtos\\LandfillSiteDto.cs",
+              "RelativeToolTip": "Models\\Dtos\\LandfillSiteDto.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAUwBMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T19:14:45.315Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DbSeeder.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Data\\DbSeeder.cs",
+              "RelativeDocumentMoniker": "Data\\DbSeeder.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Data\\DbSeeder.cs",
+              "RelativeToolTip": "Data\\DbSeeder.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T19:13:41.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "appsettings.Development.json",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\appsettings.Development.json",
+              "RelativeToolTip": "appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-15T18:49:53.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "LandfillSite.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Domain\\LandfillSite.cs",
+              "RelativeDocumentMoniker": "Models\\Domain\\LandfillSite.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Domain\\LandfillSite.cs",
+              "RelativeToolTip": "Models\\Domain\\LandfillSite.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAxwAgAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T18:36:04.351Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -56,40 +153,79 @@
               "RelativeDocumentMoniker": "Controllers\\LandfillsController.cs",
               "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\LandfillsController.cs",
               "RelativeToolTip": "Controllers\\LandfillsController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAowBwAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAwwFgAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-11T14:59:41.583Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "LandfillProcessingService.cs",
-              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\LandfillProcessingService.cs",
-              "RelativeDocumentMoniker": "Services\\LandfillProcessingService.cs",
-              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\LandfillProcessingService.cs",
-              "RelativeToolTip": "Services\\LandfillProcessingService.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAYwDgAAABUAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAkwBsAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T14:40:14.752Z",
+              "WhenOpened": "2025-10-15T18:47:49.469Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "SurfaceCalculator.cs",
-              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\SurfaceCalculator.cs",
-              "RelativeDocumentMoniker": "Services\\SurfaceCalculator.cs",
-              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\SurfaceCalculator.cs",
-              "RelativeToolTip": "Services\\SurfaceCalculator.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAgwBMAAAA5AAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAABAAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T14:17:12.464Z",
+              "WhenOpened": "2025-10-11T13:50:05.288Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
+              "Title": "CurationStatus.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Enums\\CurationStatus.cs",
+              "RelativeDocumentMoniker": "Models\\Enums\\CurationStatus.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Enums\\CurationStatus.cs",
+              "RelativeToolTip": "Models\\Enums\\CurationStatus.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T18:44:13.074Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "LandfillCategory.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Enums\\LandfillCategory.cs",
+              "RelativeDocumentMoniker": "Models\\Enums\\LandfillCategory.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Enums\\LandfillCategory.cs",
+              "RelativeToolTip": "Models\\Enums\\LandfillCategory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T18:40:48.594Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "LandfillDetection.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Domain\\LandfillDetection.cs",
+              "RelativeDocumentMoniker": "Models\\Domain\\LandfillDetection.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Domain\\LandfillDetection.cs",
+              "RelativeToolTip": "Models\\Domain\\LandfillDetection.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAnwAgAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-11T14:02:58.684Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "CoordinateConverter.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\CoordinateConverter.cs",
               "RelativeDocumentMoniker": "Services\\CoordinateConverter.cs",
@@ -102,25 +238,51 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 14,
+              "Title": "SurfaceCalculator.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\SurfaceCalculator.cs",
+              "RelativeDocumentMoniker": "Services\\SurfaceCalculator.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\SurfaceCalculator.cs",
+              "RelativeToolTip": "Services\\SurfaceCalculator.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAgwBMAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-11T14:17:12.464Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "CsvPredictionReader.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\CsvPredictionReader.cs",
               "RelativeDocumentMoniker": "Services\\CsvPredictionReader.cs",
               "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\CsvPredictionReader.cs",
               "RelativeToolTip": "Services\\CsvPredictionReader.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAQwC0AAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwC8AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-11T14:09:22.195Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "LandfillProcessingService.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\LandfillProcessingService.cs",
+              "RelativeDocumentMoniker": "Services\\LandfillProcessingService.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\LandfillProcessingService.cs",
+              "RelativeToolTip": "Services\\LandfillProcessingService.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAADwv0MAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-11T14:40:14.752Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "LandfillDto.cs",
-              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Dtos\\LandfillDto.cs",
-              "RelativeDocumentMoniker": "Dtos\\LandfillDto.cs",
-              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Dtos\\LandfillDto.cs",
-              "RelativeToolTip": "Dtos\\LandfillDto.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Dtos\\LandfillDto.cs",
+              "RelativeDocumentMoniker": "Models\\Dtos\\LandfillDto.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Dtos\\LandfillDto.cs",
+              "RelativeToolTip": "Models\\Dtos\\LandfillDto.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAAwA4AAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-11T14:04:34.556Z",
@@ -128,33 +290,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Landfill.cs",
-              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Landfill.cs",
-              "RelativeDocumentMoniker": "Models\\Landfill.cs",
-              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Landfill.cs",
-              "RelativeToolTip": "Models\\Landfill.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAowA8AAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T14:02:58.684Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAcAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T13:50:05.288Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 16,
               "Title": "launchSettings.json",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -162,8 +298,7 @@
               "RelativeToolTip": "Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-11T13:49:03.941Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T13:49:03.941Z"
             }
           ]
         }
