@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { RegionDto } from '../DTOs/region-DTO';
-
+import { API_CONFIG } from './api-config';
+import { RegionDto } from '../DTOs';
+import { BaseService } from './base-service';
 
 @Injectable({ providedIn: 'root' })
-export class RegionService {
+export class RegionService extends BaseService {
+  private readonly regionUrl = `${API_CONFIG.baseUrl}${API_CONFIG.endpoints.regions}`;
+
+  constructor(http: HttpClient) {
+    super(http);
+  }
+
   // Mock data for now — connect to API later
   private regions: RegionDto[] = [
     {
@@ -41,6 +49,14 @@ export class RegionService {
   }
 
   getAllRegions(): Observable<RegionDto[]> {
-    return of(this.regions);
+    return this.get<RegionDto[]>(this.regionUrl);
+  }
+
+  getRegionById(id: number): Observable<RegionDto> {
+    return this.get<RegionDto>(`${this.regionUrl}/${id}`);
+  }
+
+  getRegionByKey(key: string): Observable<RegionDto> {
+    return this.get<RegionDto>(`${this.regionUrl}/key/${key}`);
   }
 }

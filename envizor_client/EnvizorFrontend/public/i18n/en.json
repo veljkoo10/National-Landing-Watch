@@ -188,5 +188,8 @@
   "about.cta.form.email": "Your Email",
   "about.cta.form.subject": "Subject",
   "about.cta.form.message": "Message",
-  "about.cta.form.button": "Send Message"
+  "about.cta.form.button": "Send Message",
+  "about.cta.form.sending": "Sending Message...",
+  "about.cta.form.success": "Sent successfully.",
+  "about.cta.form.error": "Error ocured while sending message."
 }

@@ -22,7 +22,7 @@
 
   <!-- Region Details -->
   <div class="sidebar-section region-details" *ngIf="selectedRegionData as region">
-    <h3>{{ ('map.regions.' + regionKeyMap[region.name]) | translate }}</h3>
+    <h3>{{ ('map.regions.' + getRegionKey(region.name)) | translate }}</h3>
 
     <p class="info-item">
       <strong>{{ 'map.region.population' | translate }}

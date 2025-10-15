@@ -188,5 +188,8 @@
   "about.cta.form.email": "Vaš email",
   "about.cta.form.subject": "Naslov",
   "about.cta.form.message": "Poruka",
-  "about.cta.form.button": "Pošalji poruku"
+  "about.cta.form.button": "Pošalji poruku",
+  "about.cta.form.sending": "Slanje poruke...",
+  "about.cta.form.success": "Uspešno poslata poruka.",
+  "about.cta.form.error": "Došlo je do greške prilikom slanja poruke."
 }

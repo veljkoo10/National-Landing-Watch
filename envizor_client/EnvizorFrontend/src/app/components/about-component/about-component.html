@@ -53,12 +53,18 @@
     <p>{{ 'about.cta.subtitle' | translate }}</p>
 
     <div class="cta-content">
-      <form class="contact-form">
-        <input type="text" placeholder="{{ 'about.cta.form.name' | translate }}" />
-        <input type="email" placeholder="{{ 'about.cta.form.email' | translate }}" />
-        <input type="text" placeholder="{{ 'about.cta.form.subject' | translate }}" />
-        <textarea placeholder="{{ 'about.cta.form.message' | translate }}"></textarea>
-        <button type="submit">{{ 'about.cta.form.button' | translate }}</button>
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+        <input formControlName="name" type="text" placeholder="{{ 'about.cta.form.name' | translate }}" />
+        <input formControlName="email" type="email" placeholder="{{ 'about.cta.form.email' | translate }}" />
+        <input formControlName="subject" type="text" placeholder="{{ 'about.cta.form.subject' | translate }}" />
+        <textarea formControlName="content" placeholder="{{ 'about.cta.form.message' | translate }}"></textarea>
+
+        <button type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? ('about.cta.form.sending' | translate) : ('about.cta.form.button' | translate) }}
+        </button>
+
+        <p class="success" *ngIf="successMessage">{{ 'about.cta.form.success' | translate }}</p>
+        <p class="error" *ngIf="errorMessage">{{ 'about.cta.form.error' | translate }}</p>
       </form>
 
       <div class="cta-image">
