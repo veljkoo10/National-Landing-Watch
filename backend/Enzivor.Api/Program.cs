@@ -17,18 +17,11 @@ builder.Services.AddSwaggerGen();
 // MVC
 builder.Services.AddControllers();
 
-builder.Services.AddScoped<LandfillProcessingService>();
-builder.Services.AddScoped<CsvPredictionReader>();
-builder.Services.AddScoped<CoordinateConverter>();
-builder.Services.AddScoped<SurfaceCalculator>();
 
 // Services
 builder.Services.AddScoped<ILandfillSiteService, LandfillSiteService>();
-builder.Services.AddScoped<ILandfillProcessingService, LandfillProcessingService>();
-builder.Services.AddScoped<ICsvPredictionReader, CsvPredictionReader>();
-builder.Services.AddScoped<ICoordinateConverter, CoordinateConverter>();
-builder.Services.AddScoped<ISurfaceCalculator, SurfaceCalculator>();
-
+builder.Services.AddScoped<IProductionLandfillProcessor, ProductionLandfillProcessor>();
+builder.Services.AddScoped<IMethaneCalculationService, MethaneCalculationService>();
 
 // Repositories
 builder.Services.AddScoped<ILandfillDetectionRepository, LandfillDetectionRepository>();

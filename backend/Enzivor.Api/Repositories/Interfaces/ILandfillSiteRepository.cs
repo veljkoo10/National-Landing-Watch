@@ -9,7 +9,7 @@ namespace Enzivor.Api.Repositories.Interfaces
         Task AddAsync(LandfillSite site, CancellationToken ct = default);
         Task AddRangeAsync(IEnumerable<LandfillSite> sites, CancellationToken ct = default);
         Task SaveChangesAsync(CancellationToken ct = default);
-        Task<LandfillSite?> GetByIdWithDetectionsAsync(int id, CancellationToken ct = default);
+
         Task DeleteAsync(LandfillSite site, CancellationToken ct = default);
 
         // prikaz deponija po regionu

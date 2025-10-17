@@ -32,7 +32,7 @@ namespace Enzivor.Api.Repositories.Implementations
         {
             return await _db.LandfillSites
                 .Include(s => s.Detections)
-                .Where(s => s.RegionTag != null && s.RegionTag.Equals(regionTag, StringComparison.OrdinalIgnoreCase))
+                .Where(s => s.RegionTag != null && s.RegionTag.ToLower() == regionTag.ToLower()) // ✅ EF Core compatible
                 .OrderByDescending(s => s.EstimatedAreaM2 ?? 0)
                 .ToListAsync(ct);
         }
@@ -60,13 +60,6 @@ namespace Enzivor.Api.Repositories.Implementations
         public async Task SaveChangesAsync(CancellationToken ct = default)
         {
             await _db.SaveChangesAsync(ct);
-        }
-
-        public async Task<LandfillSite?> GetByIdWithDetectionsAsync(int id, CancellationToken ct = default)
-        {
-            return await _db.LandfillSites
-                 .Include(s => s.Detections)
-                 .FirstOrDefaultAsync(s => s.Id == id, ct);
         }
 
         public async Task DeleteAsync(LandfillSite site, CancellationToken ct = default)

@@ -1,42 +1,142 @@
 [
   {
-    "ContainingType": "Enzivor.Api.Controllers.LandfillsController",
-    "Method": "GetDetections",
-    "RelativePath": "api/Landfills/detections",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "minConfidence",
-        "Type": "System.Nullable\u00601[[System.Double, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "type",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Enzivor.Api.Controllers.LandfillsController",
-    "Method": "ProcessLandfills",
-    "RelativePath": "api/Landfills/process",
+    "ContainingType": "Enzivor.Api.Controllers.LandfillDetectionsController",
+    "Method": "ProcessProduction",
+    "RelativePath": "api/admin/detections/process-production",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "req",
-        "Type": "Enzivor.Api.Models.Dtos.ProcessLandfillsRequest",
+        "Type": "Enzivor.Api.Models.Dtos.ProcessProductionRequest",
         "IsRequired": true
-      },
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.LandfillDetectionsController",
+    "Method": "GetStats",
+    "RelativePath": "api/admin/detections/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.LandfillsController",
+    "Method": "GetAllLandfills",
+    "RelativePath": "api/landfills",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.LandfillsController",
+    "Method": "GetLandfillById",
+    "RelativePath": "api/landfills/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Name": "persist",
-        "Type": "System.Boolean",
-        "IsRequired": false
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.LandfillsController",
+    "Method": "GetLandfillsByRegion",
+    "RelativePath": "api/landfills/region/{regionKey}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "regionKey",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.MonitoringsController",
+    "Method": "GetMonitoringsByLandfill",
+    "RelativePath": "api/monitorings/landfill/{landfillId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "landfillId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.MonitoringsController",
+    "Method": "GetLatestMonitoring",
+    "RelativePath": "api/monitorings/landfill/{landfillId}/latest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "landfillId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.RegionsController",
+    "Method": "GetAllRegions",
+    "RelativePath": "api/regions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.RegionsController",
+    "Method": "GetRegionById",
+    "RelativePath": "api/regions/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.RegionsController",
+    "Method": "GetRegionByKey",
+    "RelativePath": "api/regions/key/{key}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "key",
+        "Type": "System.String",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

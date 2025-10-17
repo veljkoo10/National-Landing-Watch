@@ -5,36 +5,26 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Landfills/process": {
+    "/api/admin/detections/process-production": {
       "post": {
         "tags": [
-          "Landfills"
-        ],
-        "parameters": [
-          {
-            "name": "persist",
-            "in": "query",
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
-          }
+          "LandfillDetections"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProcessLandfillsRequest"
+                "$ref": "#/components/schemas/ProcessProductionRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProcessLandfillsRequest"
+                "$ref": "#/components/schemas/ProcessProductionRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/ProcessLandfillsRequest"
+                "$ref": "#/components/schemas/ProcessProductionRequest"
               }
             }
           }
@@ -46,25 +36,168 @@
         }
       }
     },
-    "/api/Landfills/detections": {
+    "/api/admin/detections/stats": {
+      "get": {
+        "tags": [
+          "LandfillDetections"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/landfills": {
+      "get": {
+        "tags": [
+          "Landfills"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/landfills/{id}": {
       "get": {
         "tags": [
           "Landfills"
         ],
         "parameters": [
           {
-            "name": "minConfidence",
-            "in": "query",
+            "name": "id",
+            "in": "path",
+            "required": true,
             "schema": {
-              "type": "number",
-              "format": "double"
+              "type": "integer",
+              "format": "int32"
             }
-          },
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/landfills/region/{regionKey}": {
+      "get": {
+        "tags": [
+          "Landfills"
+        ],
+        "parameters": [
           {
-            "name": "type",
-            "in": "query",
+            "name": "regionKey",
+            "in": "path",
+            "required": true,
             "schema": {
-              "$ref": "#/components/schemas/LandfillCategory"
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/monitorings/landfill/{landfillId}": {
+      "get": {
+        "tags": [
+          "Monitorings"
+        ],
+        "parameters": [
+          {
+            "name": "landfillId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/monitorings/landfill/{landfillId}/latest": {
+      "get": {
+        "tags": [
+          "Monitorings"
+        ],
+        "parameters": [
+          {
+            "name": "landfillId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/regions": {
+      "get": {
+        "tags": [
+          "Regions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/regions/{id}": {
+      "get": {
+        "tags": [
+          "Regions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/regions/key/{key}": {
+      "get": {
+        "tags": [
+          "Regions"
+        ],
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -78,45 +211,20 @@
   },
   "components": {
     "schemas": {
-      "LandfillCategory": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "ProcessLandfillsRequest": {
+      "ProcessProductionRequest": {
         "type": "object",
         "properties": {
-          "csvPath": {
+          "classificationCsvPath": {
             "type": "string",
             "nullable": true
           },
-          "northWestLat": {
-            "type": "number",
-            "format": "double"
+          "segmentationCsvPath": {
+            "type": "string",
+            "nullable": true
           },
-          "northWestLon": {
-            "type": "number",
-            "format": "double"
-          },
-          "southEastLat": {
-            "type": "number",
-            "format": "double"
-          },
-          "southEastLon": {
-            "type": "number",
-            "format": "double"
-          },
-          "imageWidthPx": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "imageHeightPx": {
-            "type": "integer",
-            "format": "int32"
+          "metadataSpreadsheetPath": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
