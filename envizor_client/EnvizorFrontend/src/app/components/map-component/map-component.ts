@@ -35,20 +35,20 @@ export class MapComponent implements AfterViewInit {
 
   // Regions (for zoom)
   regions: Record<string, mapboxgl.LngLatBoundsLike> = {
-    'wholeSerbia': [[18.7, 42.2], [22.6, 46.2]],
-    'vojvodina': [[18.6, 45.0], [21.1, 46.2]],
-    'belgrade': [[20.2, 44.5], [20.7, 44.95]],
-    'westernSerbia': [[18.6, 43.4], [20.2, 44.6]],
-    'sumadijaAndPomoravlje': [[20.3, 43.6], [21.4, 44.3]],
-    'easternSerbia': [[21.4, 43.6], [22.6, 44.8]],
-    'southernSerbia': [[20.6, 42.3], [22.4, 43.5]],
-    'kosovoAndMetohija': [[20.3, 41.8], [22, 43.1]]
+    'WholeSerbia': [[18.7, 42.2], [22.6, 46.2]],
+    'Vojvodina': [[18.6, 45.0], [21.1, 46.2]],
+    'Belgrade': [[20.2, 44.5], [20.7, 44.95]],
+    'WesternSerbia': [[18.6, 43.4], [20.2, 44.6]],
+    'SumadijaAndPomoravlje': [[20.3, 43.6], [21.4, 44.3]],
+    'EasternSerbia': [[21.4, 43.6], [22.6, 44.8]],
+    'SouthernSerbia': [[20.6, 42.3], [22.4, 43.5]],
+    'KosovoAndMetohija': [[20.3, 41.8], [22, 43.1]]
   };
 
   regionKeys = Object.keys(this.regions);
 
   getRegionKey(name: string): string {
-    return name.toLowerCase().replace(/\s+/g, '');
+    return name.replace(/\s+/g, '');
   }
 
   tooltipText: string | null = null;
@@ -95,6 +95,7 @@ export class MapComponent implements AfterViewInit {
   onRegionSelect(event: Event): void {
     const regionKey = (event.target as HTMLSelectElement).value;
     this.zoomToRegion(regionKey);
+    this.initializeLandfills();
   }
 
   // Zoom and load region details
@@ -113,10 +114,32 @@ export class MapComponent implements AfterViewInit {
     this.landfillService.getLandfillsByRegion(regionKey).subscribe(lfs => (this.selectedLandfills = lfs));
   }
 
+  private initializeLandfills(): void{
+    for(let landfill of this.selectedLandfills){
+        const marker = new mapboxgl.Marker({
+        color: '#FF5B5B',
+        scale: 0.8
+      })
+        .setLngLat([landfill.latitude, landfill.longitude])
+        .setPopup(
+          new mapboxgl.Popup({
+            closeButton: true,
+            closeOnClick: false
+          }).setHTML(`
+            <strong style="display: block; margin-bottom: 8px; font-size: 16px;">
+              ${landfill.id}
+            </strong>
+          `)
+        )
+        .addTo(this.map);
+    }
+  }
+
   // Landfill selection
   onLandfillClick(lf: LandfillDto): void {
     this.selectedLandfill = lf;
     this.landfillService.getLatestMonitoring(lf.id).subscribe(m => (this.latestMonitoring = m));
+    this.landfillZoomIn(this.selectedLandfill.latitude, this.selectedLandfill.longitude, this.selectedLandfill.latitude, this.selectedLandfill.longitude)
   }
 
   // Card scrolling
@@ -134,5 +157,16 @@ export class MapComponent implements AfterViewInit {
 
   hideTooltip(): void {
     this.tooltipText = null;
+  }
+
+  private landfillZoomIn(northWestLatitude: number, northWestLongitude: number, southEastLatitude: number, southEastLongitude: number){
+    const bounds: mapboxgl.LngLatBoundsLike = [
+      [northWestLongitude, northWestLatitude], // southwest corner
+      [southEastLatitude, southEastLongitude]  // northeast corner
+    ];
+
+    if (bounds) {
+      this.map.fitBounds(bounds, { padding: 50, duration: 2000, bearing: 0 });
+    }
   }
 }

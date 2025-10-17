@@ -65,8 +65,6 @@
   overflow-y: auto;
   backdrop-filter: blur(8px);
   transition: all 0.3s ease;
-  border-top-left-radius: 16px;
-  border-bottom-left-radius: 16px;
 }
 
 .map-right-sidebar::-webkit-scrollbar {
@@ -150,7 +148,7 @@ hr {
   position: absolute;
   bottom: .3rem;
   left: 10px;
-  right: 270px;
+  right: 260px;
   z-index: 4;
   pointer-events: auto;
   overflow: hidden;

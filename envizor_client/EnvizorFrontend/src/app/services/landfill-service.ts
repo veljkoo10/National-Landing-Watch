@@ -29,18 +29,18 @@ export class LandfillService extends BaseService {
   }
 
   private mockLandfills: LandfillDto[] = [
-    { id: 101, regionKey: 'vojvodina', latitude: 45.258, longitude: 19.705, type: 'sanitary', size: 'large', yearCreated: 2001 },
-    { id: 102, regionKey: 'vojvodina', latitude: 45.241, longitude: 19.882, type: 'unsanitary', size: 'medium', yearCreated: 1998 },
-    { id: 103, regionKey: 'vojvodina', latitude: 42.241, longitude: 39.882, type: 'wild', size: 'small', yearCreated: 2011 },
-    { id: 104, regionKey: 'vojvodina', latitude: 41.241, longitude: 29.882, type: 'sanitary', size: 'small', yearCreated: 2003 },
-    { id: 105, regionKey: 'vojvodina', latitude: 13.241, longitude: 45.882, type: 'unsanitary', size: 'medium', yearCreated: 2008 },
-    { id: 106, regionKey: 'vojvodina', latitude: 23.241, longitude: 23.882, type: 'wild', size: 'medium', yearCreated: 2015 },
-    { id: 201, regionKey: 'belgrade', latitude: 44.8, longitude: 20.46, type: 'sanitary', size: 'large', yearCreated: 2002 },
-    { id: 301, regionKey: 'westernSerbia', latitude: 43.85, longitude: 19.84, type: 'unsanitary', size: 'small', yearCreated: 2007 },
-    { id: 401, regionKey: 'sumadijaAndPomoravlje', latitude: 43.9, longitude: 21.2, type: 'wild', size: 'medium', yearCreated: 2012 },
-    { id: 501, regionKey: 'easternSerbia', latitude: 44.23, longitude: 22.53, type: 'sanitary', size: 'large', yearCreated: 2005 },
-    { id: 601, regionKey: 'southernSerbia', latitude: 42.9, longitude: 21.9, type: 'unsanitary', size: 'small', yearCreated: 2009 },
-    { id: 701, regionKey: 'kosovoAndMetohija', latitude: 43.7, longitude: 23.5, type: 'wild', size: 'small', yearCreated: 2010 }
+    { id: 101, regionKey: 'Vojvodina', latitude: 45.258, longitude: 19.705, type: 'sanitary', size: 'large', yearCreated: 2001 },
+    { id: 102, regionKey: 'Vojvodina', latitude: 45.241, longitude: 19.882, type: 'unsanitary', size: 'medium', yearCreated: 1998 },
+    { id: 103, regionKey: 'Vojvodina', latitude: 42.241, longitude: 39.882, type: 'wild', size: 'small', yearCreated: 2011 },
+    { id: 104, regionKey: 'Vojvodina', latitude: 41.241, longitude: 29.882, type: 'sanitary', size: 'small', yearCreated: 2003 },
+    { id: 105, regionKey: 'Vojvodina', latitude: 13.241, longitude: 45.882, type: 'unsanitary', size: 'medium', yearCreated: 2008 },
+    { id: 106, regionKey: 'Vojvodina', latitude: 23.241, longitude: 23.882, type: 'wild', size: 'medium', yearCreated: 2015 },
+    { id: 201, regionKey: 'Belgrade', latitude: 44.8, longitude: 20.46, type: 'sanitary', size: 'large', yearCreated: 2002 },
+    { id: 301, regionKey: 'WesternSerbia', latitude: 43.85, longitude: 19.84, type: 'unsanitary', size: 'small', yearCreated: 2007 },
+    { id: 401, regionKey: 'SumadijaAndPomoravlje', latitude: 43.9, longitude: 21.2, type: 'wild', size: 'medium', yearCreated: 2012 },
+    { id: 501, regionKey: 'EasternSerbia', latitude: 44.23, longitude: 22.53, type: 'sanitary', size: 'large', yearCreated: 2005 },
+    { id: 601, regionKey: 'SouthernSerbia', latitude: 42.9, longitude: 21.9, type: 'unsanitary', size: 'small', yearCreated: 2009 },
+    { id: 701, regionKey: 'KosovoAndMetohija', latitude: 43.7, longitude: 23.5, type: 'wild', size: 'small', yearCreated: 2010 }
   ];
 
   private mockMonitorings: MonitoringDto[] = [

@@ -39,6 +39,16 @@ export class RegionService extends BaseService {
       id: 5, name: 'Kosovo And Metohija', population: 900000, areaKm2: 9000,
       ch4Tons: 2000, co2Tons: 60000, landfillCount: 7, pollutionLevel: 'medium',
       totalWaste: 95000
+    },
+    {
+      id: 6, name: 'Eastern Serbia', population: 900000, areaKm2: 9000,
+      ch4Tons: 2000, co2Tons: 60000, landfillCount: 7, pollutionLevel: 'medium',
+      totalWaste: 95000
+    },
+    {
+      id: 7, name: 'Southern Serbia', population: 900000, areaKm2: 9000,
+      ch4Tons: 2000, co2Tons: 60000, landfillCount: 7, pollutionLevel: 'medium',
+      totalWaste: 95000
     }
   ];
 

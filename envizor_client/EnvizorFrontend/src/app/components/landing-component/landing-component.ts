@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import mapboxgl from 'mapbox-gl';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './landing-component.html',
   styleUrls: ['./landing-component.css']
 })
-export class LandingComponent implements AfterViewInit {
+export class LandingComponent implements AfterViewInit, OnInit {
   private accessToken: string = 'pk.eyJ1IjoiYW5kamVsYW1yZGphIiwiYSI6ImNtZ2k1eGl0dTA1YnUybHF4ZDdmZnlqNTQifQ.B-W-2BJqVGziYH-15nCvIA';
   selectedLang: string;
   isDarkMode = false;
@@ -28,6 +28,15 @@ export class LandingComponent implements AfterViewInit {
     if (storedTheme === 'dark') {
       this.isDarkMode = true;
       document.body.classList.add('dark-theme');
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.router.url === '/landing' && !sessionStorage.getItem('landingRefreshed')) {
+      sessionStorage.setItem('landingRefreshed', 'true');
+      location.reload(); // Force refresh once
+    } else {
+      sessionStorage.removeItem('landingRefreshed');
     }
   }
 
