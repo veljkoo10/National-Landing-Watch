@@ -1,83 +1,122 @@
-﻿using Enzivor.Api.Services;
+﻿using Enzivor.Api.Models.Dtos;
+using Enzivor.Api.Models.Enums;
+using Enzivor.Api.Repositories.Interfaces;
+using Enzivor.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Enzivor.Api.Controllers
 {
-    // poziv u swaggeru:
-    // POST http://localhost:5000/api/landfills/process
-
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/landfills")]
     public class LandfillsController : ControllerBase
     {
-        private readonly LandfillProcessingService _landfillService;
+        private readonly ILandfillSiteRepository _siteRepository;
 
-        public LandfillsController()
+        public LandfillsController(ILandfillSiteRepository siteRepository)
         {
-            _landfillService = new LandfillProcessingService();
+            _siteRepository = siteRepository;
         }
-        
-        // obradjuje rezultate iz Python modela (CSV fajl) i vraca sve detektovane deponije
-     
-        [HttpPost("process")]
-        public IActionResult ProcessLandfills(
-            [FromQuery] string csvPath,
-            [FromQuery] double northWestLat,
-            [FromQuery] double northWestLon,
-            [FromQuery] double southEastLat,
-            [FromQuery] double southEastLon,
-            [FromQuery] int imageWidthPx,
-            [FromQuery] int imageHeightPx
-        )
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllLandfills()
         {
-            if (!System.IO.File.Exists(csvPath))
-                return BadRequest($"CSV fajl nije pronađen na putanji: {csvPath}");
+            var sites = await _siteRepository.GetAllAsync(default);
 
-            // pokrece glavni servis za obradu CSV-a
-            var results = _landfillService.ProcessLandfills(
-                csvPath,
-                northWestLat,
-                northWestLon,
-                southEastLat,
-                southEastLon,
-                imageWidthPx,
-                imageHeightPx
-            );
+            var landfills = sites.Select(s => new
+            {
+                Id = s.Id,
+                Name = s.Name,
+                RegionKey = s.RegionTag?.ToLowerInvariant() ?? "unknown",
+                Latitude = s.PointLat ?? 0,
+                Longitude = s.PointLon ?? 0,
+                Type = GetFrontendType(s.Category.ToString()),
+                Size = GetSizeFromArea(s.EstimatedAreaM2),
+                YearCreated = s.StartYear ?? 2020,
+                AreaM2 = Math.Round(s.EstimatedAreaM2 ?? 0, 2)
+            }).ToList();
 
-            // vraca rezultate frontendu (ili ih kasnije cuvamo u bazu?)
-            return Ok(results);
+            return Ok(landfills);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetLandfillById(int id)
+        {
+            var site = await _siteRepository.GetByIdAsync(id, default);
+            if (site == null)
+                return NotFound();
+
+            var result = new
+            {
+                Id = site.Id,
+                Name = site.Name,
+                RegionKey = site.RegionTag?.ToLowerInvariant() ?? "unknown",
+                Latitude = site.PointLat ?? 0,
+                Longitude = site.PointLon ?? 0,
+                Type = GetFrontendType(site.Category.ToString()),
+                Size = GetSizeFromArea(site.EstimatedAreaM2),
+                YearCreated = site.StartYear ?? 2020,
+                AreaM2 = Math.Round(site.EstimatedAreaM2 ?? 0, 2)
+            };
+
+            return Ok(result);
+        }
+
+        [HttpGet("region/{regionKey}")]
+        public async Task<IActionResult> GetLandfillsByRegion(string regionKey)
+        {
+            var sites = await _siteRepository.GetByRegionAsync(GetRegionNameFromKey(regionKey), default);
+
+            var landfills = sites.Select(s => new
+            {
+                Id = s.Id,
+                Name = s.Name,
+                RegionKey = regionKey.ToLowerInvariant(),
+                Latitude = s.PointLat ?? 0,
+                Longitude = s.PointLon ?? 0,
+                Type = GetFrontendType(s.Category.ToString()),
+                Size = GetSizeFromArea(s.EstimatedAreaM2),
+                YearCreated = s.StartYear ?? 2020,
+                AreaM2 = Math.Round(s.EstimatedAreaM2 ?? 0, 2)
+            }).ToList();
+
+            return Ok(landfills);
+        }
+
+        private string GetFrontendType(string category)
+        {
+            return category.ToLowerInvariant() switch
+            {
+                "illegal" => "wild",
+                "nonsanitary" => "unsanitary",
+                "sanitary" => "sanitary",
+                _ => "unsanitary"
+            };
+        }
+
+        private string GetSizeFromArea(double? areaM2)
+        {
+            if (!areaM2.HasValue) return "small";
+
+            return areaM2.Value switch
+            {
+                <= 10000 => "small",
+                <= 50000 => "medium",
+                _ => "large"
+            };
+        }
+
+        private string GetRegionNameFromKey(string key)
+        {
+            return key.ToLowerInvariant() switch
+            {
+                "vojvodina" => "Vojvodina",
+                "beograd" => "Beograd",                            
+                "zapadnasrbija" => "Zapadna Srbija",                 
+                "sumadijaipomoravlje" => "Šumadija i Pomoravlje",      
+                "istocnasrbija" => "Istočna Srbija",                 
+                "juznasrbija" => "Južna Srbija",                     
+                _ => key
+            };
         }
     }
 }
-
-// query parametri:
-
-//csvPath = C:/ projekat / outputs / predictions.csv
-//northWestLat = 44.12345
-//northWestLon = 19.98765
-//southEastLat = 43.98765
-//southEastLon = 20.12345
-//imageWidthPx = 1024
-//imageHeightPx = 1024
-
-
-// rezultat koji backend vraca:
-
-//[
-//  {
-//    "imageName": "deponija_001.jpg",
-//    "type": "illegal",
-//    "confidence": 0.93,
-//    "surfaceArea": 51234.56,
-//    "northWestLat": 44.1231,
-//    "northWestLon": 19.9880,
-//    "southEastLat": 43.9881,
-//    "southEastLon": 20.1223,
-//    "centerLat": 44.0556,
-//    "centerLon": 20.0551,
-//    "polygonCoordinates": "123.5,245.7;150.1,270.4;..."
-//  },
-//  ...
-//]
-
-
