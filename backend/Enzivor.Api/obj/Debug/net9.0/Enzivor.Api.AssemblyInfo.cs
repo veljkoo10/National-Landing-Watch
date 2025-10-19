@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Enzivor.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+555a90ef931c56e84cf7b561544c91c38645b649")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56311cfc302b7dbbfdc3a09a4927766b8dc077e9")]
 [assembly: System.Reflection.AssemblyProductAttribute("Enzivor.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Enzivor.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

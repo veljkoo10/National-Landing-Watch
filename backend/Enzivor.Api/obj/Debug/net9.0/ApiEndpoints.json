@@ -33,7 +33,17 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.ShowLandfillDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "Enzivor.Api.Controllers.LandfillsController",
@@ -49,7 +59,17 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "Enzivor.Api.Models.Dtos.ShowLandfillDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "Enzivor.Api.Controllers.LandfillsController",
@@ -65,7 +85,17 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.ShowLandfillDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "Enzivor.Api.Controllers.MonitoringsController",
@@ -127,18 +157,88 @@
   },
   {
     "ContainingType": "Enzivor.Api.Controllers.RegionsController",
-    "Method": "GetRegionByKey",
-    "RelativePath": "api/regions/key/{key}",
+    "Method": "GetRegionByName",
+    "RelativePath": "api/regions/name/{name}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "key",
+        "Name": "name",
         "Type": "System.String",
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.StatisticsController",
+    "Method": "GetCh4EmissionsOverTime",
+    "RelativePath": "api/statistics/ch4-over-time",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.StatisticsController",
+    "Method": "GetEmissionsPerCapita",
+    "RelativePath": "api/statistics/emissions-per-capita",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.StatisticsController",
+    "Method": "GetLandfillGrowthOverYears",
+    "RelativePath": "api/statistics/landfill-growth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.StatisticsController",
+    "Method": "GetLandfillTypes",
+    "RelativePath": "api/statistics/landfill-types",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.StatisticsController",
+    "Method": "GetMostImpactedRegion",
+    "RelativePath": "api/statistics/most-impacted",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.StatisticsController",
+    "Method": "GetTop3LargestLandfills",
+    "RelativePath": "api/statistics/top3-largest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Enzivor.Api.Controllers.StatisticsController",
+    "Method": "GetTotalWasteByRegion",
+    "RelativePath": "api/statistics/total-waste-by-region",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]

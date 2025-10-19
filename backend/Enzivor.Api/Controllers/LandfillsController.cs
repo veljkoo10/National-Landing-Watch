@@ -1,7 +1,5 @@
 ﻿using Enzivor.Api.Models.Dtos;
-using Enzivor.Api.Models.Enums;
 using Enzivor.Api.Repositories.Interfaces;
-using Enzivor.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Enzivor.Api.Controllers
@@ -17,106 +15,137 @@ namespace Enzivor.Api.Controllers
             _siteRepository = siteRepository;
         }
 
+        // GET: api/landfills
         [HttpGet]
-        public async Task<IActionResult> GetAllLandfills()
+        public async Task<ActionResult<IEnumerable<ShowLandfillDto>>> GetAllLandfills(CancellationToken ct)
         {
-            var sites = await _siteRepository.GetAllAsync(default);
+            var sites = await _siteRepository.GetAllAsync(ct);
 
-            var landfills = sites.Select(s => new
-            {
-                Id = s.Id,
-                Name = s.Name,
-                RegionKey = s.RegionTag?.ToLowerInvariant() ?? "unknown",
-                Latitude = s.PointLat ?? 0,
-                Longitude = s.PointLon ?? 0,
-                Type = GetFrontendType(s.Category.ToString()),
-                Size = GetSizeFromArea(s.EstimatedAreaM2),
-                YearCreated = s.StartYear ?? 2020,
-                AreaM2 = Math.Round(s.EstimatedAreaM2 ?? 0, 2)
-            }).ToList();
+            var landfills = sites.Select(s => ToShowLandfillDto(
+                id: s.Id,
+                name: s.Name,
+                regionKey: (s.RegionTag ?? "unknown"),
+                latitude: s.PointLat ?? 0,
+                longitude: s.PointLon ?? 0,
+                backendCategory: s.Category.ToString(),
+                areaM2: s.EstimatedAreaM2,
+                yearCreated: s.StartYear
+            )).ToList();
 
             return Ok(landfills);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetLandfillById(int id)
+        // GET: api/landfills/{id}
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<ShowLandfillDto>> GetLandfillById(int id, CancellationToken ct)
         {
-            var site = await _siteRepository.GetByIdAsync(id, default);
-            if (site == null)
-                return NotFound();
+            var s = await _siteRepository.GetByIdAsync(id, ct);
+            if (s is null) return NotFound();
 
-            var result = new
-            {
-                Id = site.Id,
-                Name = site.Name,
-                RegionKey = site.RegionTag?.ToLowerInvariant() ?? "unknown",
-                Latitude = site.PointLat ?? 0,
-                Longitude = site.PointLon ?? 0,
-                Type = GetFrontendType(site.Category.ToString()),
-                Size = GetSizeFromArea(site.EstimatedAreaM2),
-                YearCreated = site.StartYear ?? 2020,
-                AreaM2 = Math.Round(site.EstimatedAreaM2 ?? 0, 2)
-            };
+            var dto = ToShowLandfillDto(
+                id: s.Id,
+                name: s.Name,
+                regionKey: (s.RegionTag ?? "unknown"),
+                latitude: s.PointLat ?? 0,
+                longitude: s.PointLon ?? 0,
+                backendCategory: s.Category.ToString(),
+                areaM2: s.EstimatedAreaM2,
+                yearCreated: s.StartYear
+            );
 
-            return Ok(result);
+            return Ok(dto);
         }
 
+        // GET: api/landfills/region/{regionKey}
         [HttpGet("region/{regionKey}")]
-        public async Task<IActionResult> GetLandfillsByRegion(string regionKey)
+        public async Task<ActionResult<IEnumerable<ShowLandfillDto>>> GetLandfillsByRegion(string regionKey, CancellationToken ct)
         {
-            var sites = await _siteRepository.GetByRegionAsync(GetRegionNameFromKey(regionKey), default);
+            var key = Normalize(regionKey);
+            if (string.IsNullOrWhiteSpace(key))
+                return Ok(new List<ShowLandfillDto>());
 
-            var landfills = sites.Select(s => new
-            {
-                Id = s.Id,
-                Name = s.Name,
-                RegionKey = regionKey.ToLowerInvariant(),
-                Latitude = s.PointLat ?? 0,
-                Longitude = s.PointLon ?? 0,
-                Type = GetFrontendType(s.Category.ToString()),
-                Size = GetSizeFromArea(s.EstimatedAreaM2),
-                YearCreated = s.StartYear ?? 2020,
-                AreaM2 = Math.Round(s.EstimatedAreaM2 ?? 0, 2)
-            }).ToList();
-
-            return Ok(landfills);
-        }
-
-        private string GetFrontendType(string category)
-        {
-            return category.ToLowerInvariant() switch
-            {
-                "illegal" => "wild",
-                "nonsanitary" => "unsanitary",
-                "sanitary" => "sanitary",
-                _ => "unsanitary"
-            };
-        }
-
-        private string GetSizeFromArea(double? areaM2)
-        {
-            if (!areaM2.HasValue) return "small";
-
-            return areaM2.Value switch
-            {
-                <= 10000 => "small",
-                <= 50000 => "medium",
-                _ => "large"
-            };
-        }
-
-        private string GetRegionNameFromKey(string key)
-        {
-            return key.ToLowerInvariant() switch
+            // map canonical key -> DB display name
+            var displayName = key switch
             {
                 "vojvodina" => "Vojvodina",
-                "beograd" => "Beograd",                            
-                "zapadnasrbija" => "Zapadna Srbija",                 
-                "sumadijaipomoravlje" => "Šumadija i Pomoravlje",      
-                "istocnasrbija" => "Istočna Srbija",                 
-                "juznasrbija" => "Južna Srbija",                     
+                "beograd" => "Beograd",
+                "zapadnasrbija" => "Zapadna Srbija",
+                "sumadijaipomoravlje" => "Šumadija i Pomoravlje",
+                "istocnasrbija" => "Istočna Srbija",
+                "juznasrbija" => "Južna Srbija",
                 _ => key
             };
+
+            var sites = await _siteRepository.GetByRegionAsync(displayName, ct); // <-- query by display name
+
+            var landfills = sites.Select(s => ToShowLandfillDto(
+                id: s.Id,
+                name: s.Name,
+                regionKey: key,                   // keep canonical key for FE
+                latitude: s.PointLat ?? 0,
+                longitude: s.PointLon ?? 0,
+                backendCategory: s.Category.ToString(),
+                areaM2: s.EstimatedAreaM2,
+                yearCreated: s.StartYear
+            )).ToList();
+
+            return Ok(landfills);
         }
+
+        // -------------------------
+        // Mapping & helpers
+        // -------------------------
+
+        private static ShowLandfillDto ToShowLandfillDto(
+            int id,
+            string? name,
+            string regionKey,
+            double latitude,
+            double longitude,
+            string? backendCategory,
+            double? areaM2,
+            int? yearCreated)
+        {
+            var type = GetFrontendType(backendCategory);
+            var size = GetSizeFromArea(areaM2);
+
+            return new ShowLandfillDto
+            {
+                Id = id,
+                Name = name,
+                RegionKey = regionKey,
+                Latitude = latitude,
+                Longitude = longitude,
+                Type = type,
+                Size = size,
+                YearCreated = yearCreated ?? 2020,
+                AreaM2 = areaM2 is null ? null : Math.Round(areaM2.Value, 2)
+            };
+        }
+
+        private static string GetFrontendType(string? category)
+        {
+            switch ((category ?? string.Empty).Trim().ToLowerInvariant())
+            {
+                case "illegal": return "wild";
+                case "nonsanitary": return "unsanitary";
+                case "sanitary": return "sanitary";
+                default: return "unsanitary";
+            }
+        }
+
+        private static string GetSizeFromArea(double? areaM2)
+        {
+            if (!areaM2.HasValue) return "small";
+            var a = areaM2.Value;
+            if (a <= 10_000) return "small";
+            if (a <= 50_000) return "medium";
+            return "large";
+        }
+
+        private static string Normalize(string? s) =>
+     string.IsNullOrWhiteSpace(s)
+         ? ""
+         : new string(s.Trim().ToLowerInvariant().Where(c => !char.IsWhiteSpace(c)).ToArray());
     }
 }

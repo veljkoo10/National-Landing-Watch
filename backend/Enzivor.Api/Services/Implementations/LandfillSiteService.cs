@@ -52,8 +52,8 @@ namespace Enzivor.Api.Services.Implementations
                     BoundaryGeoJson = d.PolygonCoordinates,
                     EstimatedAreaM2 = d.SurfaceArea,
 
-                    RegionTag = d.RegionTag,
-                    Region = d.Region,
+                    RegionTag = NormalizeKey(d.RegionTag), 
+                    Region = d.Region,                      
 
                     CreatedAt = now,
                     UpdatedAt = now
@@ -81,6 +81,18 @@ namespace Enzivor.Api.Services.Implementations
             await _siteRepo.SaveChangesAsync(ct);
 
             return sites.Count;
+        }
+
+        private static string? NormalizeKey(string? v)
+        {
+            if (string.IsNullOrWhiteSpace(v)) return null;
+            return v.Trim().ToLowerInvariant().Replace(" ", "")
+                .Normalize(System.Text.NormalizationForm.FormD)
+                .Where(ch => System.Globalization.CharUnicodeInfo.GetUnicodeCategory(ch) != System.Globalization.UnicodeCategory.NonSpacingMark)
+                .Aggregate(new System.Text.StringBuilder(), (sb, ch) => sb.Append(ch))
+                .ToString()
+                .Normalize(System.Text.NormalizationForm.FormC)
+                .Replace("đ", "dj");
         }
     }
 }
