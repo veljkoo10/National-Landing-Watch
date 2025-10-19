@@ -1,5 +1,7 @@
 ﻿using Enzivor.Api.Models.Dtos;
+using Enzivor.Api.Models.Enums;
 using Enzivor.Api.Repositories.Interfaces;
+using Enzivor.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Enzivor.Api.Controllers
@@ -9,10 +11,12 @@ namespace Enzivor.Api.Controllers
     public class LandfillsController : ControllerBase
     {
         private readonly ILandfillSiteRepository _siteRepository;
+        private readonly ILandfillSiteService _siteService;
 
-        public LandfillsController(ILandfillSiteRepository siteRepository)
+        public LandfillsController(ILandfillSiteRepository siteRepository, ILandfillSiteService siteService)
         {
             _siteRepository = siteRepository;
+            _siteService = siteService;
         }
 
         // GET: api/landfills
@@ -90,6 +94,22 @@ namespace Enzivor.Api.Controllers
             )).ToList();
 
             return Ok(landfills);
+        }
+
+        [HttpPost("promote")]
+        public async Task<IActionResult> PromoteDetectionsToSites(
+            [FromQuery] double? minConfidence = null,
+            [FromQuery] LandfillCategory? category = null,
+            CancellationToken ct = default)
+        {
+            var createdCount = await _siteService.CreateSitesFromUnlinkedDetectionsAsync(
+                minConfidence, category, ct
+            );
+
+            if (createdCount == 0)
+                return Ok(new { created = 0, message = "No new sites were created. All detections are already linked." });
+
+            return Ok(new { created = createdCount, message = $"{createdCount} new landfill sites were created." });
         }
 
         // -------------------------

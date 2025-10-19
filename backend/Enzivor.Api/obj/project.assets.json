@@ -3358,23 +3358,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mrdja\\.nuget\\packages\\": {},
-    "D:\\Visual Studio Instalacija\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Viktor\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Enzivor.Api.csproj",
+      "projectUniqueName": "C:\\Users\\Viktor\\OneDrive\\Desktop\\Envizor\\backend\\Enzivor.Api\\Enzivor.Api.csproj",
       "projectName": "Enzivor.Api",
-      "projectPath": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Enzivor.Api.csproj",
-      "packagesPath": "C:\\Users\\mrdja\\.nuget\\packages\\",
-      "outputPath": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\obj\\",
+      "projectPath": "C:\\Users\\Viktor\\OneDrive\\Desktop\\Envizor\\backend\\Enzivor.Api\\Enzivor.Api.csproj",
+      "packagesPath": "C:\\Users\\Viktor\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Viktor\\OneDrive\\Desktop\\Envizor\\backend\\Enzivor.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Visual Studio Instalacija\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\mrdja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Viktor\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
