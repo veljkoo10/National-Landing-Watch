@@ -360,6 +360,18 @@
           }
         }
       }
+    },
+    "/api/statistics/landfill-stats": {
+      "get": {
+        "tags": [
+          "Statistics"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {

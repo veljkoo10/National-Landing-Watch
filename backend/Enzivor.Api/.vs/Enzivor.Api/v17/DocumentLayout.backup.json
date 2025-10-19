@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\controllers\\statisticscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:controllers\\statisticscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\repositories\\implementations\\landfillsiterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:repositories\\implementations\\landfillsiterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -75,10 +83,6 @@
       "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:models\\dtos\\processproductionrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\controllers\\statisticscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:controllers\\statisticscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\controllers\\landfilldetectionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:controllers\\landfilldetectionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -115,10 +119,6 @@
       "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:services\\interfaces\\ilandfillsiteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|d:\\tiac - envizor\\backend\\enzivor.api\\models\\enums\\serbianregion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3F9F6AEE-7FA9-45FE-BB7C-C2C634B0842C}|Enzivor.Api.csproj|solutionrelative:models\\enums\\serbianregion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -141,64 +141,12 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 737,
+          "DockedWidth": 1001,
           "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "LandfillsController.cs",
-              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\LandfillsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\LandfillsController.cs",
-              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\LandfillsController.cs",
-              "RelativeToolTip": "Controllers\\LandfillsController.cs",
-              "ViewState": "AgIAAHsAAAAAAAAAAADwv5cAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T22:05:45.647Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ILandfillSiteRepository.cs",
-              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Repositories\\Interfaces\\ILandfillSiteRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Interfaces\\ILandfillSiteRepository.cs",
-              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Repositories\\Interfaces\\ILandfillSiteRepository.cs",
-              "RelativeToolTip": "Repositories\\Interfaces\\ILandfillSiteRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T21:01:31.893Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "LandfillSiteRepository.cs",
-              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Repositories\\Implementations\\LandfillSiteRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Implementations\\LandfillSiteRepository.cs",
-              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Repositories\\Implementations\\LandfillSiteRepository.cs",
-              "RelativeToolTip": "Repositories\\Implementations\\LandfillSiteRepository.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAYwCAAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T21:02:00.086Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "RegionStatisticsService.cs",
-              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\Implementations\\RegionStatisticsService.cs",
-              "RelativeDocumentMoniker": "Services\\Implementations\\RegionStatisticsService.cs",
-              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\Implementations\\RegionStatisticsService.cs",
-              "RelativeToolTip": "Services\\Implementations\\RegionStatisticsService.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAADwv5QAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T17:11:45.959Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "RegionsController.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\RegionsController.cs",
               "RelativeDocumentMoniker": "Controllers\\RegionsController.cs",
@@ -206,12 +154,11 @@
               "RelativeToolTip": "Controllers\\RegionsController.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAwwCoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T22:06:58.904Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-15T22:06:58.904Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "MonitoringsController.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\MonitoringsController.cs",
               "RelativeDocumentMoniker": "Controllers\\MonitoringsController.cs",
@@ -219,12 +166,84 @@
               "RelativeToolTip": "Controllers\\MonitoringsController.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAAUwEUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T12:28:48.604Z",
+              "WhenOpened": "2025-10-17T12:28:48.604Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "StatisticsController.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\StatisticsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\StatisticsController.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\StatisticsController.cs",
+              "RelativeToolTip": "Controllers\\StatisticsController.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAADwv0oAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T16:50:41.12Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "RegionStatisticsService.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\Implementations\\RegionStatisticsService.cs",
+              "RelativeDocumentMoniker": "Services\\Implementations\\RegionStatisticsService.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\Implementations\\RegionStatisticsService.cs",
+              "RelativeToolTip": "Services\\Implementations\\RegionStatisticsService.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAADwv5QAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T17:11:45.959Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LandfillSiteRepository.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Repositories\\Implementations\\LandfillSiteRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Implementations\\LandfillSiteRepository.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Repositories\\Implementations\\LandfillSiteRepository.cs",
+              "RelativeToolTip": "Repositories\\Implementations\\LandfillSiteRepository.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAYwCAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T21:02:00.086Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "appsettings.Development.json",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\appsettings.Development.json",
+              "RelativeToolTip": "appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-15T18:49:53.648Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ILandfillSiteRepository.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Repositories\\Interfaces\\ILandfillSiteRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Interfaces\\ILandfillSiteRepository.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Repositories\\Interfaces\\ILandfillSiteRepository.cs",
+              "RelativeToolTip": "Repositories\\Interfaces\\ILandfillSiteRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T21:01:31.893Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LandfillsController.cs",
+              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\LandfillsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\LandfillsController.cs",
+              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\LandfillsController.cs",
+              "RelativeToolTip": "Controllers\\LandfillsController.cs",
+              "ViewState": "AgIAAHsAAAAAAAAAAADwv5cAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T22:05:45.647Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "LandfillSiteService.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\Implementations\\LandfillSiteService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\LandfillSiteService.cs",
@@ -232,12 +251,11 @@
               "RelativeToolTip": "Services\\Implementations\\LandfillSiteService.cs",
               "ViewState": "AgIAADIAAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T21:20:34.531Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-15T21:20:34.531Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -245,12 +263,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAAAAB0AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T13:50:05.288Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T13:50:05.288Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "ProductionLandfillProcessor.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\Implementations\\ProductionLandfillProcessor.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\ProductionLandfillProcessor.cs",
@@ -258,12 +275,11 @@
               "RelativeToolTip": "Services\\Implementations\\ProductionLandfillProcessor.cs",
               "ViewState": "AgIAAB4BAAAAAAAAAAAAADIBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T08:58:06.42Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-17T08:58:06.42Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "LandfillDetectionRepository.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Repositories\\Implementations\\LandfillDetectionRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Implementations\\LandfillDetectionRepository.cs",
@@ -271,12 +287,11 @@
               "RelativeToolTip": "Repositories\\Implementations\\LandfillDetectionRepository.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAQwCIAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T20:57:51.425Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-15T20:57:51.425Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
@@ -284,12 +299,11 @@
               "RelativeToolTip": "Data\\AppDbContext.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAkwCQAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T18:47:49.469Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-15T18:47:49.469Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "LandfillSite.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Domain\\LandfillSite.cs",
               "RelativeDocumentMoniker": "Models\\Domain\\LandfillSite.cs",
@@ -297,12 +311,11 @@
               "RelativeToolTip": "Models\\Domain\\LandfillSite.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAuwCUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T18:36:04.351Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-15T18:36:04.351Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "RegionDto.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Dtos\\RegionDto.cs",
               "RelativeDocumentMoniker": "Models\\Dtos\\RegionDto.cs",
@@ -310,12 +323,11 @@
               "RelativeToolTip": "Models\\Dtos\\RegionDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T15:41:16.456Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T15:41:16.456Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "MonitoringDto.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Dtos\\MonitoringDto.cs",
               "RelativeDocumentMoniker": "Models\\Dtos\\MonitoringDto.cs",
@@ -323,12 +335,11 @@
               "RelativeToolTip": "Models\\Dtos\\MonitoringDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T18:56:20.231Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T18:56:20.231Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "IRegionStatisticsService.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\Interfaces\\IRegionStatisticsService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IRegionStatisticsService.cs",
@@ -336,12 +347,11 @@
               "RelativeToolTip": "Services\\Interfaces\\IRegionStatisticsService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T17:09:16.903Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T17:09:16.903Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "ShowLandfillDto.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Dtos\\ShowLandfillDto.cs",
               "RelativeDocumentMoniker": "Models\\Dtos\\ShowLandfillDto.cs",
@@ -349,12 +359,11 @@
               "RelativeToolTip": "Models\\Dtos\\ShowLandfillDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T18:39:58.175Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T18:39:58.175Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "ProcessProductionRequest.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Dtos\\ProcessProductionRequest.cs",
               "RelativeDocumentMoniker": "Models\\Dtos\\ProcessProductionRequest.cs",
@@ -362,25 +371,11 @@
               "RelativeToolTip": "Models\\Dtos\\ProcessProductionRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T18:36:18.993Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T18:36:18.993Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 18,
-              "Title": "StatisticsController.cs",
-              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\StatisticsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\StatisticsController.cs",
-              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\StatisticsController.cs",
-              "RelativeToolTip": "Controllers\\StatisticsController.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAkwDoAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T16:50:41.12Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
               "Title": "LandfillDto.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Dtos\\LandfillDto.cs",
               "RelativeDocumentMoniker": "Models\\Dtos\\LandfillDto.cs",
@@ -388,12 +383,11 @@
               "RelativeToolTip": "Models\\Dtos\\LandfillDto.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAuwCwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T14:04:34.556Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T14:04:34.556Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "LandfillDetectionsController.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Controllers\\LandfillDetectionsController.cs",
               "RelativeDocumentMoniker": "Controllers\\LandfillDetectionsController.cs",
@@ -405,7 +399,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "LandfillDetection.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Domain\\LandfillDetection.cs",
               "RelativeDocumentMoniker": "Models\\Domain\\LandfillDetection.cs",
@@ -417,7 +411,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "LandfillCategory.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Enums\\LandfillCategory.cs",
               "RelativeDocumentMoniker": "Models\\Enums\\LandfillCategory.cs",
@@ -429,7 +423,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "CurationStatus.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Models\\Enums\\CurationStatus.cs",
               "RelativeDocumentMoniker": "Models\\Enums\\CurationStatus.cs",
@@ -441,7 +435,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "MethaneCalculationService.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\Implementations\\MethaneCalculationService.cs",
               "RelativeDocumentMoniker": "Services\\Implementations\\MethaneCalculationService.cs",
@@ -453,7 +447,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "IMethaneCalculationService.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\Interfaces\\IMethaneCalculationService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IMethaneCalculationService.cs",
@@ -465,7 +459,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "IProductionLandfillProcessor.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\Interfaces\\IProductionLandfillProcessor.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IProductionLandfillProcessor.cs",
@@ -477,7 +471,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "ILandfillDetectionRepository.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Repositories\\Interfaces\\ILandfillDetectionRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\ILandfillDetectionRepository.cs",
@@ -489,7 +483,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "ILandfillSiteService.cs",
               "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\Services\\Interfaces\\ILandfillSiteService.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\ILandfillSiteService.cs",
@@ -498,18 +492,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-15T21:20:11.497Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "appsettings.Development.json",
-              "ToolTip": "D:\\TIAC - Envizor\\backend\\Enzivor.Api\\appsettings.Development.json",
-              "RelativeToolTip": "appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-15T18:49:53.648Z"
             },
             {
               "$type": "Document",
@@ -562,7 +544,7 @@
           ]
         },
         {
-          "DockedWidth": 433,
+          "DockedWidth": 169,
           "SelectedChildIndex": -1,
           "Children": [
             {

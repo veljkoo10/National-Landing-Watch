@@ -164,5 +164,32 @@ namespace Enzivor.Api.Repositories.Implementations
                 return (r.RegionTag, perCapita);
             }).ToList();
         }
+
+        public async Task<IReadOnlyList<LandfillStatRow>> GetLandfillStatsAsync(CancellationToken ct = default)
+        {
+            const double BULK_DENSITY_T_PER_M3 = 0.6;
+
+            var rows = await _db.LandfillSites
+                .AsNoTracking()
+                .Select(s => new LandfillStatRow
+                {
+                    SiteId = s.Id,
+                    SiteName = s.Name,
+                    RegionTag = s.RegionTag,
+                    Year = s.StartYear ?? 0,
+                    WasteTons = s.EstimatedMSW ?? 0,
+                    Ch4Tons = s.EstimatedCH4TonsPerYear ?? 0,
+                    VolumeM3 = (s.EstimatedMSW ?? 0) > 0
+                                ? (s.EstimatedMSW!.Value / BULK_DENSITY_T_PER_M3)
+                                : 0
+                })
+                .OrderBy(r => r.Year)
+                .ThenBy(r => r.SiteName)
+                .ToListAsync(ct);
+
+            return rows;
+        }
     }
+
+
 }

@@ -3,6 +3,16 @@ using Enzivor.Api.Models.Enums;
 
 namespace Enzivor.Api.Repositories.Interfaces
 {
+    public sealed class LandfillStatRow
+    {
+        public int SiteId { get; set; }
+        public string? SiteName { get; set; }
+        public string? RegionTag { get; set; }
+        public int Year { get; set; }
+        public double VolumeM3 { get; set; }
+        public double WasteTons { get; set; }
+        public double Ch4Tons { get; set; }
+    }
     public interface ILandfillSiteRepository
     {
         Task<List<LandfillSite>> GetAllAsync(CancellationToken ct = default);
@@ -25,6 +35,6 @@ namespace Enzivor.Api.Repositories.Interfaces
         Task<List<(int Year, int LandfillCount)>> GetLandfillGrowthOverYearsAsync(CancellationToken ct = default);
         Task<List<(string RegionTag, double EmissionsPerCapita)>> GetEmissionsPerCapitaAsync(Dictionary<string, int> regionPopulations, CancellationToken ct = default);
 
-
+        Task<IReadOnlyList<LandfillStatRow>> GetLandfillStatsAsync(CancellationToken ct = default);
     }
 }
