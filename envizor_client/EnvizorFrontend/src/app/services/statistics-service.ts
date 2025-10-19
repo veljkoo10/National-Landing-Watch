@@ -71,8 +71,4 @@ export class StatisticsService extends BaseService {
   getEmissionsPerCapita(): Observable<EmissionsPerCapitaDto[]> {
     return this.http.get<EmissionsPerCapitaDto[]>(`${this.statsUrl}/emissions-per-capita`);
   }
-
-  getLandfillStats(): Observable<TableRow[]> {
-    return this.http.get<TableRow[]>(`${this.statsUrl}/landfill-stats`);
-  }
 }

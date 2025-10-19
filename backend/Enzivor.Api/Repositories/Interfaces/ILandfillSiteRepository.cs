@@ -1,4 +1,5 @@
 ﻿using Enzivor.Api.Models.Domain;
+using Enzivor.Api.Models.Dtos;
 using Enzivor.Api.Models.Enums;
 
 namespace Enzivor.Api.Repositories.Interfaces
@@ -31,7 +32,7 @@ namespace Enzivor.Api.Repositories.Interfaces
         Task<List<(LandfillCategory Category, int Count)>> GetLandfillTypesAsync(CancellationToken ct = default);
         Task<List<(int Year, double TotalCH4)>> GetCh4EmissionsOverTimeAsync(CancellationToken ct = default);
         Task<List<LandfillSite>> GetTopLargestLandfillsAsync(int count, CancellationToken ct = default);
-        Task<(string RegionTag, double TotalCH4)> GetMostImpactedRegionAsync(CancellationToken ct = default);
+        Task<MostImpactedRegionFullDto> GetMostImpactedRegionAsync(CancellationToken ct = default);
         Task<List<(int Year, int LandfillCount)>> GetLandfillGrowthOverYearsAsync(CancellationToken ct = default);
         Task<List<(string RegionTag, double EmissionsPerCapita)>> GetEmissionsPerCapitaAsync(Dictionary<string, int> regionPopulations, CancellationToken ct = default);
 

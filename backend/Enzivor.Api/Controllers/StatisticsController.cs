@@ -20,15 +20,7 @@ namespace Enzivor.Api.Controllers
         private sealed record LandfillTypeDto(string name, int count);
         private sealed record Ch4OverTimeDto(List<int> years, List<double> ch4ByYear);
         private sealed record TopLandfillDto(string name, string region, double? areaM2, int? yearCreated);
-        private sealed record MostImpactedRegionFullDto(
-          string region,
-          double totalCh4,
-          double totalCo2eq,
-          double ch4PerKm2,
-          double co2eqPerKm2,
-          int population,
-          double areaKm2
-      );
+       
         private sealed record GrowthRowDto(int year, int landfillCount);
 
         private sealed record LandfillStatRowDto(
@@ -53,7 +45,6 @@ namespace Enzivor.Api.Controllers
         public async Task<IActionResult> GetTotalWasteByRegion(CancellationToken ct = default)
         {
             var rows = await _siteRepository.GetTotalWasteByRegionAsync(ct);
-            // rows is (RegionTag, TotalWaste) or similar
             var payload = rows.Select(r => new WasteByRegionDto(
                 name: r.RegionTag,               
                 totalWaste: Math.Round(r.TotalWaste, 2)
@@ -102,50 +93,7 @@ namespace Enzivor.Api.Controllers
         [HttpGet("most-impacted")]
         public async Task<IActionResult> GetMostImpactedRegion(CancellationToken ct = default)
         {
-            var r = await _siteRepository.GetMostImpactedRegionAsync(ct);
-            var regionTag = r.RegionTag ?? "Unknown";
-            var totalCh4 = Math.Round(r.TotalCH4, 2);
-
-            // Keep these dictionaries here (or move to DB/Config later)
-            var regionPopulations = new Dictionary<string, int>
-    {
-        { "Vojvodina", 1900000 },
-        { "Beograd", 1675000 },
-        { "Zapadna Srbija", 1200000 },
-        { "Šumadija i Pomoravlje", 1000000 },
-        { "Istočna Srbija", 800000 },
-        { "Južna Srbija", 900000 }
-    };
-
-            // Example areas in km² (adjust with your authoritative values)
-            var regionAreas = new Dictionary<string, double>
-    {
-        { "Vojvodina", 21500 },
-        { "Beograd", 3226 },
-        { "Zapadna Srbija", 26500 },
-        { "Šumadija i Pomoravlje", 12600 },
-        { "Istočna Srbija", 19300 },
-        { "Južna Srbija", 19000 }
-    };
-
-            var population = regionPopulations.TryGetValue(regionTag, out var pop) ? pop : 0;
-            var areaKm2 = regionAreas.TryGetValue(regionTag, out var area) ? area : 0d;
-
-            const double CH4_GWP100 = 28.0; // change if your methodology differs
-            var totalCo2eq = Math.Round(totalCh4 * CH4_GWP100, 2);
-            var ch4PerKm2 = areaKm2 > 0 ? Math.Round(totalCh4 / areaKm2, 2) : 0;
-            var co2eqPerKm2 = areaKm2 > 0 ? Math.Round(totalCo2eq / areaKm2, 2) : 0;
-
-            var payload = new MostImpactedRegionFullDto(
-                region: regionTag,
-                totalCh4: totalCh4,
-                totalCo2eq: totalCo2eq,
-                ch4PerKm2: ch4PerKm2,
-                co2eqPerKm2: co2eqPerKm2,
-                population: population,
-                areaKm2: areaKm2
-            );
-
+            var payload = await _siteRepository.GetMostImpactedRegionAsync(ct);
             return Ok(payload);
         }
 
@@ -183,24 +131,6 @@ namespace Enzivor.Api.Controllers
             return Ok(payload);
         }
 
-        [HttpGet("landfill-stats")]
-        public async Task<IActionResult> GetLandfillStats(CancellationToken ct = default)
-        {
-            const double CH4_GWP100 = 28.0;
-
-            var rows = await _siteRepository.GetLandfillStatsAsync(ct);
-
-            var payload = rows.Select(r => new LandfillStatRowDto(
-                landfillName: string.IsNullOrWhiteSpace(r.SiteName) ? $"Landfill {r.SiteId}" : r.SiteName!,
-                regionName: r.RegionTag ?? "Unknown",
-                year: r.Year,
-                volumeM3: Math.Round(r.VolumeM3, 2),
-                wasteTons: Math.Round(r.WasteTons, 2),
-                ch4Tons: Math.Round(r.Ch4Tons, 2),
-                co2eqTons: Math.Round(r.Ch4Tons * CH4_GWP100, 2)
-            )).ToList();
-
-            return Ok(payload);
-        }
+       
     }
 }

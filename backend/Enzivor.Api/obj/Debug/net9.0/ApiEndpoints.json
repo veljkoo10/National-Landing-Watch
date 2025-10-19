@@ -203,16 +203,6 @@
   },
   {
     "ContainingType": "Enzivor.Api.Controllers.StatisticsController",
-    "Method": "GetLandfillStats",
-    "RelativePath": "api/statistics/landfill-stats",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Enzivor.Api.Controllers.StatisticsController",
     "Method": "GetLandfillTypes",
     "RelativePath": "api/statistics/landfill-types",
     "HttpMethod": "GET",

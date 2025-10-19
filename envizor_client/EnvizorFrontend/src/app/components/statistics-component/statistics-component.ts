@@ -1,28 +1,20 @@
-// statistics-component.ts
 import {
   Component,
   OnInit,
-  OnDestroy,
   ViewChild,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '../../pipes/translation-pipe';
-
-// Highcharts Angular (v5 standalone component)
-import * as HighchartsLib from 'highcharts';
+import * as Highcharts from 'highcharts';
 import { HighchartsChartComponent } from 'highcharts-angular';
-
-// Angular Material
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-
-// Service + DTOs
 import {
   StatisticsService,
   WasteByRegionDto,
@@ -30,17 +22,16 @@ import {
   Ch4OverTimeDto,
   TopLandfillDto,
   MostImpactedRegionFullDto,
+  LandfillService,
 } from '../../services';
+import { of, forkJoin } from 'rxjs';
+import { takeUntil, catchError, map, switchMap } from 'rxjs/operators';
+import { MonitoringService } from '../../services/monitoring-service';
 
-// RxJS
-import { Subject, of } from 'rxjs';
-import { takeUntil, catchError, map } from 'rxjs/operators';
-
-// ===== View models that match your HTML =====
 type TopLandfillView = {
   name: string;
   region: string;
-  totalWaste: number; // mapped from areaM2 for now (UI expects totalWaste)
+  totalWaste: number;
   areaM2?: number;
   yearCreated?: number;
 };
@@ -71,7 +62,7 @@ type TableRow = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    HighchartsChartComponent, // required even if provided globally
+    HighchartsChartComponent,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -83,29 +74,15 @@ type TableRow = {
   templateUrl: './statistics-component.html',
   styleUrls: ['./statistics-component.css'],
 })
-export class StatisticsComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+export class StatisticsComponent implements OnInit {
+  chartRegionWaste: Highcharts.Options = { accessibility: { enabled: false }, series: [] };
+  chartSpeciesPie: Highcharts.Options = { accessibility: { enabled: false }, series: [] };
+  chartEmissionsTrend: Highcharts.Options = { accessibility: { enabled: false }, series: [] };
+  chartPrediction: Highcharts.Options = { accessibility: { enabled: false }, series: [] };
 
-  // ===== Highcharts options + update flags =====
-  chartRegionWaste: HighchartsLib.Options = { accessibility: { enabled: false }, series: [] };
-  chartSpeciesPie: HighchartsLib.Options = { accessibility: { enabled: false }, series: [] };
-  chartEmissionsTrend: HighchartsLib.Options = { accessibility: { enabled: false }, series: [] };
-  chartPrediction: HighchartsLib.Options = { accessibility: { enabled: false }, series: [] };
-
-  updateRegionWaste = false;
-  updateTypes = false;
-  updateEmissions = false;
-  updatePrediction = false;
-
-  // ===== Cards data =====
   topLargestLandfills: TopLandfillView[] = [];
   mostPollutedRegion?: MostImpactedView;
 
-  // ===== Table =====
   displayedColumns: string[] = [
     'landfill',
     'region',
@@ -119,221 +96,106 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  constructor(
+    private statisticsService: StatisticsService,
+    private landfillService: LandfillService,
+    private monitoringService: MonitoringService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  constructor(private statisticsService: StatisticsService, private cdr: ChangeDetectorRef) {}
-
-  // ===== utils =====
-  private n = (v: unknown, d = 0) => {
-    const num = Number(v);
-    return Number.isFinite(num) ? num : d;
-  };
-
-  /** Replace chart options and flip the update flag (also markForCheck for OnPush) */
-  private setChart(
-    target: 'RegionWaste' | 'Types' | 'Emissions' | 'Prediction',
-    opts: HighchartsLib.Options
-  ) {
-    switch (target) {
-      case 'RegionWaste':
-        this.chartRegionWaste = opts;
-        this.updateRegionWaste = !this.updateRegionWaste;
-        break;
-      case 'Types':
-        this.chartSpeciesPie = opts;
-        this.updateTypes = !this.updateTypes;
-        break;
-      case 'Emissions':
-        this.chartEmissionsTrend = opts;
-        this.updateEmissions = !this.updateEmissions;
-        break;
-      case 'Prediction':
-        this.chartPrediction = opts;
-        this.updatePrediction = !this.updatePrediction;
-        break;
-    }
-    this.cdr.markForCheck();
-  }
-
-  /** Simple linear projection on (year, value) to produce +5 years */
-  private linearProjection(xs: number[], ys: number[], horizon = 5) {
-    const n = Math.min(xs.length, ys.length);
-    if (n < 2) return { labels: xs.map(String), hist: ys, proj: [] as number[] };
-
-    const x = xs.slice(0, n);
-    const y = ys.slice(0, n);
-    const sum = (a: number[]) => a.reduce((s, v) => s + v, 0);
-    const sumX = sum(x);
-    const sumY = sum(y);
-    const sumXY = x.reduce((s, v, i) => s + v * y[i], 0);
-    const sumXX = x.reduce((s, v) => s + v * v, 0);
-    const denom = n * sumXX - sumX * sumX || 1;
-    const b = (n * sumXY - sumX * sumY) / denom;
-    const a = (sumY - b * sumX) / n;
-
-    const last = x[n - 1];
-    const fut = Array.from({ length: horizon }, (_, i) => last + i + 1);
-    const proj = fut.map((yr) => +(a + b * yr).toFixed(2));
-    const labels = [...x.map(String), ...fut.map(String)];
-    return { labels, hist: y, proj };
-  }
-
-  // ===== init =====
   ngOnInit(): void {
-    // --- Chart 1: total waste by region ---
+    // Chart 1: Total waste by region
     this.statisticsService
       .getTotalWasteByRegion()
       .pipe(
-        takeUntil(this.destroy$),
         map((rows) => (Array.isArray(rows) ? rows : [])),
         catchError(() => of([] as WasteByRegionDto[]))
       )
       .subscribe((rows) => {
-        const categories = rows.map((r) => r?.name ?? 'N/A');
-        const values = rows.map((r) => this.n(r?.totalWaste));
-        this.setChart('RegionWaste', {
+        this.chartRegionWaste = {
           accessibility: { enabled: false },
           chart: { type: 'column' },
-          title: { text: undefined },
-          xAxis: { categories },
+          xAxis: { categories: rows.map((r) => r?.name ?? 'N/A') },
           yAxis: { title: { text: 't' } },
           tooltip: { pointFormat: '{series.name}: <b>{point.y:.0f} t</b>' },
-          credits: { enabled: false },
-          series: [{ type: 'column', name: 'Waste (t)', data: values }],
-        });
+          series: [
+            {
+              type: 'column',
+              name: 'Waste (t)',
+              data: rows.map((r) => Number(r?.totalWaste ?? 0)),
+            },
+          ],
+        };
+        this.cdr.markForCheck();
       });
 
-    // --- Chart 2: landfill types (pie) ---
+    // Chart 2: Landfill types (pie)
     this.statisticsService
       .getLandfillTypes()
       .pipe(
-        takeUntil(this.destroy$),
         map((rows) => (Array.isArray(rows) ? rows : [])),
         catchError(() => of([] as LandfillTypeDto[]))
       )
       .subscribe((rows) => {
-        this.setChart('Types', {
+        this.chartSpeciesPie = {
           accessibility: { enabled: false },
           chart: { type: 'pie' },
-          title: { text: undefined },
-          tooltip: { pointFormat: '<b>{point.y:.0f}</b>' },
-          credits: { enabled: false },
           series: [
             {
               type: 'pie',
               name: 'Count',
-              data: rows.map((r) => ({ name: r?.name ?? 'N/A', y: this.n(r?.count) })),
+              data: rows.map((r) => ({ name: r?.name ?? 'N/A', y: Number(r?.count ?? 0) })),
             },
           ],
-        });
-      });
-
-    // --- CH4 Over Time & Prediction (single source, two charts) ---
-    this.statisticsService
-      .getCh4EmissionsOverTime()
-      .pipe(
-        takeUntil(this.destroy$),
-        catchError(() => of({ years: [], ch4ByYear: [] } as Ch4OverTimeDto)),
-        map((res) => {
-          const rawYears = Array.isArray(res?.years) ? res.years : [];
-          const rawVals = Array.isArray(res?.ch4ByYear) ? res.ch4ByYear : [];
-
-          // Fallback: replace invalid or 0 years with last valid year, else 2024
-          let fallback = 2024;
-          const validYears = rawYears.map(Number).filter((y) => Number.isFinite(y) && y > 0);
-          if (validYears.length) fallback = Math.max(...validYears);
-
-          const xs = rawYears.map((v) => {
-            const n = Number(v);
-            return Number.isFinite(n) && n > 0 ? n : fallback;
-          });
-          const ys = rawVals.map((v) => this.n(v));
-          const n = Math.min(xs.length, ys.length);
-
-          return { xs: xs.slice(0, n), ys: ys.slice(0, n) };
-        })
-      )
-      .subscribe(({ xs, ys }) => {
-        // 3a) Emissions Over Time
-        const categories = xs.length ? xs.map(String) : ['2022', '2023', '2024'];
-        const seriesData = xs.length ? ys : [0, 0, 0];
-
-        this.setChart('Emissions', {
-          accessibility: { enabled: false },
-          chart: { type: 'line' },
-          title: { text: undefined },
-          xAxis: { categories },
-          yAxis: { title: { text: 'CH₄ (t)' }, min: 0 },
-          tooltip: { shared: true, valueDecimals: 0 },
-          credits: { enabled: false },
-          series: [{ type: 'line', name: 'CH₄', data: seriesData }],
-        });
-
-        // 3b) Prediction from same data
-        if (xs.length < 2) {
-          this.setChart('Prediction', {
-            accessibility: { enabled: false },
-            chart: { type: 'line' },
-            title: { text: undefined },
-            xAxis: { categories: [] },
-            yAxis: { title: { text: 'CH₄ (t)' } },
-            series: [{ type: 'line', name: 'Projected CH₄', data: [] }],
-            subtitle: { text: 'Not enough data to project (need ≥ 2 years).' },
-            credits: { enabled: false },
-          });
-        } else {
-          const { labels, hist, proj } = this.linearProjection(xs, ys, 5);
-          const lastHist = hist.length ? hist[hist.length - 1] : null;
-
-          this.setChart('Prediction', {
-            accessibility: { enabled: false },
-            chart: { type: 'line' },
-            title: { text: undefined },
-            xAxis: { categories: labels },
-            yAxis: { title: { text: 'CH₄ (t)' }, min: 0 },
-            tooltip: { shared: true },
-            credits: { enabled: false },
-            series: [
-              { type: 'line', name: 'Historical CH₄', data: hist },
-              {
-                type: 'line',
-                name: 'Projected CH₄',
-                data: [...Array(Math.max(hist.length - 1, 0)).fill(null), lastHist, ...proj],
-                ...({ dashStyle: 'ShortDash' } as any),
-              },
-            ],
-          });
-        }
-      });
-
-    // --- Section 2: top 3 largest (map areaM2 -> totalWaste for UI) ---
-    this.statisticsService
-      .getTop3LargestLandfills()
-      .pipe(
-        takeUntil(this.destroy$),
-        catchError(() => of([] as TopLandfillDto[])),
-        map((rows) =>
-          (Array.isArray(rows) ? rows : []).map(
-            (r) =>
-              ({
-                name: r?.name ?? 'N/A',
-                region: r?.region ?? 'Unknown',
-                totalWaste: this.n(r?.areaM2), // HTML expects 't', but we show 'm²' in template
-                areaM2: r?.areaM2,
-                yearCreated: r?.yearCreated,
-              } as TopLandfillView)
-          )
-        )
-      )
-      .subscribe((rows) => {
-        this.topLargestLandfills = rows;
+        };
         this.cdr.markForCheck();
       });
 
-    // --- Section 2: most impacted (full DTO) ---
+    // Chart 3: CH4 emissions over time & prediction
+    this.statisticsService
+      .getCh4EmissionsOverTime()
+      .pipe(
+        catchError(() => of({ years: [], ch4ByYear: [] } as Ch4OverTimeDto)),
+        map((res) => {
+          const years = Array.isArray(res?.years) ? res.years.map(Number) : [];
+          const ch4 = Array.isArray(res?.ch4ByYear) ? res.ch4ByYear.map(Number) : [];
+          return { years, ch4 };
+        })
+      )
+      .subscribe(({ years, ch4 }) => {
+        this.chartEmissionsTrend = {
+          accessibility: { enabled: false },
+          chart: { type: 'line' },
+          xAxis: { categories: years.map(String) },
+          yAxis: { title: { text: 'CH₄ (t)' } },
+          series: [{ type: 'line', name: 'CH₄', data: ch4 }],
+        };
+        // Prediction chart logic can be added here if needed
+        this.cdr.markForCheck();
+      });
+
+    // Top 3 largest landfills
+    this.statisticsService
+      .getTop3LargestLandfills()
+      .pipe(
+        map((rows) => (Array.isArray(rows) ? rows : [])),
+        catchError(() => of([] as TopLandfillDto[]))
+      )
+      .subscribe((rows) => {
+        this.topLargestLandfills = rows.map((r) => ({
+          name: r?.name ?? 'N/A',
+          region: r?.region ?? 'Unknown',
+          totalWaste: Number(r?.areaM2 ?? 0),
+          areaM2: r?.areaM2,
+          yearCreated: r?.yearCreated,
+        }));
+        this.cdr.markForCheck();
+      });
+
+    // Most impacted region
     this.statisticsService
       .getMostImpactedRegion()
       .pipe(
-        takeUntil(this.destroy$),
         catchError(() =>
           of({
             region: 'Unknown',
@@ -351,14 +213,56 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck();
       });
 
-    // --- Section 4: table (stats endpoint) ---
-    this.statisticsService
-      .getLandfillStats()
+    // Table: all landfills (replace with your actual data logic)
+    this.landfillService
+      .getAllLandfills()
       .pipe(
-        takeUntil(this.destroy$),
-        catchError(() => of([] as TableRow[]))
+        // takeUntil(this.destroy$),
+        catchError(() => of([])), // no landfills = empty table
+        switchMap((landfills) => {
+          if (!Array.isArray(landfills) || landfills.length === 0) {
+            return of([] as TableRow[]);
+          }
+
+          // For each landfill, get its latest monitoring (in parallel)
+          const perLandfill$ = landfills.map((lf: any) =>
+            this.monitoringService.getLatestMonitoring(lf.id).pipe(
+              catchError(() => of(null)),
+              map((mon: any | null): TableRow => {
+                // Prefer monitoring values; fall back to landfill estimates
+                const landfillName = lf?.name ?? `Landfill ${lf?.id ?? ''}`;
+                const regionName = lf?.regionKey ?? '—';
+
+                const year =
+                  mon?.year ??
+                  this.toYear(mon?.timestamp || mon?.date || mon?.measuredAt || 0) ??
+                  this.toYear(lf?.startYear || 0);
+
+                const volumeM3 = Number(mon?.volumeM3 ?? lf?.estimatedVolumeM3 ?? 0);
+                const wasteTons = Number(mon?.wasteTons ?? lf?.estimatedMSW ?? 0);
+                const ch4Tons = Number(mon?.ch4Tons ?? lf?.estimatedCH4TonsPerYear ?? 0);
+                // If CO₂eq not present, approximate from CH₄ using GWP100 ≈ 28
+                const co2eqTons = Number(
+                  mon?.co2eqTons ?? (Number.isFinite(ch4Tons) ? ch4Tons * 28 : 0)
+                );
+
+                return {
+                  landfillName,
+                  regionName,
+                  year: this.toYear(year),
+                  volumeM3: Number.isFinite(volumeM3) ? volumeM3 : 0,
+                  wasteTons: Number.isFinite(wasteTons) ? wasteTons : 0,
+                  ch4Tons: Number.isFinite(ch4Tons) ? ch4Tons : 0,
+                  co2eqTons: Number.isFinite(co2eqTons) ? co2eqTons : 0,
+                };
+              })
+            )
+          );
+
+          return forkJoin(perLandfill$);
+        })
       )
-      .subscribe((rows) => {
+      .subscribe((rows: TableRow[]) => {
         this.dataSource = new MatTableDataSource<TableRow>(rows ?? []);
 
         // Sorting: case-insensitive for text, numeric for numbers
@@ -383,7 +287,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
           }
         };
 
-        // Filter: search across all columns
+        // Filter across all columns
         this.dataSource.filterPredicate = (data: TableRow, raw: string) => {
           const f = (raw ?? '').trim().toLowerCase();
           if (!f) return true;
@@ -397,12 +301,21 @@ export class StatisticsComponent implements OnInit, OnDestroy {
             .includes(f);
         };
 
-        // Hook up paginator/sort
         if (this.paginator) this.dataSource.paginator = this.paginator;
         if (this.sort) this.dataSource.sort = this.sort;
 
         this.cdr.markForCheck();
       });
+  }
+  private toYear(v: unknown, fallback = 2024): number {
+    const n = Number(v);
+    if (Number.isFinite(n) && n > 0 && n < 3000) return n;
+    // string date -> year
+    if (typeof v === 'string') {
+      const d = new Date(v);
+      if (!isNaN(d.getTime())) return d.getFullYear();
+    }
+    return fallback;
   }
 
   applyFilter(value: string) {
