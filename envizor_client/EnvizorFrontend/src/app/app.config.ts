@@ -7,7 +7,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 
-import * as Highcharts from 'highcharts'; // Highcharts 12.x
+import * as Highcharts from 'highcharts';
 import { provideHighcharts } from 'highcharts-angular';
 
 export const appConfig: ApplicationConfig = {

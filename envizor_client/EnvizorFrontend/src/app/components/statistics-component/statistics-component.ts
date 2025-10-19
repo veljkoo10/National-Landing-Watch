@@ -310,7 +310,6 @@ export class StatisticsComponent implements OnInit {
   private toYear(v: unknown, fallback = 2024): number {
     const n = Number(v);
     if (Number.isFinite(n) && n > 0 && n < 3000) return n;
-    // string date -> year
     if (typeof v === 'string') {
       const d = new Date(v);
       if (!isNaN(d.getTime())) return d.getFullYear();
