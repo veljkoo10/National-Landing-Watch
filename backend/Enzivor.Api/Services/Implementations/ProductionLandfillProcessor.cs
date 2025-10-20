@@ -7,17 +7,17 @@ namespace Enzivor.Api.Services.Implementations
     public class ProductionLandfillProcessor : IProductionLandfillProcessor
     {
 
-        private readonly IMethaneCalculationService _methaneService;
+        private readonly ICalculationService _calculationService;
 
-        public ProductionLandfillProcessor(IMethaneCalculationService methaneService)
+        public ProductionLandfillProcessor(ICalculationService calculationService)
         {
-            _methaneService = methaneService;
+            _calculationService = calculationService;
         }
 
         public async Task<List<LandfillDto>> ProcessProductionData(
-       string classificationCsvPath,
-       string segmentationCsvPath,
-       string metadataSpreadsheetPath)
+            string classificationCsvPath,
+            string segmentationCsvPath,
+            string metadataSpreadsheetPath)
         {
             var classifications = await ReadClassificationCsv(classificationCsvPath);
             var segmentations = await ReadSegmentationCsv(segmentationCsvPath);
@@ -30,7 +30,7 @@ namespace Enzivor.Api.Services.Implementations
                 .ToList();
 
             Console.WriteLine($"🎯 Processing {landfillClassifications.Count} landfill classifications out of {classifications.Count} total");
-            Console.WriteLine($"📐 L0 (methane potential): {_methaneService.GetMethaneGenerationPotential():F4} m³ CH4/tonne waste");
+            Console.WriteLine($"📐 L0 (methane potential): {_calculationService.GetMethaneGenerationPotential():F4} m³ CH4/tonne waste");
 
             foreach (var classification in landfillClassifications)
             {
@@ -65,7 +65,7 @@ namespace Enzivor.Api.Services.Implementations
                 ProcessCoordinatesAndArea(dto);
 
                 // 5. Calculate methane emissions using dedicated service
-                _methaneService.CalculateMethaneEmissions(dto);
+                _calculationService.CalculateMethaneEmissions(dto);
 
                 results.Add(dto);
 

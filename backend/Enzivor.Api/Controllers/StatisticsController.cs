@@ -129,8 +129,6 @@ namespace Enzivor.Api.Controllers
             });
 
             return Ok(payload);
-        }
-
-       
+        }      
     }
 }

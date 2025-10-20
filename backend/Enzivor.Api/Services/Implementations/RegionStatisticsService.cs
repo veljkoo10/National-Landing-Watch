@@ -125,8 +125,7 @@ namespace Enzivor.Api.Services.Implementations
                 "sumadijaipomoravlje" or "sumadijaandpomoravlje" => "sumadijaipomoravlje",
                 "istocnasrbija" or "easternserbia" => "istocnasrbija",
                 "juznasrbija" or "southernserbia" => "juznasrbija",
-                // if you later add:
-                // "kosovoimetohija" or "kosovoandmetohija" => "kosovoimetohija",
+                "kosovoimetohija" or "kosovoandmetohija" => "kosovoimetohija",
                 _ => null
             };
         }

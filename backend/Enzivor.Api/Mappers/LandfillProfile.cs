@@ -33,7 +33,6 @@ namespace Enzivor.Api.Mapping
                 .ForMember(dest => dest.EstimatedAreaM2, opt => opt.MapFrom(src => src.AreaM2))
                 .ForMember(dest => dest.StartYear, opt => opt.MapFrom(src => src.YearCreated))
                 .ForMember(dest => dest.Category, opt => opt.Ignore())  // handled elsewhere
-                .ForMember(dest => dest.Status, opt => opt.Ignore())
                 .ForMember(dest => dest.Region, opt => opt.Ignore())
                 .ForMember(dest => dest.Detections, opt => opt.Ignore());
 
@@ -83,6 +82,7 @@ namespace Enzivor.Api.Mapping
                 .ForMember(dest => dest.EstimatedDensity, opt => opt.MapFrom(src => src.EstimatedDensity ?? 0))
                 .ForMember(dest => dest.EstimatedMSW, opt => opt.MapFrom(src => src.EstimatedMSW ?? 0))
                 .ForMember(dest => dest.MCF, opt => opt.MapFrom(src => src.MCF ?? 0))
+                .ForMember(dest => dest.EstimatedVolume, opt => opt.MapFrom(src => src.EstimatedVolumeM3 ?? 0))
                 .ForMember(dest => dest.CH4GeneratedTonnesPerYear, opt => opt.MapFrom(src => src.EstimatedCH4TonsPerYear ?? 0))
                 .ForMember(dest => dest.CO2EquivalentTonnesPerYear, opt => opt.MapFrom(src => src.EstimatedCO2eTonsPerYear ?? 0));
 
@@ -97,10 +97,10 @@ namespace Enzivor.Api.Mapping
                 .ForMember(dest => dest.EstimatedDensity, opt => opt.MapFrom(src => (double?)src.EstimatedDensity))
                 .ForMember(dest => dest.EstimatedMSW, opt => opt.MapFrom(src => (double?)src.EstimatedMSW))
                 .ForMember(dest => dest.MCF, opt => opt.MapFrom(src => (double?)src.MCF))
+                .ForMember(dest => dest.EstimatedVolumeM3, opt => opt.MapFrom(src => (double?)src.EstimatedVolume))
                 .ForMember(dest => dest.EstimatedCH4TonsPerYear, opt => opt.MapFrom(src => (double?)src.CH4GeneratedTonnesPerYear))
                 .ForMember(dest => dest.EstimatedCO2eTonsPerYear, opt => opt.MapFrom(src => (double?)src.CO2EquivalentTonnesPerYear))
                 .ForMember(dest => dest.Category, opt => opt.Ignore())
-                .ForMember(dest => dest.Status, opt => opt.Ignore())
                 .ForMember(dest => dest.Detections, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());

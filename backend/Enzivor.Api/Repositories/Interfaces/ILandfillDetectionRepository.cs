@@ -7,6 +7,6 @@ namespace Enzivor.Api.Repositories.Interfaces
         Task<List<LandfillDetection>> GetAllAsync(CancellationToken ct = default);
         Task<List<LandfillDetection>> GetUnlinkedAsync(CancellationToken ct = default);
         Task AddRangeAsync(IEnumerable<LandfillDetection> detections, CancellationToken ct = default);
-        Task<LandfillDetection?> GetByIdAsync(int id, CancellationToken ct = default);
+        Task<IEnumerable<LandfillDetection>> GetByLandfillIdAsync(int landfillId, CancellationToken ct = default);
     }
 }

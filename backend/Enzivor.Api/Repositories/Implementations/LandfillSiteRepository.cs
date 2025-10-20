@@ -23,18 +23,6 @@ namespace Enzivor.Api.Repositories.Implementations
                 .ToListAsync(ct);
         }
 
-        public async Task<List<string>> GetAvailableRegionsAsync(CancellationToken ct = default)
-        {
-            // Return the canonical keys as stored (already normalized)
-            return await _db.LandfillSites
-                .AsNoTracking()
-                .Where(s => !string.IsNullOrEmpty(s.RegionTag))
-                .Select(s => s.RegionTag!)
-                .Distinct()
-                .OrderBy(r => r)
-                .ToListAsync(ct);
-        }
-
         public async Task<List<(string RegionTag, double TotalWaste)>> GetTotalWasteByRegionAsync(CancellationToken ct = default)
         {
             var rows = await _db.LandfillSites
@@ -181,29 +169,12 @@ namespace Enzivor.Api.Repositories.Implementations
             }).ToList();
         }
 
-        public async Task<IReadOnlyList<LandfillStatRow>> GetLandfillStatsAsync(CancellationToken ct = default)
+        public async Task<LandfillSite?> GetByIdWithDetectionsAsync(int id, CancellationToken ct = default)
         {
-            const double BULK_DENSITY_T_PER_M3 = 0.6;
-
-            var rows = await _db.LandfillSites
+            return await _db.LandfillSites
+                .Include(s => s.Detections)
                 .AsNoTracking()
-                .Select(s => new LandfillStatRow
-                {
-                    SiteId = s.Id,
-                    SiteName = s.Name,
-                    RegionTag = s.RegionTag,
-                    Year = s.StartYear ?? 0,
-                    WasteTons = s.EstimatedMSW ?? 0,
-                    Ch4Tons = s.EstimatedCH4TonsPerYear ?? 0,
-                    VolumeM3 = (s.EstimatedMSW ?? 0) > 0
-                                ? (s.EstimatedMSW!.Value / BULK_DENSITY_T_PER_M3)
-                                : 0
-                })
-                .OrderBy(r => r.Year)
-                .ThenBy(r => r.SiteName)
-                .ToListAsync(ct);
-
-            return rows;
+                .FirstOrDefaultAsync(s => s.Id == id, ct);
         }
     }
 }

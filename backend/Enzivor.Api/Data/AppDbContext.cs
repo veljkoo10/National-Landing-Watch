@@ -23,7 +23,6 @@ namespace Enzivor.Api.Data
                 e.Property(x => x.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 e.HasIndex(x => x.Category);
-                e.HasIndex(x => x.Municipality);
                 e.HasIndex(x => x.RegionTag);
             });
 
