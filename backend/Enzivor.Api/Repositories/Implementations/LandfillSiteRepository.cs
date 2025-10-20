@@ -7,27 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Enzivor.Api.Repositories.Implementations
 {
-    public class LandfillSiteRepository : ILandfillSiteRepository
+    public class LandfillSiteRepository : BaseRepository<LandfillSite>, ILandfillSiteRepository
     {
-        private readonly AppDbContext _db;
-
-        public LandfillSiteRepository(AppDbContext db) => _db = db;
-
-        public async Task<List<LandfillSite>> GetAllAsync(CancellationToken ct = default)
-        {
-            return await _db.LandfillSites
-                .AsNoTracking()
-                // .Include(s => s.Detections) // <-- include only where needed
-                .ToListAsync(ct);
-        }
-
-        public async Task<LandfillSite?> GetByIdAsync(int id, CancellationToken ct = default)
-        {
-            return await _db.LandfillSites
-                .AsNoTracking()
-                .Include(s => s.Detections) // ← IMPORTANT so MonitoringsController has data
-                .FirstOrDefaultAsync(s => s.Id == id, ct);
-        }
+        public LandfillSiteRepository(AppDbContext db) : base(db) { }
 
         // Keep the name for now; it expects a canonical, normalized region KEY (e.g., "istocnasrbija")
         public async Task<List<LandfillSite>> GetByRegionAsync(string regionTag, CancellationToken ct = default)
@@ -41,8 +23,6 @@ namespace Enzivor.Api.Repositories.Implementations
                 .ToListAsync(ct);
         }
 
-
-
         public async Task<List<string>> GetAvailableRegionsAsync(CancellationToken ct = default)
         {
             // Return the canonical keys as stored (already normalized)
@@ -53,26 +33,6 @@ namespace Enzivor.Api.Repositories.Implementations
                 .Distinct()
                 .OrderBy(r => r)
                 .ToListAsync(ct);
-        }
-
-        public async Task AddAsync(LandfillSite site, CancellationToken ct = default)
-        {
-            await _db.LandfillSites.AddAsync(site, ct);
-        }
-
-        public async Task AddRangeAsync(IEnumerable<LandfillSite> sites, CancellationToken ct = default)
-        {
-            await _db.LandfillSites.AddRangeAsync(sites, ct);
-        }
-
-        public Task SaveChangesAsync(CancellationToken ct = default)
-            => _db.SaveChangesAsync(ct);
-
-        // Not really async; keep it simple
-        public Task DeleteAsync(LandfillSite site, CancellationToken ct = default)
-        {
-            _db.LandfillSites.Remove(site);
-            return Task.CompletedTask;
         }
 
         public async Task<List<(string RegionTag, double TotalWaste)>> GetTotalWasteByRegionAsync(CancellationToken ct = default)
@@ -122,39 +82,39 @@ namespace Enzivor.Api.Repositories.Implementations
 
         public async Task<MostImpactedRegionFullDto> GetMostImpactedRegionAsync(CancellationToken ct = default)
         {
-            var allLandfills = await GetAllAsync(ct); 
+            var allLandfills = await GetAllAsync(ct);
 
             var grouped = allLandfills
                 .Where(l => !string.IsNullOrEmpty(l.RegionTag))
                 .GroupBy(l => l.RegionTag);
 
             var regionPopulations = new Dictionary<string, int>
-    {
-        { "Vojvodina", 1900000 },
-        { "Beograd", 1675000 },
-        { "Zapadna Srbija", 1200000 },
-        { "Šumadija i Pomoravlje", 1000000 },
-        { "Istočna Srbija", 800000 },
-        { "Južna Srbija", 900000 }
-    };
+            {
+                { "Vojvodina", 1900000 },
+                { "Beograd", 1675000 },
+                { "Zapadna Srbija", 1200000 },
+                { "Šumadija i Pomoravlje", 1000000 },
+                { "Istočna Srbija", 800000 },
+                { "Južna Srbija", 900000 }
+            };
+
             var regionAreas = new Dictionary<string, double>
-    {
-        { "Vojvodina", 21500 },
-        { "Beograd", 3226 },
-        { "Zapadna Srbija", 26500 },
-        { "Šumadija i Pomoravlje", 12600 },
-        { "Istočna Srbija", 19300 },
-        { "Južna Srbija", 19000 }
-    };
+            {
+                { "Vojvodina", 21500 },
+                { "Beograd", 3226 },
+                { "Zapadna Srbija", 26500 },
+                { "Šumadija i Pomoravlje", 12600 },
+                { "Istočna Srbija", 19300 },
+                { "Južna Srbija", 19000 }
+            };
 
             const double CH4_GWP100 = 28.0;
 
-            // Find the region with the highest total CH4 (or use ch4PerKm2 if you prefer)
             var mostImpacted = grouped
                 .Select(g =>
                 {
                     var region = g.Key;
-                    var totalCh4 = g.Sum(l => l.EstimatedCH4TonsPerYear); 
+                    var totalCh4 = g.Sum(l => l.EstimatedCH4TonsPerYear);
                     var population = regionPopulations.TryGetValue(region, out var pop) ? pop : 0;
                     var areaKm2 = regionAreas.TryGetValue(region, out var area) ? area : 0d;
                     var totalCo2eq = totalCh4 * CH4_GWP100;
@@ -172,7 +132,7 @@ namespace Enzivor.Api.Repositories.Implementations
                         areaKm2
                     };
                 })
-                .OrderByDescending(r => r.totalCh4) 
+                .OrderByDescending(r => r.totalCh4)
                 .FirstOrDefault();
 
             if (mostImpacted == null)
@@ -206,7 +166,6 @@ namespace Enzivor.Api.Repositories.Implementations
             Dictionary<string, int> regionPopulations,
             CancellationToken ct = default)
         {
-            // Expect keys of regionPopulations to be canonical region keys (same as RegionTag)
             var rows = await _db.LandfillSites
                 .AsNoTracking()
                 .Where(s => !string.IsNullOrEmpty(s.RegionTag) && regionPopulations.ContainsKey(s.RegionTag!))
@@ -246,9 +205,5 @@ namespace Enzivor.Api.Repositories.Implementations
 
             return rows;
         }
-
-       
     }
-
-
 }

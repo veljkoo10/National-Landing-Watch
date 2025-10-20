@@ -3,43 +3,48 @@ using Enzivor.Api.Repositories.Implementations;
 using Enzivor.Api.Repositories.Interfaces;
 using Enzivor.Api.Services.Implementations;
 using Enzivor.Api.Services.Interfaces;
+using Enzivor.Api.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Database Configuration
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Swagger
+// Swagger Configuration
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// CORS Configuration
 const string LocalAngular = "LocalAngular";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(LocalAngular, policy =>
         policy
-            .WithOrigins("http://localhost:4200") 
+            .WithOrigins("http://localhost:4200")
             .AllowAnyHeader()
             .AllowAnyMethod()
-    // .AllowCredentials() // only if you actually send cookies/authorization header cross-site
+    // .AllowCredentials() // enable only if needed
     );
 });
 
-// MVC
 builder.Services.AddControllers();
 
-
-// Services
+// Core landfill services
 builder.Services.AddScoped<ILandfillSiteService, LandfillSiteService>();
+builder.Services.AddScoped<ILandfillQueryService, LandfillQueryService>();
+builder.Services.AddScoped<ILandfillDetectionService, LandfillDetectionService>();
+
+// Supporting services
 builder.Services.AddScoped<IProductionLandfillProcessor, ProductionLandfillProcessor>();
 builder.Services.AddScoped<IMethaneCalculationService, MethaneCalculationService>();
 builder.Services.AddScoped<IRegionStatisticsService, RegionStatisticsService>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// Repositories
+// Repository Registrations
 builder.Services.AddScoped<ILandfillDetectionRepository, LandfillDetectionRepository>();
 builder.Services.AddScoped<ILandfillSiteRepository, LandfillSiteRepository>();
-
 
 var app = builder.Build();
 

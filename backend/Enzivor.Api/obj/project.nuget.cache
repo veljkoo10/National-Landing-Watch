@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "hpCtmv79Q5U=",
+  "dgSpecHash": "mDsl+vf7rQQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\Viktor\\OneDrive\\Desktop\\Envizor\\backend\\Enzivor.Api\\Enzivor.Api.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Viktor\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Viktor\\.nuget\\packages\\csvhelper\\33.1.0\\csvhelper.33.1.0.nupkg.sha512",
     "C:\\Users\\Viktor\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Viktor\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.5\\microsoft.aspnetcore.openapi.9.0.5.nupkg.sha512",

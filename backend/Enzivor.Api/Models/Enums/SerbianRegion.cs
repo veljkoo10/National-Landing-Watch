@@ -7,6 +7,7 @@
         SumadijaPomoravlje = 2,  
         WesternSerbia = 3,      
         EasternSerbia = 4,     
-        SouthernSerbia = 5      
+        SouthernSerbia = 5,
+        KosovoMetohija = 6
     }
 }

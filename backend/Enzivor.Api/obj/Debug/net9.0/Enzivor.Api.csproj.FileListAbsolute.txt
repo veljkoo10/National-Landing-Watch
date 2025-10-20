@@ -314,3 +314,4 @@ C:\Users\Viktor\OneDrive\Desktop\Envizor\backend\Enzivor.Api\obj\Debug\net9.0\re
 C:\Users\Viktor\OneDrive\Desktop\Envizor\backend\Enzivor.Api\obj\Debug\net9.0\Enzivor.Api.pdb
 C:\Users\Viktor\OneDrive\Desktop\Envizor\backend\Enzivor.Api\obj\Debug\net9.0\Enzivor.Api.genruntimeconfig.cache
 C:\Users\Viktor\OneDrive\Desktop\Envizor\backend\Enzivor.Api\obj\Debug\net9.0\ref\Enzivor.Api.dll
+C:\Users\Viktor\OneDrive\Desktop\Envizor\backend\Enzivor.Api\bin\Debug\net9.0\AutoMapper.dll

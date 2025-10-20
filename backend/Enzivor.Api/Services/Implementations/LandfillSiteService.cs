@@ -6,6 +6,9 @@ using Enzivor.Api.Services.Interfaces;
 
 namespace Enzivor.Api.Services.Implementations
 {
+    /// <summary>
+    /// Handles creation and update logic for landfill sites.
+    /// </summary>
     public sealed class LandfillSiteService : ILandfillSiteService
     {
         private readonly ILandfillDetectionRepository _detRepo;
@@ -52,8 +55,8 @@ namespace Enzivor.Api.Services.Implementations
                     BoundaryGeoJson = d.PolygonCoordinates,
                     EstimatedAreaM2 = d.SurfaceArea,
 
-                    RegionTag = NormalizeKey(d.RegionTag), 
-                    Region = d.Region,                      
+                    RegionTag = NormalizeKey(d.RegionTag),
+                    Region = d.Region,
 
                     CreatedAt = now,
                     UpdatedAt = now
@@ -77,7 +80,20 @@ namespace Enzivor.Api.Services.Implementations
                 sites.Add(site);
             }
 
+            // Insert sites and get IDs
             await _siteRepo.AddRangeAsync(sites, ct);
+            await _siteRepo.SaveChangesAsync(ct);
+
+            // Explicitly set FK to ensure it is persisted
+            foreach (var site in sites)
+            {
+                foreach (var d in site.Detections)
+                {
+                    d.LandfillSiteId = site.Id;
+                }
+            }
+
+            // Persist FK updates
             await _siteRepo.SaveChangesAsync(ct);
 
             return sites.Count;
