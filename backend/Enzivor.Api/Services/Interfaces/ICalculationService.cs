@@ -3,11 +3,10 @@ using Enzivor.Api.Models.Enums;
 
 namespace Enzivor.Api.Services.Interfaces
 {
-    public interface IMethaneCalculationService
+    public interface ICalculationService
     {
         void CalculateMethaneEmissions(LandfillDto dto);
         void CalculateMethaneEmissions(IEnumerable<LandfillDto> landfills);
         double GetMethaneGenerationPotential();
-        double GetDecayRateForRegion(SerbianRegion? region);
     }
 }

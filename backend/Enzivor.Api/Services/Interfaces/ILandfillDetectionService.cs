@@ -8,6 +8,9 @@ namespace Enzivor.Api.Services.Interfaces
     public interface ILandfillDetectionService
     {
         Task<ProductionProcessResultDto> ProcessProductionAsync(ProcessProductionRequest req, CancellationToken ct = default);
+        /// <summary>
+        /// Returns global detection statistics.
+        /// </summary>
         Task<DetectionStatsDto> GetStatsAsync(CancellationToken ct = default);
     }
 }

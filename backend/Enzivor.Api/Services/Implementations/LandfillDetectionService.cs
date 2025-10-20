@@ -30,7 +30,6 @@ namespace Enzivor.Api.Services.Implementations
             if (!File.Exists(req.SegmentationCsvPath)) throw new FileNotFoundException("Segmentation CSV not found", req.SegmentationCsvPath);
             if (!File.Exists(req.MetadataSpreadsheetPath)) throw new FileNotFoundException("Metadata file not found", req.MetadataSpreadsheetPath);
 
-            // Process production data into DTOs
             var results = await _processor.ProcessProductionData(
                 req.ClassificationCsvPath,
                 req.SegmentationCsvPath,
@@ -38,9 +37,8 @@ namespace Enzivor.Api.Services.Implementations
 
             var detections = _mapper.Map<List<LandfillDetection>>(results);
 
-            // Fix Type (enum) because the mapper ignores it by design (string => enum)
-            foreach (var detection in detections.Zip(results, (entity, dto) => (entity, dto)))
-                detection.entity.Type = MapCategory(detection.dto.Type);
+            foreach (var (entity, dto) in detections.Zip(results))
+                entity.Type = MapCategory(dto.Type);
 
             await _repo.AddRangeAsync(detections, ct);
 

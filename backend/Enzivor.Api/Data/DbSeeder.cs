@@ -19,7 +19,6 @@ namespace Enzivor.Api.Data
                         Category = LandfillCategory.Sanitary,
                         PointLat = 44.7443,
                         PointLon = 20.6051,
-                        Municipality = "Grocka",
                         RegionTag = "Beograd",
                         EstimatedAreaM2 = 250000
                     },
@@ -29,7 +28,6 @@ namespace Enzivor.Api.Data
                         Category = LandfillCategory.Illegal,
                         PointLat = 45.2985,
                         PointLon = 19.5712,
-                        Municipality = "Bački Petrovac",
                         RegionTag = "Vojvodina",
                         EstimatedAreaM2 = 12000
                     }

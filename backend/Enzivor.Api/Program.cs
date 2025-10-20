@@ -38,7 +38,7 @@ builder.Services.AddScoped<ILandfillDetectionService, LandfillDetectionService>(
 
 // Supporting services
 builder.Services.AddScoped<IProductionLandfillProcessor, ProductionLandfillProcessor>();
-builder.Services.AddScoped<IMethaneCalculationService, MethaneCalculationService>();
+builder.Services.AddScoped<ICalculationService, CalculationService>();
 builder.Services.AddScoped<IRegionStatisticsService, RegionStatisticsService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
