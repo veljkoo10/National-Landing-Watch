@@ -2,7 +2,7 @@
 
 namespace Enzivor.Api.Services.Interfaces
 {
-    public interface IRegionStatisticsService
+    public interface IRegionService
     {
         Task<List<RegionDto>> GetAllRegionsAsync(CancellationToken ct = default);
         Task<RegionDto?> GetRegionByIdAsync(int id, CancellationToken ct = default);

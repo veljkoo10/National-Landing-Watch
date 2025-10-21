@@ -2,6 +2,7 @@
 using Enzivor.Api.Models.Domain;
 using Enzivor.Api.Models.Dtos;
 using Enzivor.Api.Models.Enums;
+using Enzivor.Api.Models.Static;
 using Enzivor.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,6 @@ namespace Enzivor.Api.Repositories.Implementations
     {
         public LandfillSiteRepository(AppDbContext db) : base(db) { }
 
-        // Keep the name for now; it expects a canonical, normalized region KEY (e.g., "istocnasrbija")
         public async Task<List<LandfillSite>> GetByRegionAsync(string regionTag, CancellationToken ct = default)
         {
             var tag = regionTag.ToLower().Replace(" ", "");
@@ -76,42 +76,29 @@ namespace Enzivor.Api.Repositories.Implementations
                 .Where(l => !string.IsNullOrEmpty(l.RegionTag))
                 .GroupBy(l => l.RegionTag);
 
-            var regionPopulations = new Dictionary<string, int>
-            {
-                { "Vojvodina", 1900000 },
-                { "Beograd", 1675000 },
-                { "Zapadna Srbija", 1200000 },
-                { "Šumadija i Pomoravlje", 1000000 },
-                { "Istočna Srbija", 800000 },
-                { "Južna Srbija", 900000 }
-            };
+            // Normalize region keys for matching
+            var regionPopulations = RegionDefinitions.PopulationByName
+                .ToDictionary(kv => kv.Key.ToLower().Replace(" ", ""), kv => kv.Value);
 
-            var regionAreas = new Dictionary<string, double>
-            {
-                { "Vojvodina", 21500 },
-                { "Beograd", 3226 },
-                { "Zapadna Srbija", 26500 },
-                { "Šumadija i Pomoravlje", 12600 },
-                { "Istočna Srbija", 19300 },
-                { "Južna Srbija", 19000 }
-            };
+            var regionAreas = RegionDefinitions.AreaByName
+                .ToDictionary(kv => kv.Key.ToLower().Replace(" ", ""), kv => kv.Value);
 
             const double CH4_GWP100 = 28.0;
 
             var mostImpacted = grouped
                 .Select(g =>
                 {
-                    var region = g.Key;
-                    var totalCh4 = g.Sum(l => l.EstimatedCH4TonsPerYear);
-                    var population = regionPopulations.TryGetValue(region, out var pop) ? pop : 0;
-                    var areaKm2 = regionAreas.TryGetValue(region, out var area) ? area : 0d;
+                    var regionKey = g.Key?.ToLower().Replace(" ", "") ?? "";
+                    var totalCh4 = g.Sum(l => l.EstimatedCH4TonsPerYear ?? 0);
+                    var population = regionPopulations.TryGetValue(regionKey, out var pop) ? pop : 0;
+                    var areaKm2 = regionAreas.TryGetValue(regionKey, out var area) ? area : 0d;
                     var totalCo2eq = totalCh4 * CH4_GWP100;
                     var ch4PerKm2 = areaKm2 > 0 ? totalCh4 / areaKm2 : 0;
                     var co2eqPerKm2 = areaKm2 > 0 ? totalCo2eq / areaKm2 : 0;
 
                     return new
                     {
-                        region,
+                        region = g.Key,
                         totalCh4,
                         totalCo2eq,
                         ch4PerKm2,
@@ -128,10 +115,10 @@ namespace Enzivor.Api.Repositories.Implementations
 
             return new MostImpactedRegionFullDto(
                 region: mostImpacted.region,
-                totalCh4: Math.Round((double)mostImpacted.totalCh4, 2),
-                totalCo2eq: Math.Round((double)mostImpacted.totalCo2eq, 2),
-                ch4PerKm2: Math.Round((double)mostImpacted.ch4PerKm2, 2),
-                co2eqPerKm2: Math.Round((double)mostImpacted.co2eqPerKm2, 2),
+                totalCh4: Math.Round(mostImpacted.totalCh4, 2),
+                totalCo2eq: Math.Round(mostImpacted.totalCo2eq, 2),
+                ch4PerKm2: Math.Round(mostImpacted.ch4PerKm2, 2),
+                co2eqPerKm2: Math.Round(mostImpacted.co2eqPerKm2, 2),
                 population: mostImpacted.population,
                 areaKm2: mostImpacted.areaKm2
             );
@@ -154,19 +141,30 @@ namespace Enzivor.Api.Repositories.Implementations
             Dictionary<string, int> regionPopulations,
             CancellationToken ct = default)
         {
-            var rows = await _db.LandfillSites
+            // Normalize keys to match region tags
+            var normalizedPop = regionPopulations
+                .ToDictionary(kv => kv.Key.ToLower().Replace(" ", ""), kv => kv.Value);
+
+            // Fetch all and filter in-memory (fixes EF translation issue)
+            var all = await _db.LandfillSites
                 .AsNoTracking()
-                .Where(s => !string.IsNullOrEmpty(s.RegionTag) && regionPopulations.ContainsKey(s.RegionTag!))
-                .GroupBy(s => s.RegionTag!)
-                .Select(g => new { RegionTag = g.Key, TotalCH4 = g.Sum(s => s.EstimatedCH4TonsPerYear ?? 0) })
+                .Where(s => !string.IsNullOrEmpty(s.RegionTag))
                 .ToListAsync(ct);
 
-            return rows.Select(r =>
-            {
-                var pop = regionPopulations[r.RegionTag];
-                var perCapita = pop > 0 ? r.TotalCH4 / pop : 0;
-                return (r.RegionTag, perCapita);
-            }).ToList();
+            var filtered = all
+                .Where(s => s.RegionTag != null && normalizedPop.ContainsKey(s.RegionTag.ToLower().Replace(" ", "")))
+                .GroupBy(s => s.RegionTag!.ToLower().Replace(" ", ""))
+                .Select(g =>
+                {
+                    var key = g.Key;
+                    var pop = normalizedPop[key];
+                    var totalCh4 = g.Sum(x => x.EstimatedCH4TonsPerYear ?? 0);
+                    var perCapita = pop > 0 ? totalCh4 / pop : 0;
+                    return (RegionTag: g.First().RegionTag ?? key, EmissionsPerCapita: perCapita);
+                })
+                .ToList();
+
+            return filtered;
         }
 
         public async Task<LandfillSite?> GetByIdWithDetectionsAsync(int id, CancellationToken ct = default)

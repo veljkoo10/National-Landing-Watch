@@ -1,28 +1,17 @@
 ﻿using Enzivor.Api.Models.Dtos;
 using Enzivor.Api.Repositories.Interfaces;
 using Enzivor.Api.Services.Interfaces;
+using Enzivor.Api.Models.Static;
 using System.Globalization;
 using System.Text;
 
 namespace Enzivor.Api.Services.Implementations
 {
-    public class RegionStatisticsService : IRegionStatisticsService
+    public class RegionService : IRegionService
     {
         private readonly ILandfillSiteRepository _siteRepository;
 
-        private sealed record RegionDef(int Id, string Key, string NameSr, int Population, int AreaKm2);
-
-        private static readonly List<RegionDef> Regions = new()
-        {
-            new(1, "vojvodina",           "Vojvodina",              1_900_000, 21_506),
-            new(2, "beograd",             "Beograd",                1_675_000, 3_226),
-            new(3, "zapadnasrbija",       "Zapadna Srbija",         1_200_000, 26_000),
-            new(4, "sumadijaipomoravlje", "Šumadija i Pomoravlje",  1_000_000, 13_000),
-            new(5, "istocnasrbija",       "Istočna Srbija",           800_000, 19_000),
-            new(6, "juznasrbija",         "Južna Srbija",             900_000, 15_000),
-        };
-
-        public RegionStatisticsService(ILandfillSiteRepository siteRepository)
+        public RegionService(ILandfillSiteRepository siteRepository)
         {
             _siteRepository = siteRepository;
         }
@@ -31,9 +20,9 @@ namespace Enzivor.Api.Services.Implementations
         {
             var allSites = await _siteRepository.GetAllAsync(ct);
 
-            return Regions.Select(r =>
+            return RegionDefinitions.All.Select(def =>
             {
-                var sites = allSites.Where(s => Normalize(s.RegionTag) == r.Key).ToList();
+                var sites = allSites.Where(s => Normalize(s.RegionTag) == def.Key).ToList();
 
                 var ch4 = Math.Round(sites.Sum(s => s.EstimatedCH4TonsPerYear ?? 0), 2);
                 var co2 = Math.Round(sites.Sum(s => s.EstimatedCO2eTonsPerYear ?? 0), 2);
@@ -41,25 +30,24 @@ namespace Enzivor.Api.Services.Implementations
 
                 return new RegionDto
                 {
-                    Id = r.Id,
-                    Name = r.NameSr,
-                    Population = r.Population,
-                    AreaKm2 = r.AreaKm2,
+                    Id = def.Id,
+                    Name = def.Name,
+                    Population = def.Population,
+                    AreaKm2 = def.AreaKm2,
                     LandfillCount = sites.Count,
                     Ch4Tons = ch4,
                     Co2Tons = co2,
                     TotalWaste = waste,
-                    PollutionLevel = GetPollutionLevel(ch4, r.AreaKm2)
+                    PollutionLevel = GetPollutionLevel(ch4, def.AreaKm2)
                 };
             }).ToList();
         }
 
         public async Task<RegionDto?> GetRegionByIdAsync(int id, CancellationToken ct = default)
         {
-            var def = Regions.FirstOrDefault(r => r.Id == id);
+            var def = RegionDefinitions.All.FirstOrDefault(r => r.Id == id);
             if (def is null) return null;
 
-            // ✅ Use the same in-memory aggregation as other methods
             var allSites = await _siteRepository.GetAllAsync(ct);
             var sites = allSites.Where(s => Normalize(s.RegionTag) == def.Key).ToList();
 
@@ -70,7 +58,7 @@ namespace Enzivor.Api.Services.Implementations
             return new RegionDto
             {
                 Id = def.Id,
-                Name = def.NameSr,
+                Name = def.Name,
                 Population = def.Population,
                 AreaKm2 = def.AreaKm2,
                 LandfillCount = sites.Count,
@@ -86,13 +74,11 @@ namespace Enzivor.Api.Services.Implementations
             if (string.IsNullOrWhiteSpace(name)) return null;
 
             var key = MapInputToKey(name);
-            if (key is null) return null;
-
-            var def = Regions.FirstOrDefault(r => r.Key == key);
-            if (def is null) return null; // safety if map returns a key you didn't define
+            var def = RegionDefinitions.GetByKey(key ?? "");
+            if (def is null) return null;
 
             var allSites = await _siteRepository.GetAllAsync(ct);
-            var sites = allSites.Where(s => Normalize(s.RegionTag) == key).ToList();
+            var sites = allSites.Where(s => Normalize(s.RegionTag) == def.Key).ToList();
 
             var ch4 = Math.Round(sites.Sum(s => s.EstimatedCH4TonsPerYear ?? 0), 2);
             var co2 = Math.Round(sites.Sum(s => s.EstimatedCO2eTonsPerYear ?? 0), 2);
@@ -101,7 +87,7 @@ namespace Enzivor.Api.Services.Implementations
             return new RegionDto
             {
                 Id = def.Id,
-                Name = def.NameSr,
+                Name = def.Name,
                 Population = def.Population,
                 AreaKm2 = def.AreaKm2,
                 LandfillCount = sites.Count,
@@ -111,8 +97,6 @@ namespace Enzivor.Api.Services.Implementations
                 PollutionLevel = GetPollutionLevel(ch4, def.AreaKm2)
             };
         }
-
-        // ---------- Helpers ----------
 
         private static string? MapInputToKey(string input)
         {
