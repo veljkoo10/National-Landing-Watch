@@ -53,6 +53,8 @@
   "map.region.co2": "Ugljen-dioksid (CO₂)",
   "map.region.pollutionLevel": "Nivo zagađenja",
 
+  "map.empty.selectTitle": "Izaberite region",
+
   "map.pollution.low": "Nizak",
   "map.pollution.medium": "Srednji",
   "map.pollution.high": "Visok",
@@ -76,6 +78,8 @@
   "map.landfill.size.small": "Mala",
   "map.landfill.size.medium": "Srednja",
   "map.landfill.size.large": "Velika",
+
+  "map.empty.selectSubtitle": "Izaberite region da vidite deponije, emisije i statistiku.",
 
   "map.tooltip.population": "Ukupan broj stanovnika koji žive u ovom regionu.",
   "map.tooltip.area": "Ukupna površina regiona izražena u kvadratnim kilometrima.",

@@ -57,6 +57,9 @@
   "map.pollution.medium": "Medium",
   "map.pollution.high": "High",
 
+  "map.empty.selectTitle": "Select a region",
+  "map.empty.selectSubtitle": "Choose a region to see landfill data, emissions, and statistics.",
+
   "map.landfill.id": "Landfill ID",
   "map.landfill.area": "Area",
   "map.landfill.coords": "Coordinates",
@@ -124,7 +127,7 @@
   "statistics.table.year": "Year",
   "statistics.table.volume": "Volume (m³)",
   "statistics.table.waste": "Waste (t)",
-  
+
   "statistics.labels.region": "Region",
   "statistics.labels.totalCh4": "Total CH₄",
   "statistics.labels.totalCo2eq": "Total CO₂eq",
@@ -133,7 +136,7 @@
 
   "faq.page.title": "Find answers to all your questions",
   "faq.page.description": "Welcome to the <b>National Landfill Watch</b> help center. Here you can learn how to use our platform — from navigating the interactive map, exploring regional statistics, to reading the latest sustainability updates. Click on a question below to expand its answer.",
-  
+
   "faq.categories.map.title": "Map Features",
   "faq.categories.map.q1.question": "How do I use the interactive map?",
   "faq.categories.map.q1.answer": "Use the region selector in the top-right corner to choose a part of Serbia. The map will automatically zoom to that area. Click on a landfill marker to view detailed information about it in a modal window.",
