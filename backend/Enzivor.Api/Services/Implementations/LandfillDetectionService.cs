@@ -40,6 +40,12 @@ namespace Enzivor.Api.Services.Implementations
             foreach (var (entity, dto) in detections.Zip(results))
                 entity.Type = MapCategory(dto.Type);
 
+            foreach (var det in detections)
+            {
+                if (!string.IsNullOrWhiteSpace(det.LandfillName))
+                    det.LandfillName = det.LandfillName.Trim().Trim('"', '“', '”').Replace("\"", string.Empty);
+            }
+
             await _repo.AddRangeAsync(detections, ct);
 
             return new ProductionProcessResultDto

@@ -26,9 +26,9 @@ namespace Enzivor.Api.Services.Implementations
         }
 
         public async Task<int> CreateSitesFromUnlinkedDetectionsAsync(
-            double? minConfidence = null,
-            LandfillCategory? category = null,
-            CancellationToken ct = default)
+    double? minConfidence = null,
+    LandfillCategory? category = null,
+    CancellationToken ct = default)
         {
             var detections = await _detRepo.GetUnlinkedAsync(ct);
             if (minConfidence.HasValue)
@@ -44,9 +44,16 @@ namespace Enzivor.Api.Services.Implementations
 
             foreach (var d in detections)
             {
+                // Remove extra quotes and whitespace
+                var cleanName = (d.LandfillName ?? "")
+                    .Trim()
+                    .Trim('"')
+                    .Trim('“', '”')
+                    .Replace("\"", string.Empty);
+
                 var site = new LandfillSite
                 {
-                    Name = d.LandfillName,
+                    Name = string.IsNullOrWhiteSpace(cleanName) ? $"Landfill-{Guid.NewGuid():N}" : cleanName,
                     Category = d.Type,
                     PointLat = (d.NorthWestLat + d.SouthEastLat) / 2.0,
                     PointLon = (d.NorthWestLon + d.SouthEastLon) / 2.0,
@@ -61,11 +68,13 @@ namespace Enzivor.Api.Services.Implementations
                 var dummyDto = new LandfillDto
                 {
                     SurfaceArea = d.SurfaceArea,
-                    ParsedRegion = d.Region
+                    ParsedRegion = d.Region,
+                    Type = site.Category.ToString().ToLowerInvariant()
                 };
 
                 _calculationService.CalculateMethaneEmissions(dummyDto);
 
+                // Computed values
                 site.EstimatedDepth = dummyDto.EstimatedDepth;
                 site.EstimatedDensity = dummyDto.EstimatedDensity;
                 site.EstimatedMSW = dummyDto.EstimatedMSW;

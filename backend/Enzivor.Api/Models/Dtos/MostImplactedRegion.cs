@@ -10,8 +10,6 @@
         public int Population { get; set; }
         public double AreaKm2 { get; set; }
 
-        public MostImpactedRegionFullDto() { }
-
         public MostImpactedRegionFullDto(
             string region,
             double totalCh4,

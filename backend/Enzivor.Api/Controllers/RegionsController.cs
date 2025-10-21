@@ -10,24 +10,24 @@ namespace Enzivor.Api.Controllers
     [Route("api/regions")]
     public class RegionsController : ControllerBase
     {
-        private readonly IRegionStatisticsService _regionStatisticsService;
+        private readonly IRegionService _regionService;
 
-        public RegionsController(IRegionStatisticsService regionStatisticsService)
+        public RegionsController(IRegionService regionStatisticsService)
         {
-            _regionStatisticsService = regionStatisticsService;
+            _regionService = regionStatisticsService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllRegions(CancellationToken ct = default)
         {
-            var regions = await _regionStatisticsService.GetAllRegionsAsync(ct);
+            var regions = await _regionService.GetAllRegionsAsync(ct);
             return Ok(regions);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRegionById(int id, CancellationToken ct = default)
         {
-            var region = await _regionStatisticsService.GetRegionByIdAsync(id, ct);
+            var region = await _regionService.GetRegionByIdAsync(id, ct);
             if (region == null) return NotFound();
             return Ok(region);
         }
@@ -35,7 +35,7 @@ namespace Enzivor.Api.Controllers
         [HttpGet("name/{name}")]
         public async Task<IActionResult> GetRegionByName(string name, CancellationToken ct = default)
         {
-            var region = await _regionStatisticsService.GetRegionByNameAsync(name, ct); 
+            var region = await _regionService.GetRegionByNameAsync(name, ct); 
             if (region == null) return NotFound();
             return Ok(region);
         }

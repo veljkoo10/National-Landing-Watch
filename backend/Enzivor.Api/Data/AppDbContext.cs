@@ -1,7 +1,5 @@
 ﻿using Enzivor.Api.Models.Domain;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 
 namespace Enzivor.Api.Data
 {
@@ -11,6 +9,8 @@ namespace Enzivor.Api.Data
 
         public DbSet<LandfillSite> LandfillSites => Set<LandfillSite>();
         public DbSet<LandfillDetection> LandfillDetections => Set<LandfillDetection>();
+        public DbSet<UserMessage> UserMessages => Set<UserMessage>();
+        public DbSet<UserReport> UserReports => Set<UserReport>();
 
         protected override void OnModelCreating(ModelBuilder b)
         {
@@ -18,7 +18,7 @@ namespace Enzivor.Api.Data
             {
                 e.HasKey(x => x.Id);
 
-                e.Property(x => x.Category).IsRequired();       
+                e.Property(x => x.Category).IsRequired();
                 e.Property(x => x.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 e.Property(x => x.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
@@ -36,6 +36,25 @@ namespace Enzivor.Api.Data
                  .WithMany(s => s.Detections)
                  .HasForeignKey(x => x.LandfillSiteId)
                  .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            b.Entity<UserMessage>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Name).IsRequired();
+                e.Property(x => x.Email).IsRequired();
+                e.Property(x => x.Subject).IsRequired();
+                e.Property(x => x.Content).IsRequired();
+                e.Property(x => x.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            });
+
+            b.Entity<UserReport>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Latitude).IsRequired();
+                e.Property(x => x.Longitude).IsRequired();
+                e.Property(x => x.PlaceName).IsRequired(false);
+                e.Property(x => x.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
             });
         }
 

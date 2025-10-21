@@ -17,15 +17,13 @@ namespace Enzivor.Api.Services.Implementations
             var wasteDepth = GetSimpleDepth(dto.SurfaceArea, dto.Type);
             var wasteDensity = GetSimpleDensity(dto.SurfaceArea, dto.Type);
             var totalWaste = dto.SurfaceArea * wasteDepth * wasteDensity;
-
             var decayRate = GetRegionDecayRate(dto.ParsedRegion);
-
             var methanePerYear = totalWaste * L0 * decayRate;
 
             dto.EstimatedDepth = wasteDepth;        // Height (Depth) of landfill
             dto.EstimatedDensity = wasteDensity;
             dto.EstimatedMSW = totalWaste;
-            dto.MCF = wasteDepth >= 3.0 ? 0.8 : 0.4;
+            dto.MCF = wasteDepth >= 6.0 ? 0.8 : 0.5;
             dto.EstimatedVolume = dto.SurfaceArea * wasteDepth;
             dto.CH4GeneratedTonnesPerYear = methanePerYear;
             dto.CO2EquivalentTonnesPerYear = methanePerYear * CH4_TO_CO2;
@@ -113,13 +111,14 @@ namespace Enzivor.Api.Services.Implementations
         {
             return region switch
             {
-                SerbianRegion.Vojvodina => 0.065,        // Warmer region
-                SerbianRegion.Belgrade => 0.06,          // Urban area
-                SerbianRegion.WesternSerbia => 0.055,    // Cooler mountains
-                SerbianRegion.EasternSerbia => 0.055,    // Cooler mountains
-                SerbianRegion.SouthernSerbia => 0.058,   // Moderate
+                SerbianRegion.Vojvodina => 0.065,         // Warmer region
+                SerbianRegion.Belgrade => 0.06,           // Urban area
+                SerbianRegion.WesternSerbia => 0.055,     // Cooler mountains
+                SerbianRegion.EasternSerbia => 0.055,     // Cooler mountains
+                SerbianRegion.SouthernSerbia => 0.058,    // Moderate
                 SerbianRegion.SumadijaPomoravlje => 0.06, // Moderate
-                _ => K_DEFAULT                           // Default
+                SerbianRegion.KosovoMetohija => 0.058,    // Moderate
+                _ => K_DEFAULT                            // Default
             };
         }
     }

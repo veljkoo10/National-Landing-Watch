@@ -1,10 +1,11 @@
 using Enzivor.Api.Data;
+using Enzivor.Api.Mapping;
 using Enzivor.Api.Repositories.Implementations;
 using Enzivor.Api.Repositories.Interfaces;
 using Enzivor.Api.Services.Implementations;
 using Enzivor.Api.Services.Interfaces;
-using Enzivor.Api.Mapping;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Swagger Configuration
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Encoding Configuration
+Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 // CORS Configuration
 const string LocalAngular = "LocalAngular";
@@ -31,15 +35,14 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 
-// Core landfill services
+// Service Registrations
 builder.Services.AddScoped<ILandfillSiteService, LandfillSiteService>();
 builder.Services.AddScoped<ILandfillQueryService, LandfillQueryService>();
 builder.Services.AddScoped<ILandfillDetectionService, LandfillDetectionService>();
-
-// Supporting services
 builder.Services.AddScoped<IProductionLandfillProcessor, ProductionLandfillProcessor>();
 builder.Services.AddScoped<ICalculationService, CalculationService>();
-builder.Services.AddScoped<IRegionStatisticsService, RegionStatisticsService>();
+builder.Services.AddScoped<IRegionService, RegionService>();
+builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Repository Registrations
