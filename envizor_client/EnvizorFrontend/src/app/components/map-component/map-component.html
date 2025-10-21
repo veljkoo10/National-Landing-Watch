@@ -8,11 +8,49 @@
 </div>
 
 <div class="map-right-sidebar">
+  <!-- Map Type (inline, one row) -->
+  <div class="map-mode-inline">
+    <label class="map-type-inline-label">
+      <mat-icon>layers</mat-icon>
+      <span>Map Type:</span>
+    </label>
+
+    <div
+      class="map-type-inline-dropdown"
+      (click)="toggleMapTypeDropdown()"
+      [class.open]="isDropdownOpen"
+      tabindex="0"
+    >
+      <mat-icon *ngIf="mapType === 'satellite'">satellite_alt</mat-icon>
+      <mat-icon *ngIf="mapType === 'heatmap'">local_fire_department</mat-icon>
+      <span>{{ mapType === 'satellite' ? 'Satellite' : 'Heatmap' }}</span>
+      <mat-icon class="arrow">{{ isDropdownOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+
+      <!-- Dropdown menu -->
+      <div class="inline-dropdown-menu" *ngIf="isDropdownOpen">
+        <div
+          class="inline-dropdown-option"
+          (click)="setMapType('satellite'); $event.stopPropagation()"
+        >
+          <mat-icon>satellite_alt</mat-icon>
+          <span>Satellite</span>
+        </div>
+        <div
+          class="inline-dropdown-option"
+          (click)="setMapType('heatmap'); $event.stopPropagation()"
+        >
+          <mat-icon>local_fire_department</mat-icon>
+          <span>Heatmap</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Region Selector -->
   <div class="region-selector-section">
-    <label for="regionSelect" class="region-label">{{
-      'map.overlay.selectRegion' | translate
-    }}</label>
+    <label for="regionSelect" class="region-label">
+      {{ 'map.overlay.selectRegion' | translate }}
+    </label>
     <select id="regionSelect" (change)="onRegionSelect($event)" class="region-dropdown">
       <option value="" disabled selected hidden>
         {{ 'map.overlay.selectRegion' | translate }}
@@ -22,92 +60,100 @@
       </option>
     </select>
   </div>
-  <hr />
+
+  <!-- Empty state (shown before any region is selected) -->
+  <div class="empty-state-card" *ngIf="!selectedRegionData">
+    <mat-icon>explore</mat-icon>
+    <h4>{{ 'map.empty.selectTitle' | translate }}</h4>
+    <p>{{ 'map.empty.selectSubtitle' | translate }}</p>
+  </div>
+
+  <hr *ngIf="selectedRegionData" />
 
   <!-- Region Details -->
   <div class="sidebar-section region-details" *ngIf="selectedRegionData as region">
-    <h3>{{ 'map.regions.' + getRegionKey(region.name) | translate }}</h3>
+    <h3>{{ region.name }}</h3>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.region.population' | translate }}
+      <strong>
+        {{ 'map.region.population' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, populationTooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #populationTooltip style="display: none">{{
-            'map.tooltip.population' | translate
-          }}</span> </span
+          <span #populationTooltip style="display: none">
+            {{ 'map.tooltip.population' | translate }}
+          </span> </span
         >:
       </strong>
       {{ region.population | number }}
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.region.area' | translate }}
+      <strong>
+        {{ 'map.region.area' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, areaTooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #areaTooltip style="display: none">{{
-            'map.tooltip.area' | translate
-          }}</span> </span
+          <span #areaTooltip style="display: none">
+            {{ 'map.tooltip.area' | translate }}
+          </span> </span
         >:
       </strong>
       {{ region.areaKm2 | number }} km²
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.region.landfills' | translate }}
+      <strong>
+        {{ 'map.region.landfills' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, landfillsTooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #landfillsTooltip style="display: none">{{
-            'map.tooltip.landfills' | translate
-          }}</span> </span
+          <span #landfillsTooltip style="display: none">
+            {{ 'map.tooltip.landfills' | translate }}
+          </span> </span
         >:
       </strong>
       {{ region.landfillCount }}
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.region.totalWaste' | translate }}
+      <strong>
+        {{ 'map.region.totalWaste' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, totalWasteTooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #totalWasteTooltip style="display: none">{{
-            'map.tooltip.totalWaste' | translate
-          }}</span> </span
+          <span #totalWasteTooltip style="display: none">
+            {{ 'map.tooltip.totalWaste' | translate }}
+          </span> </span
         >:
       </strong>
       {{ region.totalWaste | number }} t
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.region.wastePerCapita' | translate }}
+      <strong>
+        {{ 'map.region.wastePerCapita' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, wastePerCapitaTooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #wastePerCapitaTooltip style="display: none">{{
-            'map.tooltip.wastePerCapita' | translate
-          }}</span> </span
+          <span #wastePerCapitaTooltip style="display: none">
+            {{ 'map.tooltip.wastePerCapita' | translate }}
+          </span> </span
         >:
       </strong>
       {{ region.totalWaste / region.population | number : '1.2-2' }}
@@ -115,8 +161,8 @@
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.region.ch4' | translate }}
+      <strong>
+        {{ 'map.region.ch4' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, ch4Tooltip.textContent)"
@@ -130,8 +176,8 @@
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.region.co2' | translate }}
+      <strong>
+        {{ 'map.region.co2' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, co2Tooltip.textContent)"
@@ -146,12 +192,11 @@
 
     <p>
       <strong>{{ 'map.region.pollutionLevel' | translate }}:</strong>
-      <span [ngClass]="region.pollutionLevel">{{
-        'map.pollution.' + region.pollutionLevel | translate
-      }}</span>
+      <span [ngClass]="region.pollutionLevel">
+        {{ 'map.pollution.' + region.pollutionLevel | translate }}
+      </span>
     </p>
   </div>
-  <hr *ngIf="selectedRegionData" />
 
   <!-- Landfill Details -->
   <div class="sidebar-section landfill-details" *ngIf="selectedLandfill && latestMonitoring">
@@ -168,119 +213,119 @@
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.landfill.yearCreated' | translate }}
+      <strong>
+        {{ 'map.landfill.yearCreated' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, yearCreatedTooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #yearCreatedTooltip style="display: none">{{
-            'map.tooltip.landfill.yearCreated' | translate
-          }}</span> </span
+          <span #yearCreatedTooltip style="display: none">
+            {{ 'map.tooltip.landfill.yearCreated' | translate }}
+          </span> </span
         >:
       </strong>
       {{ selectedLandfill.yearCreated }}
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.landfill.yearMeasured' | translate }}
+      <strong>
+        {{ 'map.landfill.yearMeasured' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, yearMeasuredTooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #yearMeasuredTooltip style="display: none">{{
-            'map.tooltip.landfill.yearMeasured' | translate
-          }}</span> </span
+          <span #yearMeasuredTooltip style="display: none">
+            {{ 'map.tooltip.landfill.yearMeasured' | translate }}
+          </span> </span
         >:
       </strong>
       {{ latestMonitoring.year }}
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.landfill.area' | translate }}
+      <strong>
+        {{ 'map.landfill.area' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, landfillAreaTooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #landfillAreaTooltip style="display: none">{{
-            'map.tooltip.landfill.area' | translate
-          }}</span> </span
+          <span #landfillAreaTooltip style="display: none">
+            {{ 'map.tooltip.landfill.area' | translate }}
+          </span> </span
         >:
       </strong>
       {{ latestMonitoring.areaM2 | number }} m²
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.landfill.volume' | translate }}
+      <strong>
+        {{ 'map.landfill.volume' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, landfillVolumeTooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #landfillVolumeTooltip style="display: none">{{
-            'map.tooltip.landfill.volume' | translate
-          }}</span> </span
+          <span #landfillVolumeTooltip style="display: none">
+            {{ 'map.tooltip.landfill.volume' | translate }}
+          </span> </span
         >:
       </strong>
       {{ latestMonitoring.volumeM3 | number }} m³
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.landfill.waste' | translate }}
+      <strong>
+        {{ 'map.landfill.waste' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, landfillWasteTooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #landfillWasteTooltip style="display: none">{{
-            'map.tooltip.landfill.waste' | translate
-          }}</span> </span
+          <span #landfillWasteTooltip style="display: none">
+            {{ 'map.tooltip.landfill.waste' | translate }}
+          </span> </span
         >:
       </strong>
       {{ latestMonitoring.wasteTons | number }} t
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.landfill.ch4' | translate }}
+      <strong>
+        {{ 'map.landfill.ch4' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, landfillCh4Tooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #landfillCh4Tooltip style="display: none">{{
-            'map.tooltip.landfill.ch4' | translate
-          }}</span> </span
+          <span #landfillCh4Tooltip style="display: none">
+            {{ 'map.tooltip.landfill.ch4' | translate }}
+          </span> </span
         >:
       </strong>
       {{ latestMonitoring.ch4Tons | number }} t
     </p>
 
     <p class="info-item">
-      <strong
-        >{{ 'map.landfill.co2' | translate }}
+      <strong>
+        {{ 'map.landfill.co2' | translate }}
         <span
           class="tooltip-container"
           (mouseenter)="showTooltip($event, landfillCo2Tooltip.textContent)"
           (mouseleave)="hideTooltip()"
         >
           <mat-icon class="tooltip-icon">info_outline</mat-icon>
-          <span #landfillCo2Tooltip style="display: none">{{
-            'map.tooltip.landfill.co2' | translate
-          }}</span> </span
+          <span #landfillCo2Tooltip style="display: none">
+            {{ 'map.tooltip.landfill.co2' | translate }}
+          </span> </span
         >:
       </strong>
       {{ latestMonitoring.co2Tons | number }} t
@@ -309,8 +354,8 @@
         {{ 'map.landfill.size.' + lf.size | translate }}
       </p>
       <p>
-        <strong>{{ 'map.landfill.coords' | translate }}:</strong> {{ lf.latitude.toFixed(3) }},
-        {{ lf.longitude.toFixed(3) }}
+        <strong>{{ 'map.landfill.coords' | translate }}:</strong>
+        {{ lf.latitude.toFixed(3) }}, {{ lf.longitude.toFixed(3) }}
       </p>
     </div>
   </div>
