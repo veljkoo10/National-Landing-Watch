@@ -7,22 +7,22 @@ using Enzivor.Api.Services.Interfaces;
 namespace Enzivor.Api.Services.Implementations
 {
     /// <summary>
-    /// Handles creation and update logic for landfill sites.
+    /// Handles creation, monitoring, and statistics logic for landfill sites.
     /// </summary>
     public sealed class LandfillSiteService : ILandfillSiteService
     {
         private readonly ILandfillDetectionRepository _detRepo;
         private readonly ILandfillSiteRepository _siteRepo;
-        private readonly IMethaneCalculationService _methaneService;
+        private readonly ICalculationService _calculationService;
 
         public LandfillSiteService(
             ILandfillDetectionRepository detRepo,
             ILandfillSiteRepository siteRepo,
-            IMethaneCalculationService methaneService)
+            ICalculationService calculationService)
         {
             _detRepo = detRepo;
             _siteRepo = siteRepo;
-            _methaneService = methaneService;
+            _calculationService = calculationService;
         }
 
         public async Task<int> CreateSitesFromUnlinkedDetectionsAsync(
@@ -48,16 +48,12 @@ namespace Enzivor.Api.Services.Implementations
                 {
                     Name = d.LandfillName,
                     Category = d.Type,
-                    Status = CurationStatus.Pending,
-
                     PointLat = (d.NorthWestLat + d.SouthEastLat) / 2.0,
                     PointLon = (d.NorthWestLon + d.SouthEastLon) / 2.0,
                     BoundaryGeoJson = d.PolygonCoordinates,
                     EstimatedAreaM2 = d.SurfaceArea,
-
                     RegionTag = NormalizeKey(d.RegionTag),
                     Region = d.Region,
-
                     CreatedAt = now,
                     UpdatedAt = now
                 };
@@ -67,12 +63,14 @@ namespace Enzivor.Api.Services.Implementations
                     SurfaceArea = d.SurfaceArea,
                     ParsedRegion = d.Region
                 };
-                _methaneService.CalculateMethaneEmissions(dummyDto);
+
+                _calculationService.CalculateMethaneEmissions(dummyDto);
 
                 site.EstimatedDepth = dummyDto.EstimatedDepth;
                 site.EstimatedDensity = dummyDto.EstimatedDensity;
                 site.EstimatedMSW = dummyDto.EstimatedMSW;
                 site.MCF = dummyDto.MCF;
+                site.EstimatedVolumeM3 = dummyDto.EstimatedVolume;
                 site.EstimatedCH4TonsPerYear = dummyDto.CH4GeneratedTonnesPerYear;
                 site.EstimatedCO2eTonsPerYear = dummyDto.CO2EquivalentTonnesPerYear;
 
@@ -80,23 +78,82 @@ namespace Enzivor.Api.Services.Implementations
                 sites.Add(site);
             }
 
-            // Insert sites and get IDs
             await _siteRepo.AddRangeAsync(sites, ct);
             await _siteRepo.SaveChangesAsync(ct);
 
-            // Explicitly set FK to ensure it is persisted
             foreach (var site in sites)
-            {
                 foreach (var d in site.Detections)
-                {
                     d.LandfillSiteId = site.Id;
-                }
+
+            await _siteRepo.SaveChangesAsync(ct);
+            return sites.Count;
+        }
+
+        public async Task<IEnumerable<MonitoringDto>> GetMonitoringsAsync(int landfillId, CancellationToken ct = default)
+        {
+            var site = await _siteRepo.GetByIdWithDetectionsAsync(landfillId, ct);
+            if (site is null || site.Detections == null || !site.Detections.Any())
+                return Enumerable.Empty<MonitoringDto>();
+
+            var year = DateTime.UtcNow.Year;
+            var dtos = site.Detections.Select(d => new MonitoringDto
+            {
+                Id = d.Id,
+                LandfillId = landfillId,
+                Year = year,
+                AreaM2 = Math.Round(d.SurfaceArea, 2)
+            }).ToList();
+
+            foreach (var dto in dtos)
+            {
+                var landfillDto = new LandfillDto
+                {
+                    SurfaceArea = dto.AreaM2,
+                    ParsedRegion = site.Region,
+                    Type = site.Category.ToString().ToLowerInvariant()
+                };
+
+                _calculationService.CalculateMethaneEmissions(landfillDto);
+
+                dto.VolumeM3 = landfillDto.EstimatedVolume;
+                dto.WasteTons = landfillDto.EstimatedMSW;
+                dto.Ch4Tons = landfillDto.CH4GeneratedTonnesPerYear;
+                dto.Co2Tons = landfillDto.CO2EquivalentTonnesPerYear;
             }
 
-            // Persist FK updates
-            await _siteRepo.SaveChangesAsync(ct);
+            return dtos;
+        }
 
-            return sites.Count;
+        public async Task<MonitoringDto?> GetLatestMonitoringAsync(int landfillId, CancellationToken ct = default)
+        {
+            var site = await _siteRepo.GetByIdWithDetectionsAsync(landfillId, ct);
+            if (site is null || site.Detections == null || !site.Detections.Any())
+                return null;
+
+            var latest = site.Detections.OrderByDescending(d => d.Confidence).FirstOrDefault();
+            if (latest == null)
+                return null;
+
+            var landfillDto = new LandfillDto
+            {
+                SurfaceArea = latest.SurfaceArea,
+                ParsedRegion = site.Region,
+                Type = site.Category.ToString().ToLowerInvariant()
+            };
+
+            _calculationService.CalculateMethaneEmissions(landfillDto);
+
+            return new MonitoringDto
+            {
+                Id = latest.Id,
+                LandfillId = landfillId,
+                Year = DateTime.UtcNow.Year,
+                AreaM2 = landfillDto.SurfaceArea,
+                VolumeM3 = landfillDto.EstimatedVolume,
+                WasteTons = landfillDto.EstimatedMSW,
+                Ch4Tons = landfillDto.CH4GeneratedTonnesPerYear,
+                Co2Tons = landfillDto.CO2EquivalentTonnesPerYear
+            };
         }
 
         private static string? NormalizeKey(string? v)

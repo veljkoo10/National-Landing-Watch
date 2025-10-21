@@ -36,6 +36,7 @@ namespace Enzivor.Api.Models.Dtos
         public double EstimatedDepth { get; set; }
         public double EstimatedDensity { get; set; }
         public double EstimatedMSW { get; set; }
+        public double EstimatedVolume { get; set; }
         public double MCF { get; set; }                  
         public double CH4GeneratedTonnesPerYear { get; set; }  
         public double CO2EquivalentTonnesPerYear { get; set; }

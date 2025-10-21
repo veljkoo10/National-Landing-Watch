@@ -32,11 +32,12 @@ namespace Enzivor.Api.Repositories.Implementations
             await _db.SaveChangesAsync(ct);
         }
 
-        public async Task<LandfillDetection?> GetByIdAsync(int id, CancellationToken ct = default)
+        public async Task<IEnumerable<LandfillDetection>> GetByLandfillIdAsync(int landfillId, CancellationToken ct = default)
         {
             return await _db.LandfillDetections
-                .Include(d => d.LandfillSite)
-                .FirstOrDefaultAsync(d => d.Id == id, ct);
+                .AsNoTracking()
+                .Where(d => d.LandfillSiteId == landfillId)
+                .ToListAsync(ct);
         }
     }
 }
