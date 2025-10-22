@@ -1,4 +1,5 @@
-﻿using Enzivor.Api.Models.Dtos.Landfills;
+﻿using Enzivor.Api.Models.Domain;
+using Enzivor.Api.Models.Dtos.Landfills;
 using Enzivor.Api.Models.Enums;
 using Enzivor.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,7 @@ namespace Enzivor.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ShowLandfillDto>> GetLandfillById(int id, CancellationToken ct)
+        public async Task<ActionResult<LandfillSite>> GetLandfillById(int id, CancellationToken ct)
         {
             var landfill = await _queryService.GetLandfillByIdAsync(id, ct);
             return landfill is null ? NotFound() : Ok(landfill);

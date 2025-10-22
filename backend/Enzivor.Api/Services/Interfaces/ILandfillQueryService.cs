@@ -1,4 +1,5 @@
-﻿using Enzivor.Api.Models.Dtos.Landfills;
+﻿using Enzivor.Api.Models.Domain;
+using Enzivor.Api.Models.Dtos.Landfills;
 
 namespace Enzivor.Api.Services.Interfaces
 {
@@ -10,16 +11,16 @@ namespace Enzivor.Api.Services.Interfaces
         /// <summary>
         /// Retrieves all landfill sites.
         /// </summary>
-        Task<IEnumerable<ShowLandfillDto>> GetAllLandfillsAsync(CancellationToken ct);
+        Task<IEnumerable<LandfillSite>> GetAllLandfillsAsync(CancellationToken ct);
 
         /// <summary>
         /// Retrieves a single landfill by its ID.
         /// </summary>
-        Task<ShowLandfillDto?> GetLandfillByIdAsync(int id, CancellationToken ct);
+        Task<LandfillSite?> GetLandfillByIdAsync(int id, CancellationToken ct);
 
         /// <summary>
         /// Retrieves all landfills within a specific region.
         /// </summary>
-        Task<IEnumerable<ShowLandfillDto>> GetLandfillsByRegionAsync(string regionKey, CancellationToken ct);
+        Task<IEnumerable<LandfillSite>> GetLandfillsByRegionAsync(string regionKey, CancellationToken ct);
     }
 }

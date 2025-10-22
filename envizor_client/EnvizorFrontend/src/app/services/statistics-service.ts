@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_CONFIG } from './api-config';
 import { BaseService } from './base-service';
+import { LandfillSite } from '../DTOs/LandfillSiteAllDto';
 
 export type WasteByRegionDto = { name: string; totalWaste: number };
 export type LandfillTypeDto = { name: string; count: number };
@@ -56,8 +57,8 @@ export class StatisticsService extends BaseService {
     );
   }
 
-  getTop3LargestLandfills(): Observable<TopLandfillDto[]> {
-    return this.http.get<TopLandfillDto[]>(`${this.statsUrl}/top3-largest`);
+  getTop3LargestLandfills(): Observable<LandfillSite[]> {
+    return this.http.get<LandfillSite[]>(`${this.statsUrl}/top3-largest`);
   }
 
   getMostImpactedRegion(): Observable<MostImpactedRegionFullDto> {

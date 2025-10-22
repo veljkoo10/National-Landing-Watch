@@ -199,17 +199,19 @@
   </div>
 
   <!-- Landfill Details -->
-  <div class="sidebar-section landfill-details" *ngIf="selectedLandfill && latestMonitoring">
+  <div class="sidebar-section landfill-details" *ngIf="selectedLandfill">
     <h3>{{ 'map.landfill.id' | translate }}: {{ selectedLandfill.id }}</h3>
 
     <p class="info-item">
       <strong>{{ 'map.landfill.type' | translate }}:</strong>
-      {{ 'map.landfill.type.' + selectedLandfill.type | translate }}
+      {{ getLandfillCategoryString(selectedLandfill.category) }}
     </p>
 
     <p class="info-item">
       <strong>{{ 'map.landfill.size' | translate }}:</strong>
-      {{ 'map.landfill.size.' + selectedLandfill.size | translate }}
+      <span [style.color]="getLandfillSizeInfo(selectedLandfill.estimatedAreaM2!).color">
+        {{ getLandfillSizeInfo(selectedLandfill.estimatedAreaM2!).label }}
+      </span>
     </p>
 
     <p class="info-item">
@@ -226,7 +228,7 @@
           </span> </span
         >:
       </strong>
-      {{ selectedLandfill.yearCreated }}
+      {{ selectedLandfill.startYear || 2022 }}
     </p>
 
     <p class="info-item">
@@ -243,7 +245,7 @@
           </span> </span
         >:
       </strong>
-      {{ latestMonitoring.year }}
+      {{ 2025 }}
     </p>
 
     <p class="info-item">
@@ -260,7 +262,7 @@
           </span> </span
         >:
       </strong>
-      {{ latestMonitoring.areaM2 | number }} m²
+      {{ selectedLandfill.estimatedAreaM2 | number }} m²
     </p>
 
     <p class="info-item">
@@ -277,7 +279,7 @@
           </span> </span
         >:
       </strong>
-      {{ latestMonitoring.volumeM3 | number }} m³
+      {{ selectedLandfill.estimatedVolumeM3 | number }} m³
     </p>
 
     <p class="info-item">
@@ -294,7 +296,7 @@
           </span> </span
         >:
       </strong>
-      {{ latestMonitoring.wasteTons | number }} t
+      {{ selectedLandfill.estimatedCH4Tons | number }} t
     </p>
 
     <p class="info-item">
@@ -311,7 +313,7 @@
           </span> </span
         >:
       </strong>
-      {{ latestMonitoring.ch4Tons | number }} t
+      {{ selectedLandfill.estimatedCH4Tons | number }} t
     </p>
 
     <p class="info-item">
@@ -328,7 +330,7 @@
           </span> </span
         >:
       </strong>
-      {{ latestMonitoring.co2Tons | number }} t
+      {{ selectedLandfill.estimatedCO2eTons | number }} t
     </p>
   </div>
 </div>
@@ -347,15 +349,17 @@
       <h4>{{ 'map.landfill.id' | translate }}: {{ lf.id }}</h4>
       <p>
         <strong>{{ 'map.landfill.type' | translate }}:</strong>
-        {{ 'map.landfill.type.' + lf.type | translate }}
+        {{ getLandfillCategoryString(lf.category) }}
       </p>
       <p>
         <strong>{{ 'map.landfill.size' | translate }}:</strong>
-        {{ 'map.landfill.size.' + lf.size | translate }}
+        <span [style.color]="getLandfillSizeInfo(lf.estimatedAreaM2!).color">
+          {{ getLandfillSizeInfo(lf.estimatedAreaM2!).label }}
+        </span>
       </p>
       <p>
         <strong>{{ 'map.landfill.coords' | translate }}:</strong>
-        {{ lf.latitude.toFixed(3) }}, {{ lf.longitude.toFixed(3) }}
+        {{ lf.pointLat?.toFixed(5) }}, {{ lf.pointLon?.toFixed(5) }}
       </p>
     </div>
   </div>

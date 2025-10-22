@@ -61,7 +61,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Enzivor.Api.Models.Dtos.Landfills.ShowLandfillDto",
+        "Type": "Enzivor.Api.Models.Domain.LandfillSite",
         "MediaTypes": [
           "text/plain",
           "application/json",

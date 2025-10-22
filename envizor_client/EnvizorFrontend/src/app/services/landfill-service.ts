@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { API_CONFIG } from './api-config';
 import { BaseService } from './base-service';
 import { LandfillDto } from '../DTOs';
+import { LandfillSite } from '../DTOs/LandfillSiteAllDto';
 
 @Injectable({ providedIn: 'root' })
 export class LandfillService extends BaseService {
@@ -13,16 +14,20 @@ export class LandfillService extends BaseService {
     super(http);
   }
 
-  getAllLandfills(): Observable<LandfillDto[]> {
-    return this.get<LandfillDto[]>(this.landfillUrl);
+  getAllLandfills(): Observable<LandfillSite[]> {
+    return this.get<LandfillSite[]>(this.landfillUrl);
   }
 
-  getLandfillById(id: number): Observable<LandfillDto> {
-    return this.get<LandfillDto>(`${this.landfillUrl}/${id}`);
-  }
+  // getLandfillById(id: number): Observable<LandfillDto> {
+  //   return this.get<LandfillDto>(`${this.landfillUrl}/${id}`);
+  // }
 
-  getLandfillsByRegion(regionKey: string): Observable<LandfillDto[]> {
+  getLandfillsByRegion(regionKey: string): Observable<LandfillSite[]> {
     // backend route: GET /api/landfills/region/{key}
-    return this.get<LandfillDto[]>(`${this.landfillUrl}/region/${encodeURIComponent(regionKey)}`);
+    return this.get<LandfillSite[]>(`${this.landfillUrl}/region/${encodeURIComponent(regionKey)}`);
+  }
+
+  getLandfillById(id: number): Observable<LandfillSite> {
+    return this.get<LandfillSite>(`${this.landfillUrl}/${id}`);
   }
 }

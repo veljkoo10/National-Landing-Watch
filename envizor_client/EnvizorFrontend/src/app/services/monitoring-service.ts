@@ -13,11 +13,11 @@ export class MonitoringService extends BaseService {
     super(http);
   }
 
-  getMonitoringsByLandfill(landfillId: number): Observable<MonitoringDto[]> {
-    return this.get<MonitoringDto[]>(`${this.monitoringUrl}/landfill/${landfillId}`);
-  }
+  // getMonitoringsByLandfill(landfillId: number): Observable<MonitoringDto[]> {
+  //   return this.get<MonitoringDto[]>(`${this.monitoringUrl}/landfill/${landfillId}`);
+  // }
 
-  getLatestMonitoring(landfillId: number): Observable<MonitoringDto> {
-    return this.get<MonitoringDto>(`${this.monitoringUrl}/landfill/${landfillId}/latest`);
-  }
+  // getLatestMonitoring(landfillId: number): Observable<MonitoringDto> {
+  //   return this.get<MonitoringDto>(`${this.monitoringUrl}/landfill/${landfillId}/latest`);
+  // }
 }

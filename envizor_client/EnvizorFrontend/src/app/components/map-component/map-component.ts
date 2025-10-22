@@ -4,9 +4,11 @@ import mapboxgl from 'mapbox-gl';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '../../pipes/translation-pipe';
 import { SidebarCommunicationService, RegionService, LandfillService } from '../../services';
-import { RegionDto, LandfillDto, MonitoringDto } from '../../DTOs';
+import { RegionDto, MonitoringDto } from '../../DTOs';
 import { MonitoringService } from '../../services/monitoring-service';
 import { FormsModule } from '@angular/forms';
+import { LandfillSite } from '../../DTOs/LandfillSiteAllDto';
+import { LandfillCategory } from '../../DTOs/Enums/LandfillCategory';
 
 @Component({
   selector: 'app-map',
@@ -33,13 +35,13 @@ export class MapComponent implements AfterViewInit {
 
   // Data
   selectedRegionData: RegionDto | null = null;
-  selectedLandfills: LandfillDto[] = [];
-  selectedLandfill: LandfillDto | null = null;
-  latestMonitoring: MonitoringDto | null = null;
+  selectedLandfills: LandfillSite[] = [];
+  selectedLandfill: LandfillSite | null = null;
+  // latestMonitoring: MonitoringDto | null = null;
   latestMonitorings: Record<number, MonitoringDto> = {};
   mapType: 'satellite' | 'heatmap' = 'satellite';
   markers: mapboxgl.Marker[] = [];
-  allLandfills: LandfillDto[] = [];
+  allLandfills: LandfillSite[] = [];
   heatmapPopup: mapboxgl.Popup | null = null;
   isDropdownOpen = false;
 
@@ -95,10 +97,10 @@ export class MapComponent implements AfterViewInit {
     KosovoAndMetohija: 'Kosovo i Metohija',
   };
 
-  typeColors: Record<string, string> = {
-    wild: '#FF5B5B',
-    sanitary: '#2196F3',
-    unsanitary: '#FF9800',
+  typeColors: Record<LandfillCategory | number, string> = {
+    [LandfillCategory.Illegal]: '#FF5B5B', // Red
+    [LandfillCategory.NonSanitary]: '#FF9800', // Orange
+    [LandfillCategory.Sanitary]: '#2196F3', // Blue
   };
 
   regionKeys = Object.keys(this.regions);
@@ -123,11 +125,11 @@ export class MapComponent implements AfterViewInit {
     this.landfillService.getAllLandfills().subscribe((landfills) => {
       this.allLandfills = landfills;
       // Fetch latest monitoring for all landfills
-      landfills.forEach((lf) => {
-        this.monitoringService.getLatestMonitoring(lf.id).subscribe((monitoring) => {
-          this.latestMonitorings[lf.id] = monitoring;
-        });
-      });
+      // landfills.forEach((lf) => {
+      //   // this.monitoringService.getLatestMonitoring(lf.id).subscribe((monitoring) => {
+      //   //   this.latestMonitorings[lf.id] = monitoring;
+      //   // });
+      // });
       this.initializeMap();
     });
   }
@@ -141,10 +143,10 @@ export class MapComponent implements AfterViewInit {
     });
 
     this.map.on('load', () => {
-      // this.landfillService.getAllLandfills().subscribe((landfills) => {
-      //   this.selectedLandfills = landfills;
-      //   this.initializeLandfills();
-      // });
+      this.landfillService.getAllLandfills().subscribe((landfills) => {
+        // this.selectedLandfills = landfills;
+        this.initializeLandfills();
+      });
       this.map.setFog({
         'horizon-blend': 0.2,
         color: '#242B4B',
@@ -181,7 +183,7 @@ export class MapComponent implements AfterViewInit {
     const displayName = this.regionDisplayNames[feKey] ?? feKey; // e.g. "Beograd"
 
     this.selectedLandfill = null;
-    this.latestMonitoring = null;
+    // this.latestMonitoring = null;
     this.selectedRegionData = null;
 
     if (feKey === 'WholeSerbia') {
@@ -212,33 +214,23 @@ export class MapComponent implements AfterViewInit {
 
   // Place markers for currently selected landfills (call this after selectedLandfills updates if you want markers)
   private initializeLandfills(): void {
+    // for (const landfill of this.selectedLandfills) {
+    //   this.monitoringService.getLatestMonitoring(landfill.id).subscribe((monitoring) => {
+    //     this.latestMonitorings[landfill.id] = monitoring;
+    //   });
+    // }
     for (const landfill of this.selectedLandfills) {
-      this.monitoringService.getLatestMonitoring(landfill.id).subscribe((monitoring) => {
-        this.latestMonitorings[landfill.id] = monitoring;
-      });
-    }
-    for (const landfill of this.selectedLandfills) {
-      const color = this.typeColors[landfill.type];
+      const color = this.typeColors[landfill.category] || '#FF5B5B'; // fallback to red
 
-      // Create a larger marker using custom HTML element
-      const el = document.createElement('div');
-      el.style.width = '50px';
-      el.style.height = '50px';
-      el.style.borderRadius = '50%';
-      el.style.background = color;
-      el.style.border = '2px solid #fff';
-      el.style.boxShadow = '0 0 8px rgba(0,0,0,0.2)';
-      el.style.cursor = 'pointer';
-      el.title = landfill.type;
-      const marker = new mapboxgl.Marker({ color: '#FF5B5B', scale: 0.8 })
-        // Mapbox requires [lng, lat] !
-        .setLngLat([landfill.longitude, landfill.latitude])
+      const marker = new mapboxgl.Marker({ color })
+        .setLngLat([landfill.pointLon!, landfill.pointLat!])
         .setPopup(
           new mapboxgl.Popup({ closeButton: true, closeOnClick: false }).setHTML(
-            `<strong style="display:block;margin-bottom:8px;font-size:16px;">${landfill.type}</strong>`
+            `<strong style="font-size:16px;">${landfill.name ?? 'Unknown Landfill'}</strong>`
           )
         )
         .addTo(this.map);
+
       this.markers.push(marker);
 
       marker.getElement().addEventListener('click', () => {
@@ -274,9 +266,9 @@ export class MapComponent implements AfterViewInit {
     if (this.map.getLayer('landfill-heatmap')) {
       this.map.removeLayer('landfill-heatmap');
     }
-    // if (this.map.getSource('landfills')) {
-    //   this.map.removeSource('landfills');
-    // }
+    if (this.map.getSource('landfills')) {
+      this.map.removeSource('landfills');
+    }
 
     if (this.mapType === 'satellite') {
       this.map.setStyle('mapbox://styles/mapbox/satellite-streets-v12');
@@ -293,19 +285,15 @@ export class MapComponent implements AfterViewInit {
         features: this.allLandfills.map((lf) => ({
           type: 'Feature',
           properties: {
-            emission: this.latestMonitorings[lf.id]?.ch4Tons ?? 0,
+            emission: lf.estimatedAreaM2 ?? 0,
           },
           geometry: {
             type: 'Point',
-            coordinates: [lf.longitude, lf.latitude],
+            coordinates: [lf.pointLon!, lf.pointLat!],
           },
         })),
       };
 
-      console.log(
-        'CH4 tons for all landfills:',
-        this.allLandfills.map((lf) => this.latestMonitorings[lf.id]?.ch4Tons ?? 0)
-      );
       this.map.once('style.load', () => {
         this.map.addSource('landfills', { type: 'geojson', data: geojson });
         this.map.addLayer({
@@ -355,12 +343,43 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
-  onLandfillClick(lf: LandfillDto): void {
+  getLandfillSizeString(size: number): string {
+    if (size < 10000) {
+      return 'Small';
+    } else if (size < 50000) {
+      return 'Medium';
+    } else {
+      return 'Large';
+    }
+  }
+
+  getLandfillSizeInfo(size: number): { label: string; color: string } {
+    if (size < 10000) {
+      return { label: 'Small', color: '#4CAF50' }; // Green
+    } else if (size < 50000) {
+      return { label: 'Medium', color: '#FFC107' }; // Amber
+    } else {
+      return { label: 'Large', color: '#F44336' }; // Red
+    }
+  }
+  getLandfillCategoryString(category: LandfillCategory | number): string {
+    switch (category) {
+      case LandfillCategory.Illegal:
+        return 'illegal';
+      case LandfillCategory.NonSanitary:
+        return 'non-sanitary';
+      case LandfillCategory.Sanitary:
+        return 'sanitary';
+      default:
+        return 'unknown';
+    }
+  }
+  onLandfillClick(lf: LandfillSite): void {
     this.selectedLandfill = lf;
-    this.monitoringService.getLatestMonitoring(lf.id).subscribe((m) => (this.latestMonitoring = m));
+    // this.monitoringService.getLatestMonitoring(lf.id).subscribe((m) => (this.latestMonitoring = m));
 
     // We don't have a bbox; center on point.
-    this.landfillZoomIn(lf.latitude, lf.longitude, lf.latitude, lf.longitude);
+    this.landfillZoomIn(lf.pointLat!, lf.pointLon!, lf.pointLat!, lf.pointLon!);
   }
 
   onCardsMouseMove(event: MouseEvent): void {

@@ -31,7 +31,7 @@ namespace Enzivor.Api.Data
                         RegionTag = "Vojvodina",
                         EstimatedAreaM2 = 12000
                     }
-                );
+                    );
                 await db.SaveChangesAsync();
             }
         }

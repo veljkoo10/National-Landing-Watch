@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Enzivor.Api.Models.Domain;
 using Enzivor.Api.Models.Dtos.Landfills;
 using Enzivor.Api.Repositories.Interfaces;
 using Enzivor.Api.Services.Interfaces;
@@ -19,23 +20,23 @@ namespace Enzivor.Api.Services.Implementations
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ShowLandfillDto>> GetAllLandfillsAsync(CancellationToken ct)
+        public async Task<IEnumerable<LandfillSite>> GetAllLandfillsAsync(CancellationToken ct)
         {
             var sites = await _repo.GetAllAsync(ct);
-            return _mapper.Map<IEnumerable<ShowLandfillDto>>(sites);
+            return _mapper.Map<IEnumerable<LandfillSite>>(sites);
         }
 
-        public async Task<ShowLandfillDto?> GetLandfillByIdAsync(int id, CancellationToken ct)
+        public async Task<LandfillSite?> GetLandfillByIdAsync(int id, CancellationToken ct)
         {
             var site = await _repo.GetByIdAsync(id, ct);
-            return site is null ? null : _mapper.Map<ShowLandfillDto>(site);
+            return site is null ? null : _mapper.Map<LandfillSite>(site);
         }
 
-        public async Task<IEnumerable<ShowLandfillDto>> GetLandfillsByRegionAsync(string regionKey, CancellationToken ct)
+        public async Task<IEnumerable<LandfillSite>> GetLandfillsByRegionAsync(string regionKey, CancellationToken ct)
         {
             var canonicalKey = Normalize(regionKey);
             if (string.IsNullOrWhiteSpace(canonicalKey))
-                return Enumerable.Empty<ShowLandfillDto>();
+                return Enumerable.Empty<LandfillSite>();
 
             var displayName = canonicalKey switch
             {
@@ -49,11 +50,11 @@ namespace Enzivor.Api.Services.Implementations
             };
 
             var sites = await _repo.GetByRegionAsync(displayName, ct);
-            var dtos = _mapper.Map<List<ShowLandfillDto>>(sites);
+            var dtos = _mapper.Map<List<LandfillSite>>(sites);
 
             // preserve canonical key for FE
             foreach (var dto in dtos)
-                dto.RegionKey = canonicalKey;
+                dto.RegionTag = canonicalKey;
 
             return dtos;
         }

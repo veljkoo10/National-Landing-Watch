@@ -26,7 +26,9 @@ import {
 } from '../../services';
 import { of, forkJoin } from 'rxjs';
 import { takeUntil, catchError, map, switchMap } from 'rxjs/operators';
-import { MonitoringService } from '../../services/monitoring-service';
+import { LandfillSite } from '../../DTOs/LandfillSiteAllDto';
+import { SerbianRegion } from '../../DTOs/Enums/SerbianRegion';
+// import { MonitoringService } from '../../services/monitoring-service';
 
 type TopLandfillView = {
   name: string;
@@ -82,6 +84,7 @@ export class StatisticsComponent implements OnInit {
 
   topLargestLandfills: TopLandfillView[] = [];
   mostPollutedRegion?: MostImpactedView;
+  chartRegionLandfills: Highcharts.Options = { accessibility: { enabled: false }, series: [] };
 
   displayedColumns: string[] = [
     'landfill',
@@ -93,50 +96,114 @@ export class StatisticsComponent implements OnInit {
     'co2eqTons',
   ];
   dataSource = new MatTableDataSource<TableRow>([]);
+  regionDisplayMap: Record<SerbianRegion, string> = {
+    [SerbianRegion.Vojvodina]: 'Vojvodina',
+    [SerbianRegion.Belgrade]: 'Beograd',
+    [SerbianRegion.WesternSerbia]: 'Zapadna Srbija',
+    [SerbianRegion.SumadijaAndPomoravlje]: 'Šumadija i Pomoravlje',
+    [SerbianRegion.EasternSerbia]: 'Istočna Srbija',
+    [SerbianRegion.SouthernSerbia]: 'Južna Srbija',
+    [SerbianRegion.KosovoAndMetohija]: 'Kosovo i Metohija',
+  };
+  // In your component, already defined:
+  regionDisplayMap2: Record<string, string> = {
+    beograd: 'Beograd',
+    vojvodina: 'Vojvodina',
+    zapadnasrbija: 'Zapadna Srbija',
+    sumadijapomoravlje: 'Šumadija i Pomoravlje',
+    istocnasrbija: 'Istočna Srbija',
+    juznasrbija: 'Južna Srbija',
+    // Add all possible regionTag values here
+  };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private statisticsService: StatisticsService,
     private landfillService: LandfillService,
-    private monitoringService: MonitoringService,
+    // private monitoringService: MonitoringService,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     // Chart 1: Total waste by region
-    this.statisticsService
-      .getTotalWasteByRegion()
+    this.landfillService
+      .getAllLandfills()
       .pipe(
-        map((rows) => (Array.isArray(rows) ? rows : [])),
-        catchError(() => of([] as WasteByRegionDto[]))
+        map((landfills: LandfillSite[]) => {
+          const regionStats: Record<string, number> = {};
+          for (const lf of landfills) {
+            const regionTag = lf.regionTag;
+            if (!regionTag) continue; // skip if missing
+            // If you want to map to display names:
+            // const displayRegion = regionDisplayMap[regionTag as SerbianRegion] || regionTag;
+            // regionStats[displayRegion] = (regionStats[displayRegion] || 0) + Number(lf.estimatedMSW ?? 0);
+            // If regionTag is already display name, use directly:
+            regionStats[regionTag] = (regionStats[regionTag] || 0) + Number(lf.estimatedMSW ?? 0);
+          }
+          return Object.entries(regionStats)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([name, waste]) => ({ name, totalWaste: waste }));
+        }),
+        catchError(() => of([]))
       )
       .subscribe((rows) => {
         this.chartRegionWaste = {
           accessibility: { enabled: false },
           chart: { type: 'column' },
-          xAxis: { categories: rows.map((r) => r?.name ?? 'N/A') },
-          yAxis: { title: { text: 't' } },
-          tooltip: { pointFormat: '{series.name}: <b>{point.y:.0f} t</b>' },
+          xAxis: {
+            categories: rows.map((r) => r.name),
+            title: { text: 'Region' },
+            labels: { rotation: -45 },
+          },
+          yAxis: {
+            title: { text: 'Waste (t)' },
+            min: 0,
+          },
+          tooltip: {
+            pointFormat: '{series.name}: <b>{point.y:.0f} t</b>',
+          },
           series: [
             {
               type: 'column',
               name: 'Waste (t)',
-              data: rows.map((r) => Number(r?.totalWaste ?? 0)),
+              data: rows.map((r) => r.totalWaste),
             },
           ],
         };
         this.cdr.markForCheck();
       });
-
     // Chart 2: Landfill types (pie)
-    this.statisticsService
-      .getLandfillTypes()
+    this.landfillService
+      .getAllLandfills()
       .pipe(
-        map((rows) => (Array.isArray(rows) ? rows : [])),
-        catchError(() => of([] as LandfillTypeDto[]))
+        map((landfills: LandfillSite[]) => {
+          // Count landfills by type
+          const typeCounts: Record<string, number> = {};
+          for (const lf of landfills) {
+            // Convert enum value to string label
+            let typeLabel = '';
+            switch (lf.category) {
+              case 0:
+                typeLabel = 'Illegal';
+                break;
+              case 1:
+                typeLabel = 'NonSanitary';
+                break;
+              case 2:
+                typeLabel = 'Sanitary';
+                break;
+              default:
+                typeLabel = 'Unknown';
+            }
+            typeCounts[typeLabel] = (typeCounts[typeLabel] || 0) + 1;
+          }
+          // Convert to chart data format
+          return Object.entries(typeCounts).map(([name, count]) => ({ name, y: count }));
+        }),
+        catchError(() => of([]))
       )
-      .subscribe((rows) => {
+      .subscribe((data) => {
         this.chartSpeciesPie = {
           accessibility: { enabled: false },
           chart: { type: 'pie' },
@@ -144,7 +211,7 @@ export class StatisticsComponent implements OnInit {
             {
               type: 'pie',
               name: 'Count',
-              data: rows.map((r) => ({ name: r?.name ?? 'N/A', y: Number(r?.count ?? 0) })),
+              data: data,
             },
           ],
         };
@@ -175,23 +242,29 @@ export class StatisticsComponent implements OnInit {
       });
 
     // Top 3 largest landfills
-    this.statisticsService
-      .getTop3LargestLandfills()
+    this.landfillService
+      .getAllLandfills()
       .pipe(
-        map((rows) => (Array.isArray(rows) ? rows : [])),
-        catchError(() => of([] as TopLandfillDto[]))
+        map((landfills: LandfillSite[]) => {
+          // Sort by estimatedAreaM2 descending and take top 3
+          return (landfills ?? [])
+            .filter((lf) => typeof lf.estimatedAreaM2 === 'number')
+            .sort((a, b) => (b.estimatedAreaM2 ?? 0) - (a.estimatedAreaM2 ?? 0))
+            .slice(0, 3);
+        }),
+        catchError(() => of([] as LandfillSite[]))
       )
       .subscribe((rows) => {
         this.topLargestLandfills = rows.map((r) => ({
           name: r?.name ?? 'N/A',
-          region: r?.region ?? 'Unknown',
-          totalWaste: Number(r?.areaM2 ?? 0),
-          areaM2: r?.areaM2,
-          yearCreated: r?.yearCreated,
+          region:
+            this.regionDisplayMap2[r?.regionTag?.toLowerCase() ?? ''] ?? r?.regionTag ?? 'Unknown',
+          totalWaste: Number(r?.estimatedAreaM2 ?? 0),
+          areaM2: r?.estimatedAreaM2,
+          yearCreated: r?.startYear,
         }));
         this.cdr.markForCheck();
       });
-
     // Most impacted region
     this.statisticsService
       .getMostImpactedRegion()
@@ -226,21 +299,21 @@ export class StatisticsComponent implements OnInit {
 
           // For each landfill, get its latest monitoring (in parallel)
           const perLandfill$ = landfills.map((lf: any) =>
-            this.monitoringService.getLatestMonitoring(lf.id).pipe(
+            this.landfillService.getAllLandfills().pipe(
               catchError(() => of(null)),
               map((mon: any | null): TableRow => {
                 // Prefer monitoring values; fall back to landfill estimates
                 const landfillName = lf?.name ?? `Landfill ${lf?.id ?? ''}`;
-                const regionName = lf?.regionKey ?? '—';
+                const regionName = lf?.region ?? '—';
 
                 const year =
                   mon?.year ??
                   this.toYear(mon?.timestamp || mon?.date || mon?.measuredAt || 0) ??
                   this.toYear(lf?.startYear || 0);
 
-                const volumeM3 = Number(mon?.volumeM3 ?? lf?.estimatedVolumeM3 ?? 0);
-                const wasteTons = Number(mon?.wasteTons ?? lf?.estimatedMSW ?? 0);
-                const ch4Tons = Number(mon?.ch4Tons ?? lf?.estimatedCH4TonsPerYear ?? 0);
+                const volumeM3 = Number(mon?.estimatedVolumeM3 ?? lf?.estimatedVolumeM3 ?? 0);
+                const wasteTons = Number(mon?.estimatedWasteTons ?? lf?.estimatedMSW ?? 0);
+                const ch4Tons = Number(mon?.estimatedCH4Tons ?? lf?.estimatedCH4Tons ?? 0);
                 // If CO₂eq not present, approximate from CH₄ using GWP100 ≈ 28
                 const co2eqTons = Number(
                   mon?.co2eqTons ?? (Number.isFinite(ch4Tons) ? ch4Tons * 28 : 0)

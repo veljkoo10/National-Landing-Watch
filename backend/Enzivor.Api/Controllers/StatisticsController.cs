@@ -1,4 +1,5 @@
-﻿using Enzivor.Api.Models.Dtos.Statistics;
+﻿using Enzivor.Api.Models.Domain;
+using Enzivor.Api.Models.Dtos.Statistics;
 using Enzivor.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,7 @@ namespace Enzivor.Api.Controllers
         }
 
         [HttpGet("landfill-types")]
-        public async Task<ActionResult<IEnumerable<LandfillTypeDto>>> GetLandfillTypes(CancellationToken ct = default)
+        public async Task<ActionResult<IEnumerable<LandfillSite>>> GetLandfillTypes(CancellationToken ct = default)
         {
             var result = await _statisticsService.GetLandfillTypesAsync(ct);
             return Ok(result);
@@ -37,7 +38,7 @@ namespace Enzivor.Api.Controllers
         }
 
         [HttpGet("top3-largest")]
-        public async Task<ActionResult<IEnumerable<TopLandfillDto>>> GetTop3LargestLandfills(CancellationToken ct = default)
+        public async Task<ActionResult<IEnumerable<LandfillSite>>> GetTop3LargestLandfills(CancellationToken ct = default)
         {
             var result = await _statisticsService.GetTopLargestLandfillsAsync(3, ct);
             return Ok(result);
