@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Enzivor.Api.Models.Dtos;
+using Enzivor.Api.Models.Dtos.Landfills;
 using Enzivor.Api.Repositories.Interfaces;
 using Enzivor.Api.Services.Interfaces;
 

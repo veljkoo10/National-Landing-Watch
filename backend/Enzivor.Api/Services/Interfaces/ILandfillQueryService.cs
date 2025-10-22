@@ -1,4 +1,4 @@
-﻿using Enzivor.Api.Models.Dtos;
+﻿using Enzivor.Api.Models.Dtos.Landfills;
 
 namespace Enzivor.Api.Services.Interfaces
 {

@@ -1,9 +1,9 @@
-﻿using Enzivor.Api.Models.Dtos;
-using Enzivor.Api.Repositories.Interfaces;
+﻿using Enzivor.Api.Repositories.Interfaces;
 using Enzivor.Api.Services.Interfaces;
 using Enzivor.Api.Models.Static;
 using System.Globalization;
 using System.Text;
+using Enzivor.Api.Models.Dtos.Regions;
 
 namespace Enzivor.Api.Services.Implementations
 {
@@ -24,8 +24,8 @@ namespace Enzivor.Api.Services.Implementations
             {
                 var sites = allSites.Where(s => Normalize(s.RegionTag) == def.Key).ToList();
 
-                var ch4 = Math.Round(sites.Sum(s => s.EstimatedCH4TonsPerYear ?? 0), 2);
-                var co2 = Math.Round(sites.Sum(s => s.EstimatedCO2eTonsPerYear ?? 0), 2);
+                var ch4 = Math.Round(sites.Sum(s => s.EstimatedCH4Tons ?? 0), 2);
+                var co2 = Math.Round(sites.Sum(s => s.EstimatedCO2eTons ?? 0), 2);
                 var waste = Math.Round(sites.Sum(s => s.EstimatedMSW ?? 0), 2);
 
                 return new RegionDto
@@ -51,8 +51,8 @@ namespace Enzivor.Api.Services.Implementations
             var allSites = await _siteRepository.GetAllAsync(ct);
             var sites = allSites.Where(s => Normalize(s.RegionTag) == def.Key).ToList();
 
-            var ch4 = Math.Round(sites.Sum(s => s.EstimatedCH4TonsPerYear ?? 0), 2);
-            var co2 = Math.Round(sites.Sum(s => s.EstimatedCO2eTonsPerYear ?? 0), 2);
+            var ch4 = Math.Round(sites.Sum(s => s.EstimatedCH4Tons ?? 0), 2);
+            var co2 = Math.Round(sites.Sum(s => s.EstimatedCO2eTons ?? 0), 2);
             var waste = Math.Round(sites.Sum(s => s.EstimatedMSW ?? 0), 2);
 
             return new RegionDto
@@ -80,8 +80,8 @@ namespace Enzivor.Api.Services.Implementations
             var allSites = await _siteRepository.GetAllAsync(ct);
             var sites = allSites.Where(s => Normalize(s.RegionTag) == def.Key).ToList();
 
-            var ch4 = Math.Round(sites.Sum(s => s.EstimatedCH4TonsPerYear ?? 0), 2);
-            var co2 = Math.Round(sites.Sum(s => s.EstimatedCO2eTonsPerYear ?? 0), 2);
+            var ch4 = Math.Round(sites.Sum(s => s.EstimatedCH4Tons ?? 0), 2);
+            var co2 = Math.Round(sites.Sum(s => s.EstimatedCO2eTons ?? 0), 2);
             var waste = Math.Round(sites.Sum(s => s.EstimatedMSW ?? 0), 2);
 
             return new RegionDto
@@ -131,11 +131,11 @@ namespace Enzivor.Api.Services.Implementations
                      .Replace("đ", "dj");
         }
 
-        private static string GetPollutionLevel(double ch4TonsPerYear, int areaKm2)
+        private static string GetPollutionLevel(double ch4Tons, int areaKm2)
         {
             if (areaKm2 <= 0) return "unknown";
-            var density = ch4TonsPerYear / areaKm2;
-            return density switch { > 2.0 => "high", > 0.5 => "medium", _ => "low" };
+            var density = ch4Tons / areaKm2;
+            return density switch { > 1.0 => "high", > 0.15 => "medium", _ => "low" };
         }
     }
 }

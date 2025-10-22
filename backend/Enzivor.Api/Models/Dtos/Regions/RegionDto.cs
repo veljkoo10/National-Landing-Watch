@@ -1,4 +1,4 @@
-﻿namespace Enzivor.Api.Models.Dtos
+﻿namespace Enzivor.Api.Models.Dtos.Regions
 {
     public class RegionDto
     {

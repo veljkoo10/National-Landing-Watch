@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "req",
-        "Type": "Enzivor.Api.Models.Dtos.ProcessProductionRequest",
+        "Type": "Enzivor.Api.Models.Dtos.Detections.ProcessProductionRequest",
         "IsRequired": true
       }
     ],
@@ -35,7 +35,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.ShowLandfillDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.Landfills.ShowLandfillDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -61,7 +61,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Enzivor.Api.Models.Dtos.ShowLandfillDto",
+        "Type": "Enzivor.Api.Models.Dtos.Landfills.ShowLandfillDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -108,7 +108,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.ShowLandfillDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.Landfills.ShowLandfillDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -117,38 +117,6 @@
         "StatusCode": 200
       }
     ]
-  },
-  {
-    "ContainingType": "Enzivor.Api.Controllers.MonitoringsController",
-    "Method": "GetMonitoringsByLandfill",
-    "RelativePath": "api/monitorings/landfill/{landfillId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "landfillId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Enzivor.Api.Controllers.MonitoringsController",
-    "Method": "GetLatestMonitoring",
-    "RelativePath": "api/monitorings/landfill/{landfillId}/latest",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "landfillId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
   },
   {
     "ContainingType": "Enzivor.Api.Controllers.RegionsController",
@@ -202,7 +170,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "Enzivor.Api.Models.Dtos.Ch4OverTimeDto",
+        "Type": "Enzivor.Api.Models.Dtos.Statistics.Ch4OverTimeDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -222,7 +190,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.EmissionPerCapitaDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.Statistics.EmissionPerCapitaDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -242,7 +210,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.GrowthRowDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.Statistics.GrowthRowDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -262,7 +230,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.LandfillTypeDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.Statistics.LandfillTypeDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -282,7 +250,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "Enzivor.Api.Models.Dtos.MostImpactedRegionFullDto",
+        "Type": "Enzivor.Api.Models.Dtos.Statistics.MostImpactedRegionFullDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -302,7 +270,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.TopLandfillDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.Statistics.TopLandfillDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -322,7 +290,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.WasteByRegionDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Enzivor.Api.Models.Dtos.Statistics.WasteByRegionDto, Enzivor.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

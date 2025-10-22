@@ -203,52 +203,6 @@
         }
       }
     },
-    "/api/monitorings/landfill/{landfillId}": {
-      "get": {
-        "tags": [
-          "Monitorings"
-        ],
-        "parameters": [
-          {
-            "name": "landfillId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/monitorings/landfill/{landfillId}/latest": {
-      "get": {
-        "tags": [
-          "Monitorings"
-        ],
-        "parameters": [
-          {
-            "name": "landfillId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/regions": {
       "get": {
         "tags": [

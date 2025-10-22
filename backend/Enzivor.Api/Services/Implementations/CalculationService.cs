@@ -1,47 +1,61 @@
-﻿using Enzivor.Api.Models.Dtos;
+﻿using Enzivor.Api.Models.Dtos.Landfills;
 using Enzivor.Api.Models.Enums;
 using Enzivor.Api.Services.Interfaces;
 
 namespace Enzivor.Api.Services.Implementations
 {
+    /// <summary>
+    /// Provides landfill-related physical and emission calculations
+    /// using the IPCC first-order decay model.
+    /// </summary>
     public class CalculationService : ICalculationService
     {
-        private const double L0 = 0.1;              // Methane potential (simplified)
-        private const double K_DEFAULT = 0.06;      // Decay rate
-        private const double CH4_TO_CO2 = 25.0;     // CO2 equivalent factor
+        private const double L0 = 0.1;              // Methane generation potential (m³ CH₄ per tonne of waste)
+        private const double CH4_TO_CO2 = 25.0;     // Global warming potential (CH₄ → CO₂e)
 
         public void CalculateMethaneEmissions(LandfillDto dto)
-        { 
-            if (dto?.SurfaceArea <= 0) return;
+        {
+            if (dto?.SurfaceArea <= 0 || !dto.StartYear.HasValue)
+                return;
+
+            var currentYear = DateTime.UtcNow.Year;
+            var startYear = dto.StartYear.Value;
+            if (startYear >= currentYear) return;
+
+            var yearsActive = currentYear - startYear;
 
             var wasteDepth = GetSimpleDepth(dto.SurfaceArea, dto.Type);
             var wasteDensity = GetSimpleDensity(dto.SurfaceArea, dto.Type);
             var totalWaste = dto.SurfaceArea * wasteDepth * wasteDensity;
             var decayRate = GetRegionDecayRate(dto.ParsedRegion);
-            var methanePerYear = totalWaste * L0 * decayRate;
 
-            dto.EstimatedDepth = wasteDepth;        // Height (Depth) of landfill
+            dto.EstimatedDepth = wasteDepth;
             dto.EstimatedDensity = wasteDensity;
             dto.EstimatedMSW = totalWaste;
             dto.MCF = wasteDepth >= 6.0 ? 0.8 : 0.5;
             dto.EstimatedVolume = dto.SurfaceArea * wasteDepth;
-            dto.CH4GeneratedTonnesPerYear = methanePerYear;
-            dto.CO2EquivalentTonnesPerYear = methanePerYear * CH4_TO_CO2;
+
+            double methaneSum = 0;
+
+            // Skip first year (methane starts after 1 year)
+            for (int i = 1; i < yearsActive; i++)
+            {
+                methaneSum += totalWaste * L0 * decayRate * Math.Exp(-decayRate * (yearsActive - i)) * dto.MCF;
+            }
+
+            dto.CH4GeneratedTonnes = methaneSum;
+            dto.CO2EquivalentTonnes = methaneSum * CH4_TO_CO2;
         }
 
         public void CalculateMethaneEmissions(IEnumerable<LandfillDto> landfills)
         {
             foreach (var landfill in landfills)
-            {
                 CalculateMethaneEmissions(landfill);
-            }
         }
 
-        public double GetMethaneGenerationPotential()
-        {
-            return L0;
-        }
+        public double GetMethaneGenerationPotential() => L0;
 
+        // Helpers
         private double GetSimpleDepth(double areaM2, string landfillType)
         {
             return landfillType.ToLowerInvariant() switch
@@ -109,16 +123,18 @@ namespace Enzivor.Api.Services.Implementations
 
         private double GetRegionDecayRate(SerbianRegion? region)
         {
+            // warmer areas -> higher decay rate
+            // cooler areas -> lower decay rate
             return region switch
             {
-                SerbianRegion.Vojvodina => 0.065,         // Warmer region
-                SerbianRegion.Belgrade => 0.06,           // Urban area
-                SerbianRegion.WesternSerbia => 0.055,     // Cooler mountains
-                SerbianRegion.EasternSerbia => 0.055,     // Cooler mountains
-                SerbianRegion.SouthernSerbia => 0.058,    // Moderate
-                SerbianRegion.SumadijaPomoravlje => 0.06, // Moderate
-                SerbianRegion.KosovoMetohija => 0.058,    // Moderate
-                _ => K_DEFAULT                            // Default
+                SerbianRegion.Vojvodina => 0.065,
+                SerbianRegion.Belgrade => 0.06,
+                SerbianRegion.WesternSerbia => 0.055,
+                SerbianRegion.EasternSerbia => 0.055,
+                SerbianRegion.SouthernSerbia => 0.058,
+                SerbianRegion.SumadijaPomoravlje => 0.06,
+                SerbianRegion.KosovoMetohija => 0.058,
+                _ => 0.06
             };
         }
     }

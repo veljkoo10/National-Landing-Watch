@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Enzivor.Api.Models.Domain;
-using Enzivor.Api.Models.Dtos;
-using System;
+using Enzivor.Api.Models.Dtos.Landfills;
 
 namespace Enzivor.Api.Mapping
 {
@@ -32,7 +31,7 @@ namespace Enzivor.Api.Mapping
                 .ForMember(dest => dest.PointLon, opt => opt.MapFrom(src => src.Longitude))
                 .ForMember(dest => dest.EstimatedAreaM2, opt => opt.MapFrom(src => src.AreaM2))
                 .ForMember(dest => dest.StartYear, opt => opt.MapFrom(src => src.YearCreated))
-                .ForMember(dest => dest.Category, opt => opt.Ignore())  // handled elsewhere
+                .ForMember(dest => dest.Category, opt => opt.Ignore())
                 .ForMember(dest => dest.Region, opt => opt.Ignore())
                 .ForMember(dest => dest.Detections, opt => opt.Ignore());
 
@@ -83,8 +82,8 @@ namespace Enzivor.Api.Mapping
                 .ForMember(dest => dest.EstimatedMSW, opt => opt.MapFrom(src => src.EstimatedMSW ?? 0))
                 .ForMember(dest => dest.MCF, opt => opt.MapFrom(src => src.MCF ?? 0))
                 .ForMember(dest => dest.EstimatedVolume, opt => opt.MapFrom(src => src.EstimatedVolumeM3 ?? 0))
-                .ForMember(dest => dest.CH4GeneratedTonnesPerYear, opt => opt.MapFrom(src => src.EstimatedCH4TonsPerYear ?? 0))
-                .ForMember(dest => dest.CO2EquivalentTonnesPerYear, opt => opt.MapFrom(src => src.EstimatedCO2eTonsPerYear ?? 0));
+                .ForMember(dest => dest.CH4GeneratedTonnes, opt => opt.MapFrom(src => src.EstimatedCH4Tons ?? 0))
+                .ForMember(dest => dest.CO2EquivalentTonnes, opt => opt.MapFrom(src => src.EstimatedCO2eTons ?? 0));
 
             CreateMap<LandfillDto, LandfillSite>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.KnownLandfillName))
@@ -98,37 +97,15 @@ namespace Enzivor.Api.Mapping
                 .ForMember(dest => dest.EstimatedMSW, opt => opt.MapFrom(src => (double?)src.EstimatedMSW))
                 .ForMember(dest => dest.MCF, opt => opt.MapFrom(src => (double?)src.MCF))
                 .ForMember(dest => dest.EstimatedVolumeM3, opt => opt.MapFrom(src => (double?)src.EstimatedVolume))
-                .ForMember(dest => dest.EstimatedCH4TonsPerYear, opt => opt.MapFrom(src => (double?)src.CH4GeneratedTonnesPerYear))
-                .ForMember(dest => dest.EstimatedCO2eTonsPerYear, opt => opt.MapFrom(src => (double?)src.CO2EquivalentTonnesPerYear))
+                .ForMember(dest => dest.EstimatedCH4Tons, opt => opt.MapFrom(src => (double?)src.CH4GeneratedTonnes))
+                .ForMember(dest => dest.EstimatedCO2eTons, opt => opt.MapFrom(src => (double?)src.CO2EquivalentTonnes))
                 .ForMember(dest => dest.Category, opt => opt.Ignore())
                 .ForMember(dest => dest.Detections, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());
-
-            // MonitoringDto (one-way)
-            CreateMap<LandfillSite, MonitoringDto>()
-                .ForMember(dest => dest.LandfillId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.AreaM2, opt => opt.MapFrom(src => src.EstimatedAreaM2 ?? 0))
-                .ForMember(dest => dest.VolumeM3, opt => opt.MapFrom(src => src.EstimatedVolumeM3 ?? 0))
-                .ForMember(dest => dest.WasteTons, opt => opt.MapFrom(src => src.EstimatedMSW ?? 0))
-                .ForMember(dest => dest.Ch4Tons, opt => opt.MapFrom(src => src.EstimatedCH4TonsPerYear ?? 0))
-                .ForMember(dest => dest.Co2Tons, opt => opt.MapFrom(src => src.EstimatedCO2eTonsPerYear ?? 0))
-                .ForMember(dest => dest.Year, opt => opt.MapFrom(src => src.StartYear ?? 0));
-
-            // Reverse map (if needed for updates)
-            CreateMap<MonitoringDto, LandfillSite>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.LandfillId))
-                .ForMember(dest => dest.StartYear, opt => opt.MapFrom(src => src.Year))
-                .ForMember(dest => dest.EstimatedAreaM2, opt => opt.MapFrom(src => (double?)src.AreaM2))
-                .ForMember(dest => dest.EstimatedVolumeM3, opt => opt.MapFrom(src => (double?)src.VolumeM3))
-                .ForMember(dest => dest.EstimatedMSW, opt => opt.MapFrom(src => (double?)src.WasteTons))
-                .ForMember(dest => dest.EstimatedCH4TonsPerYear, opt => opt.MapFrom(src => (double?)src.Ch4Tons))
-                .ForMember(dest => dest.EstimatedCO2eTonsPerYear, opt => opt.MapFrom(src => (double?)src.Co2Tons))
-                .ForMember(dest => dest.Detections, opt => opt.Ignore());
         }
 
         // Helper methods for computed values
-
         private static string GetFrontendType(string? category)
         {
             switch ((category ?? string.Empty).Trim().ToLowerInvariant())

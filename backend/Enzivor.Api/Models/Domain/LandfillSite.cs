@@ -18,8 +18,8 @@ namespace Enzivor.Api.Models.Domain
         public double? EstimatedDensity { get; set; }
         public double? EstimatedMSW { get; set; }
         public double? MCF { get; set; }
-        public double? EstimatedCH4TonsPerYear { get; set; }
-        public double? EstimatedCO2eTonsPerYear { get; set; }
+        public double? EstimatedCH4Tons { get; set; }
+        public double? EstimatedCO2eTons { get; set; }
         public int? StartYear { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

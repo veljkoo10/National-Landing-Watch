@@ -1,8 +1,8 @@
-﻿using Enzivor.Api.Models.Dtos;
-using Enzivor.Api.Models.Enums;
+﻿using Enzivor.Api.Models.Enums;
 using Enzivor.Api.Repositories.Interfaces;
 using Enzivor.Api.Services.Interfaces;
 using Enzivor.Api.Models.Static;
+using Enzivor.Api.Models.Dtos.Statistics;
 
 namespace Enzivor.Api.Services.Implementations
 {

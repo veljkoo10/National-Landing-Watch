@@ -9,6 +9,7 @@ namespace Enzivor.Api.Models.Domain
         public string ImageName { get; set; } = "";
         public string? LandfillName { get; set; }
         public LandfillCategory Type { get; set; }
+        public int? StartYear { get; set; }
         public double Confidence { get; set; }
         public double NorthWestLat { get; set; }
         public double NorthWestLon { get; set; }
@@ -22,4 +23,3 @@ namespace Enzivor.Api.Models.Domain
         public LandfillSite? LandfillSite { get; set; }
     }
 }
-

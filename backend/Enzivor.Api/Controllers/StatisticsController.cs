@@ -1,4 +1,4 @@
-﻿using Enzivor.Api.Models.Dtos;
+﻿using Enzivor.Api.Models.Dtos.Statistics;
 using Enzivor.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

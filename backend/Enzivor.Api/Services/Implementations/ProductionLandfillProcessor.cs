@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Enzivor.Api.Models.Dtos;
+using Enzivor.Api.Models.Dtos.Landfills;
 using Enzivor.Api.Models.Enums;
 using Enzivor.Api.Services.Interfaces;
 
@@ -39,6 +39,7 @@ namespace Enzivor.Api.Services.Implementations
             foreach (var classification in landfillClassifications)
             {
                 var segmentation = segmentations.FirstOrDefault(s => s.ImageName == classification.ImageName);
+
                 var meta = metadata.FirstOrDefault(m => m.ImageName == classification.ImageName);
 
                 if (meta == null)
@@ -72,7 +73,7 @@ namespace Enzivor.Api.Services.Implementations
                 Console.WriteLine($"Processed {classification.ImageName}: {classification.Type} " +
                                   $"(confidence: {classification.Confidence:F2}, " +
                                   $"segmentation: {(segmentation != null ? "Yes" : "Default")}, " +
-                                  $"Area: {dto.SurfaceArea:F2} m², CH4: {dto.CH4GeneratedTonnesPerYear:F2} t/year)");
+                                  $"Area: {dto.SurfaceArea:F2} m², CH4: {dto.CH4GeneratedTonnes:F2} t/year)");
             }
 
             return results;

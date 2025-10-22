@@ -1,6 +1,6 @@
 ﻿using Enzivor.Api.Data;
 using Enzivor.Api.Models.Domain;
-using Enzivor.Api.Models.Dtos;
+using Enzivor.Api.Models.Dtos.Statistics;
 using Enzivor.Api.Models.Enums;
 using Enzivor.Api.Models.Static;
 using Enzivor.Api.Repositories.Interfaces;
@@ -52,7 +52,7 @@ namespace Enzivor.Api.Repositories.Implementations
                 .AsNoTracking()
                 .Where(s => s.StartYear.HasValue)
                 .GroupBy(s => s.StartYear!.Value)
-                .Select(g => new { Year = g.Key, TotalCH4 = g.Sum(s => s.EstimatedCH4TonsPerYear ?? 0) })
+                .Select(g => new { Year = g.Key, TotalCH4 = g.Sum(s => s.EstimatedCH4Tons ?? 0) })
                 .OrderBy(r => r.Year)
                 .ToListAsync(ct);
 
@@ -89,7 +89,7 @@ namespace Enzivor.Api.Repositories.Implementations
                 .Select(g =>
                 {
                     var regionKey = g.Key?.ToLower().Replace(" ", "") ?? "";
-                    var totalCh4 = g.Sum(l => l.EstimatedCH4TonsPerYear ?? 0);
+                    var totalCh4 = g.Sum(l => l.EstimatedCH4Tons ?? 0);
                     var population = regionPopulations.TryGetValue(regionKey, out var pop) ? pop : 0;
                     var areaKm2 = regionAreas.TryGetValue(regionKey, out var area) ? area : 0d;
                     var totalCo2eq = totalCh4 * CH4_GWP100;
@@ -158,21 +158,13 @@ namespace Enzivor.Api.Repositories.Implementations
                 {
                     var key = g.Key;
                     var pop = normalizedPop[key];
-                    var totalCh4 = g.Sum(x => x.EstimatedCH4TonsPerYear ?? 0);
+                    var totalCh4 = g.Sum(x => x.EstimatedCH4Tons ?? 0);
                     var perCapita = pop > 0 ? totalCh4 / pop : 0;
                     return (RegionTag: g.First().RegionTag ?? key, EmissionsPerCapita: perCapita);
                 })
                 .ToList();
 
             return filtered;
-        }
-
-        public async Task<LandfillSite?> GetByIdWithDetectionsAsync(int id, CancellationToken ct = default)
-        {
-            return await _db.LandfillSites
-                .Include(s => s.Detections)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(s => s.Id == id, ct);
         }
     }
 }

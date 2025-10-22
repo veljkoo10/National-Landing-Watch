@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Enzivor.Api.Models.Domain;
-using Enzivor.Api.Models.Dtos;
+using Enzivor.Api.Models.Dtos.Detections;
 using Enzivor.Api.Models.Enums;
 using Enzivor.Api.Repositories.Interfaces;
 using Enzivor.Api.Services.Interfaces;

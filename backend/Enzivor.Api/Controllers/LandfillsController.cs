@@ -1,4 +1,4 @@
-﻿using Enzivor.Api.Models.Dtos;
+﻿using Enzivor.Api.Models.Dtos.Landfills;
 using Enzivor.Api.Models.Enums;
 using Enzivor.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;

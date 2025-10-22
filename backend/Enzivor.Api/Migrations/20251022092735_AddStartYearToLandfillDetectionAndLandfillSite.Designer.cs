@@ -3,6 +3,7 @@ using System;
 using Enzivor.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Enzivor.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251022092735_AddStartYearToLandfillDetectionAndLandfillSite")]
+    partial class AddStartYearToLandfillDetectionAndLandfillSite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,10 +107,10 @@ namespace Enzivor.Api.Migrations
                     b.Property<double?>("EstimatedAreaM2")
                         .HasColumnType("double precision");
 
-                    b.Property<double?>("EstimatedCH4Tons")
+                    b.Property<double?>("EstimatedCH4TonsPerYear")
                         .HasColumnType("double precision");
 
-                    b.Property<double?>("EstimatedCO2eTons")
+                    b.Property<double?>("EstimatedCO2eTonsPerYear")
                         .HasColumnType("double precision");
 
                     b.Property<double?>("EstimatedDensity")
