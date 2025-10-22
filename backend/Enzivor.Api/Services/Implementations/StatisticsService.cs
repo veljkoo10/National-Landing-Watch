@@ -1,9 +1,8 @@
-﻿using Enzivor.Api.Models.Domain;
-using Enzivor.Api.Models.Dtos.Statistics;
-using Enzivor.Api.Models.Enums;
-using Enzivor.Api.Models.Static;
+﻿using Enzivor.Api.Models.Enums;
 using Enzivor.Api.Repositories.Interfaces;
 using Enzivor.Api.Services.Interfaces;
+using Enzivor.Api.Models.Static;
+using Enzivor.Api.Models.Dtos.Statistics;
 
 namespace Enzivor.Api.Services.Implementations
 {
@@ -27,13 +26,13 @@ namespace Enzivor.Api.Services.Implementations
                 .ToList();
         }
 
-        public async Task<List<LandfillSite>> GetLandfillTypesAsync(CancellationToken ct = default)
+        public async Task<List<LandfillTypeDto>> GetLandfillTypesAsync(CancellationToken ct = default)
         {
             var rows = await _siteRepository.GetLandfillTypesAsync(ct);
 
             return rows
-                .Select(r => new LandfillSite(
-                    Name?: MapCategoryName(r.Category),
+                .Select(r => new LandfillTypeDto(
+                    name: MapCategoryName(r.Category),
                     count: r.Count))
                 .ToList();
         }
