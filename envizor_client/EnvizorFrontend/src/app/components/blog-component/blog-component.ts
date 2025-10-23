@@ -12,57 +12,75 @@ export class BlogComponent {
   blogs = [
     {
       id: 1,
-      title: 'The Role of ESG in a Sustainable Future',
+      title: 'What is ESG and Why is it Important?',
       description:
-        'Environmental, Social, and Governance (ESG) principles are now central to responsible business. Learn how ESG metrics influence investments and help build a resilient global economy.',
+        'Environmental, Social, and Governance (ESG) isn’t just an investor’s checklist anymore — it’s now a...',
       image:
-        'https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=80',
-      link: 'https://www.un.org/sustainabledevelopment/sustainable-development-goals/',
+        '/images/esg.webp',
+      link: 'https://esgthereport.com/what-is-esg-and-why-is-it-important/',
     },
     {
       id: 2,
-      title: 'Methane Emissions and Climate Change',
+      title: 'How Generative AI can build an organization’s ESG roadmap',
       description:
-        'Methane is one of the most potent greenhouse gases. Explore its sources, effects, and the technologies that help detect and reduce emissions worldwide.',
+        'ESG reporting has emerged as a critical component of corporate strategy and stakeholder engagement...',
       image:
-        'https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=80',
-      link: 'https://www.epa.gov/gmi/methane-emissions',
+        '/images/AI.jpeg',
+      link: 'https://www.ey.com/en_in/insights/ai/how-generative-ai-can-build-an-organization-s-esg-roadmap',
     },
     {
       id: 3,
-      title: 'Carbon Dioxide: The Invisible Challenge',
+      title: 'How Does Climate Change Affect Investing?',
       description:
-        'CO₂ is a natural part of our atmosphere, but human activities have disrupted the balance. Find out how innovative solutions are being developed to capture and store carbon.',
+        'Climate change is not just an environmental issue—it’s a financial one too. As global temperatures...',
       image:
-        'https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80',
-      link: 'https://www.climatewatchdata.org/ghg-emissions',
+        '/images/biznis.webp',
+      link: 'https://esgthereport.com/how-does-climate-change-affect-investing/',
     },
     {
       id: 4,
-      title: 'Circular Economy: Rethinking Waste',
+      title: 'How Can the ESG Disclosure Framework Help your Business?',
       description:
-        'From plastic recycling to sustainable production, the circular economy model aims to eliminate waste and promote resource efficiency.',
+        'In today’s business landscape, transparency and sustainability are more crucial than ever. Imagine...',
       image:
-        'https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=80',
-      link: 'https://ellenmacarthurfoundation.org/topics/circular-economy-introduction/overview',
+        '/images/hand.webp',
+      link: 'https://esgthereport.com/how-can-the-esg-disclosure-framework-help-your-business/',
     },
     {
       id: 5,
-      title: 'Green Energy and the Path to Net Zero',
+      title: 'ESG Survey: Who Should be Fined for Greenwashing?',
       description:
-        'Renewable energy sources like wind, solar, and hydro are essential in achieving net-zero emissions. Learn how nations are transitioning to greener energy systems.',
+        'Welcome to our deep dive into a rising issue that impacts consumers worldwide.',
       image:
-        'https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80',
-      link: 'https://www.iea.org/topics/renewables',
+        '/images/tree.webp',
+      link: 'https://esgthereport.com/esg-survey-advisers-say-asset-managers-should-be-fined-for-greenwashing/',
     },
     {
       id: 6,
-      title: 'Green Energy and the Path to Net Zero',
+      title: 'What is Social and Environmental Reporting?',
       description:
-        'Renewable energy sources like wind, solar, and hydro are essential in achieving net-zero emissions. Learn how nations are transitioning to greener energy systems.',
+        'Social and environmental reporting plays a crucial role in helping businesses...',
       image:
-        'https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80',
-      link: 'https://www.iea.org/topics/renewables',
+        '/images/esgg.webp',
+      link: 'https://esgthereport.com/what-is-social-and-environmental-reporting/',
+    },
+    {
+      id: 7,
+      title: 'What are ESG Certifications?',
+      description:
+        'A certificate in ESG investing is a rigorous credential that signifies your environmental...',
+      image:
+        '/images/sert.webp',
+      link: 'https://esgthereport.com/what-are-esg-certifications/',
+    },
+    {
+      id: 8,
+      title: 'What does Personal ESG have to do with Green Living?',
+      description:
+        'Green living has become more than just a trend – it’s a lifestyle choice for many ...',
+      image:
+        '/images/house.webp',
+      link: 'https://esgthereport.com/what-does-personal-esg-have-to-do-with-green-living/',
     },
   ];
 }
