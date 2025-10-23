@@ -311,7 +311,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LandfillTypeDto"
+                    "$ref": "#/components/schemas/LandfillSite"
                   }
                 }
               },
@@ -319,7 +319,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LandfillTypeDto"
+                    "$ref": "#/components/schemas/LandfillSite"
                   }
                 }
               },
@@ -327,7 +327,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LandfillTypeDto"
+                    "$ref": "#/components/schemas/LandfillSite"
                   }
                 }
               }
@@ -378,7 +378,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TopLandfillDto"
+                    "$ref": "#/components/schemas/LandfillSite"
                   }
                 }
               },
@@ -386,7 +386,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TopLandfillDto"
+                    "$ref": "#/components/schemas/LandfillSite"
                   }
                 }
               },
@@ -394,7 +394,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TopLandfillDto"
+                    "$ref": "#/components/schemas/LandfillSite"
                   }
                 }
               }
@@ -737,20 +737,6 @@
         },
         "additionalProperties": false
       },
-      "LandfillTypeDto": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "count": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
       "MostImpactedRegionFullDto": {
         "type": "object",
         "properties": {
@@ -854,30 +840,6 @@
           "areaM2": {
             "type": "number",
             "format": "double",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TopLandfillDto": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "region": {
-            "type": "string",
-            "nullable": true
-          },
-          "areaM2": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "yearCreated": {
-            "type": "integer",
-            "format": "int32",
             "nullable": true
           }
         },

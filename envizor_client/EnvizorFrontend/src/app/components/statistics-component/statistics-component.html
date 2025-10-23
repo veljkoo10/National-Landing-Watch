@@ -93,36 +93,10 @@
           </div>
         </ng-container>
       </div>
-
-      <div class="insight-card">
-        <h3>{{ 'statistics.section2.otherAnalyses.title' | translate }}</h3>
-        <ul class="bullets">
-          <li>{{ 'statistics.section2.otherAnalyses.item1' | translate }}</li>
-          <li>{{ 'statistics.section2.otherAnalyses.item2' | translate }}</li>
-          <li>{{ 'statistics.section2.otherAnalyses.item3' | translate }}</li>
-        </ul>
-      </div>
     </div>
   </section>
 
-  <!-- ========== SECTION 3: Predictions ========== -->
-  <section class="card-section">
-    <h2 class="section-title">{{ 'statistics.section3.title' | translate }}</h2>
-    <p class="section-desc">{{ 'statistics.section3.desc' | translate }}</p>
-
-    <div class="chart-box chart-wide">
-      <h3>{{ 'statistics.section3.chart.prediction' | translate }}</h3>
-      <highcharts-chart
-        [options]="chartPrediction"
-        [oneToOne]="true"
-        constructorType="chart"
-        style="width: 100%; height: 340px; display: block"
-      >
-      </highcharts-chart>
-    </div>
-  </section>
-
-  <!-- ========== SECTION 4: Table (search + paging) ========== -->
+  <!-- ========== SECTION 3: Table (search + paging) ========== -->
   <section class="card-section">
     <h2 class="section-title">{{ 'statistics.section4.title' | translate }}</h2>
     <p class="section-desc">{{ 'statistics.section4.desc' | translate }}</p>

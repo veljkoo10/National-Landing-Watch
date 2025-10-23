@@ -12,13 +12,13 @@
     {
         public static readonly List<RegionDefinition> All = new()
         {
-            new(1, "vojvodina",           "Vojvodina",              1_900_000, 21_506),
-            new(2, "beograd",             "Beograd",                1_675_000, 3_226),
-            new(3, "zapadnasrbija",       "Zapadna Srbija",         1_200_000, 26_000),
-            new(4, "sumadijaipomoravlje", "Šumadija i Pomoravlje",  1_000_000, 13_000),
-            new(5, "istocnasrbija",       "Istočna Srbija",           800_000, 19_000),
-            new(6, "juznasrbija",         "Južna Srbija",             900_000, 15_000),
-            new(7, "kosovoimetohija",     "Kosovo i Metohija",      1_600_000, 10_887)
+            new(1, "vojvodina",           "Vojvodina",               1_740_000, 21_614),
+            new(2, "beograd",             "Beograd",                 1_200_000,   3_234),
+            new(3, "zapadnasrbija",       "Zapadna Srbija",           1_500_000, 26_000),
+            new(4, "sumadijaipomoravlje", "Šumadija i Pomoravlje",    1_000_000, 13_000),
+            new(5, "istocnasrbija",       "Istočna Srbija",            800_000, 19_000),
+            new(6, "juznasrbija",         "Južna Srbija",              900_000, 15_000),
+            new(7, "kosovoimetohija",     "Kosovo i Metohija",       1_600_000, 10_887)
         };
 
         public static Dictionary<string, int> PopulationByName =>

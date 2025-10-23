@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_CONFIG } from './api-config';
 import { BaseService } from './base-service';
-import { LandfillSite } from '../DTOs/LandfillSiteAllDto';
+import { LandfillSite } from '../DTOs/landfillSiteAll-DTO';
 
 export type WasteByRegionDto = { name: string; totalWaste: number };
 export type LandfillTypeDto = { name: string; count: number };

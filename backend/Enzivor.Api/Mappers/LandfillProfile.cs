@@ -51,12 +51,13 @@ namespace Enzivor.Api.Mapping
                 .ForMember(dest => dest.KnownLandfillName, opt => opt.MapFrom(src => src.LandfillName))
                 .ForMember(dest => dest.CenterLat, opt => opt.Ignore())
                 .ForMember(dest => dest.CenterLon, opt => opt.Ignore())
-                .ForMember(dest => dest.ZoomLevel, opt => opt.Ignore());
+                .ForMember(dest => dest.ZoomLevel, opt => opt.Ignore())
+                .ForMember(dest => dest.StartYear, opt => opt.MapFrom(src => src.StartYear));
 
             CreateMap<LandfillDto, LandfillDetection>()
                 .ForMember(dest => dest.ImageName, opt => opt.MapFrom(src => src.ImageName))
                 .ForMember(dest => dest.LandfillName, opt => opt.MapFrom(src => src.KnownLandfillName))
-                .ForMember(dest => dest.Type, opt => opt.Ignore()) // requires enum parse
+                .ForMember(dest => dest.Type, opt => opt.Ignore())
                 .ForMember(dest => dest.Confidence, opt => opt.MapFrom(src => src.Confidence))
                 .ForMember(dest => dest.PolygonCoordinates, opt => opt.MapFrom(src => src.PolygonCoordinates))
                 .ForMember(dest => dest.NorthWestLat, opt => opt.MapFrom(src => src.NorthWestLat))
@@ -67,7 +68,8 @@ namespace Enzivor.Api.Mapping
                 .ForMember(dest => dest.RegionTag, opt => opt.MapFrom(src => src.RegionTag))
                 .ForMember(dest => dest.Region, opt => opt.MapFrom(src => src.ParsedRegion))
                 .ForMember(dest => dest.LandfillSite, opt => opt.Ignore())
-                .ForMember(dest => dest.LandfillSiteId, opt => opt.Ignore());
+                .ForMember(dest => dest.LandfillSiteId, opt => opt.Ignore())
+                .ForMember(dest => dest.StartYear, opt => opt.MapFrom(src => src.StartYear));
 
             // LandfillSite <=> LandfillDto
             CreateMap<LandfillSite, LandfillDto>()

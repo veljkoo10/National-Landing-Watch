@@ -52,7 +52,7 @@ namespace Enzivor.Api.Services.Implementations
                     .Trim('"', '“', '”')
                     .Replace("\"", string.Empty);
 
-                var startYear = d.StartYear ?? (currentYear - 5);
+                var startYear = d.StartYear ?? 2005;
 
                 var site = new LandfillSite
                 {

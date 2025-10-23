@@ -16,19 +16,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import {
-  StatisticsService,
-  WasteByRegionDto,
-  LandfillTypeDto,
   Ch4OverTimeDto,
-  TopLandfillDto,
   MostImpactedRegionFullDto,
-  LandfillService,
 } from '../../services';
-import { of, forkJoin } from 'rxjs';
-import { takeUntil, catchError, map, switchMap } from 'rxjs/operators';
-import { LandfillSite } from '../../DTOs/LandfillSiteAllDto';
+import { RegionService, LandfillService, StatisticsService } from '../../services';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { LandfillSite } from '../../DTOs';
 import { SerbianRegion } from '../../DTOs/Enums/SerbianRegion';
-// import { MonitoringService } from '../../services/monitoring-service';
 
 type TopLandfillView = {
   name: string;
@@ -121,34 +116,19 @@ export class StatisticsComponent implements OnInit {
   constructor(
     private statisticsService: StatisticsService,
     private landfillService: LandfillService,
+    private regionService: RegionService,
     // private monitoringService: MonitoringService,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     // Chart 1: Total waste by region
-    this.landfillService
-      .getAllLandfills()
-      .pipe(
-        map((landfills: LandfillSite[]) => {
-          const regionStats: Record<string, number> = {};
-          for (const lf of landfills) {
-            const regionTag = lf.regionTag;
-            if (!regionTag) continue; // skip if missing
-            // If you want to map to display names:
-            // const displayRegion = regionDisplayMap[regionTag as SerbianRegion] || regionTag;
-            // regionStats[displayRegion] = (regionStats[displayRegion] || 0) + Number(lf.estimatedMSW ?? 0);
-            // If regionTag is already display name, use directly:
-            regionStats[regionTag] = (regionStats[regionTag] || 0) + Number(lf.estimatedMSW ?? 0);
-          }
-          return Object.entries(regionStats)
-            .sort(([a], [b]) => a.localeCompare(b))
-            .map(([name, waste]) => ({ name, totalWaste: waste }));
-        }),
-        catchError(() => of([]))
-      )
+    this.regionService
+      .getAllRegions()
       .subscribe((rows) => {
         this.chartRegionWaste = {
+          title: { text: undefined },
+          credits: { enabled: false },
           accessibility: { enabled: false },
           chart: { type: 'column' },
           xAxis: {
@@ -173,6 +153,7 @@ export class StatisticsComponent implements OnInit {
         };
         this.cdr.markForCheck();
       });
+      
     // Chart 2: Landfill types (pie)
     this.landfillService
       .getAllLandfills()
@@ -205,6 +186,8 @@ export class StatisticsComponent implements OnInit {
       )
       .subscribe((data) => {
         this.chartSpeciesPie = {
+          title: { text: undefined },
+          credits: { enabled: false },
           accessibility: { enabled: false },
           chart: { type: 'pie' },
           series: [
@@ -231,13 +214,14 @@ export class StatisticsComponent implements OnInit {
       )
       .subscribe(({ years, ch4 }) => {
         this.chartEmissionsTrend = {
+          title: { text: undefined },
+          credits: { enabled: false },
           accessibility: { enabled: false },
           chart: { type: 'line' },
           xAxis: { categories: years.map(String) },
           yAxis: { title: { text: 'CH₄ (t)' } },
           series: [{ type: 'line', name: 'CH₄', data: ch4 }],
         };
-        // Prediction chart logic can be added here if needed
         this.cdr.markForCheck();
       });
 
@@ -290,49 +274,31 @@ export class StatisticsComponent implements OnInit {
     this.landfillService
       .getAllLandfills()
       .pipe(
-        // takeUntil(this.destroy$),
         catchError(() => of([])), // no landfills = empty table
-        switchMap((landfills) => {
-          if (!Array.isArray(landfills) || landfills.length === 0) {
-            return of([] as TableRow[]);
-          }
+        map((landfills) => {
+          return (landfills ?? []).map((lf) => {
+            const landfillName = lf?.name ?? `Landfill ${lf?.id ?? ''}`;
 
-          // For each landfill, get its latest monitoring (in parallel)
-          const perLandfill$ = landfills.map((lf: any) =>
-            this.landfillService.getAllLandfills().pipe(
-              catchError(() => of(null)),
-              map((mon: any | null): TableRow => {
-                // Prefer monitoring values; fall back to landfill estimates
-                const landfillName = lf?.name ?? `Landfill ${lf?.id ?? ''}`;
-                const regionName = lf?.region ?? '—';
+            const regionKey = lf?.regionTag?.toLowerCase?.().replace(/\s+/g, '') ?? '';
+            const regionName =
+              this.regionDisplayMap2[regionKey] ?? lf?.regionTag ?? 'Unknown';
 
-                const year =
-                  mon?.year ??
-                  this.toYear(mon?.timestamp || mon?.date || mon?.measuredAt || 0) ??
-                  this.toYear(lf?.startYear || 0);
+            const year = this.toYear(lf?.startYear ?? lf?.createdAt);
+            const volumeM3 = Number(lf?.estimatedVolumeM3 ?? 0);
+            const wasteTons = Number(lf?.estimatedMSW ?? 0);
+            const ch4Tons = Number(lf?.estimatedCH4Tons ?? 0);
+            const co2eqTons = Number(lf?.estimatedCO2eTons ?? 0);
 
-                const volumeM3 = Number(mon?.estimatedVolumeM3 ?? lf?.estimatedVolumeM3 ?? 0);
-                const wasteTons = Number(mon?.estimatedWasteTons ?? lf?.estimatedMSW ?? 0);
-                const ch4Tons = Number(mon?.estimatedCH4Tons ?? lf?.estimatedCH4Tons ?? 0);
-                // If CO₂eq not present, approximate from CH₄ using GWP100 ≈ 28
-                const co2eqTons = Number(
-                  mon?.co2eqTons ?? (Number.isFinite(ch4Tons) ? ch4Tons * 28 : 0)
-                );
-
-                return {
-                  landfillName,
-                  regionName,
-                  year: this.toYear(year),
-                  volumeM3: Number.isFinite(volumeM3) ? volumeM3 : 0,
-                  wasteTons: Number.isFinite(wasteTons) ? wasteTons : 0,
-                  ch4Tons: Number.isFinite(ch4Tons) ? ch4Tons : 0,
-                  co2eqTons: Number.isFinite(co2eqTons) ? co2eqTons : 0,
-                };
-              })
-            )
-          );
-
-          return forkJoin(perLandfill$);
+            return {
+              landfillName,
+              regionName,
+              year,
+              volumeM3,
+              wasteTons,
+              ch4Tons,
+              co2eqTons,
+            };
+          });
         })
       )
       .subscribe((rows: TableRow[]) => {
@@ -380,14 +346,13 @@ export class StatisticsComponent implements OnInit {
         this.cdr.markForCheck();
       });
   }
-  private toYear(v: unknown, fallback = 2024): number {
-    const n = Number(v);
-    if (Number.isFinite(n) && n > 0 && n < 3000) return n;
-    if (typeof v === 'string') {
-      const d = new Date(v);
-      if (!isNaN(d.getTime())) return d.getFullYear();
-    }
-    return fallback;
+
+  private toYear(v: unknown): number {
+    if (!v) return NaN;
+    const parsed = Number(v);
+    if (Number.isFinite(parsed) && parsed > 1900 && parsed < 3000) return parsed;
+    const d = new Date(v as string);
+    return isNaN(d.getTime()) ? NaN : d.getFullYear();
   }
 
   applyFilter(value: string) {

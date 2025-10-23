@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { API_CONFIG } from './api-config';
 import { BaseService } from './base-service';
 import { LandfillDto } from '../DTOs';
-import { LandfillSite } from '../DTOs/LandfillSiteAllDto';
+import { LandfillSite } from '../DTOs/landfillSiteAll-DTO';
 
 @Injectable({ providedIn: 'root' })
 export class LandfillService extends BaseService {

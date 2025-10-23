@@ -59,6 +59,7 @@ namespace Enzivor.Api.Services.Implementations
                     RegionTag = meta.RegionTag,
                     ParsedRegion = ParseRegion(meta.RegionTag),
                     ZoomLevel = meta.ZoomLevel,
+                    StartYear = meta.StartYear,
 
                     ImageNorthWestLat = meta.NorthWestLat,
                     ImageNorthWestLon = meta.NorthWestLon,
@@ -382,6 +383,7 @@ namespace Enzivor.Api.Services.Implementations
             public string RegionTag { get; set; } = "";
             public string? ZoomLevelRaw { get; set; }
             public int? ZoomLevel { get; set; }
+            public int? StartYear { get; set; }
 
             public double NorthWestLat { get; set; }
             public double NorthWestLon { get; set; }
@@ -425,6 +427,7 @@ namespace Enzivor.Api.Services.Implementations
 
                 Map(m => m.RegionTag).Name("RegionTag", "region_tag");
                 Map(m => m.ZoomLevelRaw).Name("ZoomLevel", "zoom_level").Optional();
+                Map(m => m.StartYear).Name("StartYear").Optional();
             }
         }
     }

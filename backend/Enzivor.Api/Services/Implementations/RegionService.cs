@@ -135,7 +135,7 @@ namespace Enzivor.Api.Services.Implementations
         {
             if (areaKm2 <= 0) return "unknown";
             var density = ch4Tons / areaKm2;
-            return density switch { > 1.0 => "high", > 0.15 => "medium", _ => "low" };
+            return density switch { > 1.5 => "high", > 0.5 => "medium", _ => "low" };
         }
     }
 }

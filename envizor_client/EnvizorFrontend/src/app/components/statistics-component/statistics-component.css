@@ -64,19 +64,27 @@
 }
 
 /* Insights cards */
+/* Insights grid full width */
 .insights-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(260px, 1fr));
-  gap: 1rem;
+  grid-template-columns: 2fr 1fr; /* ✅ left 2x wider than right */
+  gap: 1.2rem;                    /* ✅ small separation */
+  width: 100%;
+  align-items: stretch;
 }
+
+/* Each card fills its column */
 .insight-card {
   background: var(--surface);
   border: 1px solid #eee;
-  border-radius: 12px;
-  padding: .9rem;
+  border-radius: 14px;
+  padding: 1.2rem 1.4rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
+
 .insight-card h3 {
-  margin: 0 0 .6rem;
+  margin: 0 0 .8rem;
+  font-size: 1.05rem;
   color: #333;
 }
 

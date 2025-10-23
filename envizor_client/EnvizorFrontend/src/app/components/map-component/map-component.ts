@@ -7,7 +7,7 @@ import { SidebarCommunicationService, RegionService, LandfillService } from '../
 import { RegionDto, MonitoringDto } from '../../DTOs';
 import { MonitoringService } from '../../services/monitoring-service';
 import { FormsModule } from '@angular/forms';
-import { LandfillSite } from '../../DTOs/LandfillSiteAllDto';
+import { LandfillSite } from '../../DTOs/landfillSiteAll-DTO';
 import { LandfillCategory } from '../../DTOs/Enums/LandfillCategory';
 
 @Component({
