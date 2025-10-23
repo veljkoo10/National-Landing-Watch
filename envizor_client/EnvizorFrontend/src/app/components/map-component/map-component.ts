@@ -44,6 +44,7 @@ export class MapComponent implements AfterViewInit {
   allLandfills: LandfillSite[] = [];
   heatmapPopup: mapboxgl.Popup | null = null;
   isDropdownOpen = false;
+  selectedRegionKey: string | null = null;
 
   emissions = this.allLandfills.map((lf) => this.latestMonitorings[lf.id]?.ch4Tons ?? 0);
   minEmission = Math.min(...this.emissions);
@@ -117,6 +118,18 @@ export class MapComponent implements AfterViewInit {
       .replace(/ž/g, 'z');
   }
 
+  normalizeRegionKey(key: string | null | undefined): string {
+    if (!key) return '';
+    return key
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/š/g, 's')
+      .replace(/đ/g, 'dj')
+      .replace(/č|ć/g, 'c')
+      .replace(/ž/g, 'z')
+      .replace(/\?/g, ''); // Remove any stray characters
+  }
+
   tooltipText: string | null = null;
   tooltipPosition = { x: 0, y: 0 };
 
@@ -172,12 +185,19 @@ export class MapComponent implements AfterViewInit {
     return this.getRegionKey(display); // e.g. "beograd"
   }
 
-  onRegionSelect(event: Event): void {
-    const feKey = (event.target as HTMLSelectElement).value; // e.g. "Belgrade"
+  onRegionDropdownClick(event: Event): void {
+    // Get the currently selected value
+    const select = event.target as HTMLSelectElement;
+    const feKey = select.value;
     if (!feKey) return;
-
+    // Always run the region selection logic
+    this.onRegionSelect({ target: select } as unknown as Event);
+  }
+  onRegionSelect(event: Event): void {
+    const feKey = (event.target as HTMLSelectElement).value;
+    if (!feKey) return;
+    this.selectedRegionKey = feKey;
     this.zoomToRegion(feKey);
-
     const apiKey = this.regionKeyForApi(feKey); // e.g. "beograd"
 
     const displayName = this.regionDisplayNames[feKey] ?? feKey; // e.g. "Beograd"
@@ -189,7 +209,10 @@ export class MapComponent implements AfterViewInit {
     if (feKey === 'WholeSerbia') {
       this.landfillService.getAllLandfills().subscribe((lfs) => {
         this.selectedLandfills = lfs;
-        this.initializeLandfills();
+        if (this.mapType === 'satellite') {
+          this.initializeLandfills();
+        }
+        // If heatmap, let updateMapType handle rendering
       });
     } else {
       const apiKey = this.regionKeyForApi(feKey);
@@ -200,12 +223,15 @@ export class MapComponent implements AfterViewInit {
         .subscribe((region) => (this.selectedRegionData = region));
       this.landfillService.getLandfillsByRegion(apiKey).subscribe((lfs) => {
         this.selectedLandfills = lfs;
-        this.initializeLandfills();
+        if (this.mapType === 'satellite') {
+          this.initializeLandfills();
+        }
+        // If heatmap, let updateMapType handle rendering
       });
     }
   }
 
-  private zoomToRegion(feKey: string): void {
+  public zoomToRegion(feKey: string): void {
     const bounds = this.regions[feKey];
     if (bounds) {
       this.map.fitBounds(bounds, { padding: 50, duration: 1200, bearing: 0 });
@@ -226,7 +252,7 @@ export class MapComponent implements AfterViewInit {
         .setLngLat([landfill.pointLon!, landfill.pointLat!])
         .setPopup(
           new mapboxgl.Popup({ closeButton: true, closeOnClick: false }).setHTML(
-            `<strong style="font-size:16px;">${landfill.name ?? 'Unknown Landfill'}</strong>`
+            `<strong style="font-size:14px;">${landfill.name ?? 'Unknown Landfill'}</strong>`
           )
         )
         .addTo(this.map);
@@ -376,9 +402,7 @@ export class MapComponent implements AfterViewInit {
   }
   onLandfillClick(lf: LandfillSite): void {
     this.selectedLandfill = lf;
-    // this.monitoringService.getLatestMonitoring(lf.id).subscribe((m) => (this.latestMonitoring = m));
 
-    // We don't have a bbox; center on point.
     this.landfillZoomIn(lf.pointLat!, lf.pointLon!, lf.pointLat!, lf.pointLon!);
   }
 
@@ -400,7 +424,6 @@ export class MapComponent implements AfterViewInit {
   }
 
   private landfillZoomIn(nwLat: number, nwLng: number, seLat: number, seLng: number) {
-    // If caller passes same point twice, just flyTo center.
     if (nwLat === seLat && nwLng === seLng) {
       this.map.flyTo({ center: [seLng, seLat], zoom: 18, speed: 0.8, curve: 1.2 });
       return;

@@ -43,9 +43,9 @@ namespace Enzivor.Api.Services.Implementations
                 "vojvodina" => "Vojvodina",
                 "beograd" => "Beograd",
                 "zapadnasrbija" => "Zapadna Srbija",
-                "sumadijaipomoravlje" => "Šumadija i Pomoravlje",
-                "istocnasrbija" => "Istočna Srbija",
-                "juznasrbija" => "Južna Srbija",
+                "sumadijaipomoravlje" => "Sumadija i Pomoravlje",
+                "istocnasrbija" => "Istocna Srbija",
+                "juznasrbija" => "Juzna Srbija",
                 _ => canonicalKey
             };
 

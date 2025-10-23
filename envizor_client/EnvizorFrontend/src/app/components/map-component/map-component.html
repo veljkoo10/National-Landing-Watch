@@ -30,17 +30,19 @@
       <div class="inline-dropdown-menu" *ngIf="isDropdownOpen">
         <div
           class="inline-dropdown-option"
-          (click)="setMapType('satellite'); $event.stopPropagation()"
-        >
-          <mat-icon>satellite_alt</mat-icon>
-          <span>Satellite</span>
-        </div>
-        <div
-          class="inline-dropdown-option"
+          *ngIf="mapType === 'satellite'"
           (click)="setMapType('heatmap'); $event.stopPropagation()"
         >
           <mat-icon>local_fire_department</mat-icon>
           <span>Heatmap</span>
+        </div>
+        <div
+          class="inline-dropdown-option"
+          *ngIf="mapType === 'heatmap'"
+          (click)="setMapType('satellite'); $event.stopPropagation()"
+        >
+          <mat-icon>satellite_alt</mat-icon>
+          <span>Satellite</span>
         </div>
       </div>
     </div>
@@ -51,14 +53,30 @@
     <label for="regionSelect" class="region-label">
       {{ 'map.overlay.selectRegion' | translate }}
     </label>
-    <select id="regionSelect" (change)="onRegionSelect($event)" class="region-dropdown">
-      <option value="" disabled selected hidden>
-        {{ 'map.overlay.selectRegion' | translate }}
-      </option>
-      <option *ngFor="let region of regionKeys" [value]="region">
-        {{ regionDisplayNames[region] }}
-      </option>
-    </select>
+    <div class="region-selector-inline">
+      <select
+        id="regionSelect"
+        (change)="onRegionSelect($event)"
+        (click)="onRegionDropdownClick($event)"
+        class="region-dropdown"
+      >
+        <option value="" disabled selected hidden>
+          {{ 'map.overlay.selectRegion' | translate }}
+        </option>
+        <option *ngFor="let region of regionKeys" [value]="region">
+          {{ regionDisplayNames[region] }}
+        </option>
+      </select>
+      <button
+        class="recenter-btn"
+        [disabled]="!selectedRegionKey"
+        (click)="zoomToRegion(selectedRegionKey!)"
+        mat-icon-button
+        aria-label="Recenter map"
+      >
+        <mat-icon>my_location</mat-icon>
+      </button>
+    </div>
   </div>
 
   <!-- Empty state (shown before any region is selected) -->
