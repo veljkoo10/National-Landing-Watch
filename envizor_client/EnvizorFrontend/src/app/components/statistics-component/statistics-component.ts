@@ -153,7 +153,7 @@ export class StatisticsComponent implements OnInit {
         };
         this.cdr.markForCheck();
       });
-      
+
     // Chart 2: Landfill types (pie)
     this.landfillService
       .getAllLandfills()

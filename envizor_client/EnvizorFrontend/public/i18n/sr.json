@@ -10,10 +10,12 @@
   "sidebar.theme.tooltip.light": "Prebaci na svetli režim",
   "sidebar.theme.tooltip.dark": "Prebaci na tamni režim",
 
+  "landing.nav.statistics": "Statistika",
   "landing.nav.title": "Nacionalni nadzor deponija",
   "landing.nav.map": "Mapa",
   "landing.nav.blog": "Blog",
   "landing.nav.faq": "FAQ",
+  "landing.nav.aboutus": "O nama",
 
   "landing.hero.title": "Nacionalni nadzor deponija",
   "landing.hero.description": "Platforma za praćenje deponija širom Srbije korišćenjem satelitskih podataka. Analiziramo metan (CH₄) i ugljen-dioksid (CO₂) kako bismo doprineli čistijoj i održivoj budućnosti.",

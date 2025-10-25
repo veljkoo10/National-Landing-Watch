@@ -238,3 +238,177 @@ p {
     max-width: 300px;
   }
 }
+
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  text-align: center;
+}
+
+.about-container .card-section {
+  background-color: rgba(255, 255, 255, 0.86);
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,.03);
+  margin-bottom: 1.5rem;
+  transition: box-shadow .2s ease, transform .2s ease;
+  text-align: left;
+}
+
+.about-container .card-section:hover {
+  box-shadow: 0 6px 14px rgba(0,0,0,.05);
+  transform: translateY(-2px);
+}
+
+.about-container .page-title {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.about-container .page-subtitle {
+  text-align: center;
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 2rem;
+}
+
+:host-context(body.dark-theme) .about-container .card-section {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(129,199,132,0.15);
+  box-shadow: 0 0 14px rgba(0,0,0,0.5);
+}
+
+:host-context(body.dark-theme) .about-container .card-section:hover {
+  box-shadow: 0 0 18px rgba(129,199,132,0.25);
+  transform: translateY(-3px);
+}
+
+:host-context(body.dark-theme) .about-container {
+  color: #e0e0e0;
+}
+
+/* dark section */
+:host-context(body.dark-theme) {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+
+:host-context(body.dark-theme) .page-title {
+  color: #81c784;
+  text-shadow: 0 0 6px rgba(129, 199, 132, 0.4);
+}
+
+:host-context(body.dark-theme) .page-subtitle {
+  color: #bdbdbd;
+}
+
+:host-context(body.dark-theme) section {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(129, 199, 132, 0.15);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+:host-context(body.dark-theme) section:hover {
+  box-shadow: 0 0 14px rgba(129, 199, 132, 0.2);
+  transform: translateY(-3px);
+}
+
+:host-context(body.dark-theme) h2 {
+  color: #81c784;
+}
+
+:host-context(body.dark-theme) p {
+  color: #e0e0e0;
+}
+
+:host-context(body.dark-theme) .team-member {
+  background-color: #232323;
+  border: 1px solid rgba(129, 199, 132, 0.15);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+:host-context(body.dark-theme) .team-member:hover {
+  background-color: #2a2a2a;
+  box-shadow: 0 0 14px rgba(129, 199, 132, 0.25);
+}
+
+:host-context(body.dark-theme) .member-info h3 {
+  color: #81c784;
+}
+
+:host-context(body.dark-theme) .member-info .role {
+  color: #bdbdbd;
+}
+
+:host-context(body.dark-theme) .member-info .contact {
+  color: #d0d0d0;
+}
+
+:host-context(body.dark-theme) .member-info .contact mat-icon {
+  color: #81c784;
+}
+
+:host-context(body.dark-theme) .social-icons mat-icon {
+  color: #81c784;
+}
+
+:host-context(body.dark-theme) .social-icons a:hover {
+  background-color: rgba(129, 199, 132, 0.15);
+  transform: translateY(-2px);
+}
+
+:host-context(body.dark-theme) .member-photo {
+  border-color: #81c784;
+}
+
+:host-context(body.dark-theme) .contact-form input,
+:host-context(body.dark-theme) .contact-form textarea {
+  background-color: #232323;
+  border: 1px solid rgba(129, 199, 132, 0.2);
+  color: #e0e0e0;
+}
+
+:host-context(body.dark-theme) .contact-form input::placeholder,
+:host-context(body.dark-theme) .contact-form textarea::placeholder {
+  color: #bdbdbd;
+}
+
+:host-context(body.dark-theme) .contact-form input:focus,
+:host-context(body.dark-theme) .contact-form textarea:focus {
+  border-color: #81c784;
+  box-shadow: 0 0 0 2px rgba(129, 199, 132, 0.25);
+  outline: none;
+}
+
+:host-context(body.dark-theme) .contact-form button {
+  background-color: #66bb6a;
+  color: #fff;
+  transition: background-color 0.25s ease;
+}
+
+:host-context(body.dark-theme) .contact-form button:hover {
+  background-color: #81c784;
+}
+
+:host-context(body.dark-theme) .cta-content .cta-image img {
+  filter: brightness(0.9) contrast(1.1);
+  border: 1px solid rgba(129, 199, 132, 0.2);
+}
+
+:host-context(body.dark-theme) section {
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+:host-context(body.dark-theme) .member-info .contact span {
+  color: #ffffff !important;
+}

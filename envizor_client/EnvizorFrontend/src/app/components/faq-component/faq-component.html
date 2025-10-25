@@ -1,29 +1,37 @@
-<div class="faq-container">
+<div class="stats-container faq-container">
   <!-- Header section -->
   <h1 class="faq-title">{{ 'faq.page.title' | translate }}</h1>
   <p class="faq-description" [innerHTML]="'faq.page.description' | translate"></p>
 
   <!-- Categories -->
   <div class="faq-categories">
-    <div class="category-card" *ngFor="let category of categories" (click)="scrollToCategory(category.id)">
+    <div
+      class="category-card"
+      *ngFor="let category of categories"
+      (click)="navigateTo(category.id)"
+    >
       <mat-icon>{{ category.icon }}</mat-icon>
       <span>{{ category.title | translate }}</span>
     </div>
   </div>
 
   <!-- FAQ sections -->
-  <div class="faq-section" *ngFor="let category of categories" [attr.id]="category.id">
+  <section class="card-section" *ngFor="let category of categories" [attr.id]="category.id">
     <h2 class="category-title">{{ category.title | translate }}</h2>
 
-    <mat-accordion>
-      <mat-expansion-panel *ngFor="let item of category.questions" hideToggle>
+    <mat-accordion multi="true">
+      <mat-expansion-panel *ngFor="let item of category.questions" hideToggle #panel="matExpansionPanel">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ item.question | translate }}
           </mat-panel-title>
+          <mat-icon class="toggle-icon"
+                    [ngClass]="{'rotated': panel.expanded, 'minus': panel.expanded}">
+            {{ panel.expanded ? 'remove' : 'add' }}
+          </mat-icon>
         </mat-expansion-panel-header>
         <p class="answer">{{ item.answer | translate }}</p>
       </mat-expansion-panel>
     </mat-accordion>
-  </div>
+  </section>
 </div>

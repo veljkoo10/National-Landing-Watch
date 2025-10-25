@@ -10,10 +10,12 @@
   "sidebar.theme.tooltip.light": "Switch to Light Mode",
   "sidebar.theme.tooltip.dark": "Switch to Dark Mode",
 
+  "landing.nav.statistics": "Statistics",
   "landing.nav.title": "National Landfill Watch",
   "landing.nav.map": "Map",
   "landing.nav.blog": "Blog",
   "landing.nav.faq": "FAQ",
+  "landing.nav.aboutus": "About Us",
 
   "landing.hero.title": "National Landfill Watch",
   "landing.hero.description": "A platform for monitoring landfills across Serbia using advanced satellite data. We analyze methane (CH₄) and carbon dioxide (CO₂) emissions to support cleaner and sustainable communities.",

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, HostListener, HostBinding, inject } from '@angular/core';
+import { Component, AfterViewInit, HostListener, HostBinding, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import mapboxgl from 'mapbox-gl';
 import { MatIcon } from '@angular/material/icon';

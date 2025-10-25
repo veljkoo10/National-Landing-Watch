@@ -390,3 +390,76 @@ hr {
 }
 
 
+/* Dark section */
+:host-context(body.dark-theme) {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+:host-context(body.dark-theme) #map {
+  background-color: #121212 !important;
+  filter: brightness(0.95) contrast(1.05);
+  transition: background-color 0.3s ease;
+}
+
+
+:host-context(body.dark-theme) .map-right-sidebar {
+  background: #1e1e1e;
+  border-left: 1px solid rgba(129, 199, 132, 0.25);
+  color: #e0e0e0;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.6);
+}
+
+
+:host-context(body.dark-theme) .region-label,
+:host-context(body.dark-theme) .map-type-inline-label,
+:host-context(body.dark-theme) .sidebar-section h3 {
+  color: #81c784;
+  text-shadow: 0 0 6px rgba(129, 199, 132, 0.3);
+}
+
+
+:host-context(body.dark-theme) .region-dropdown,
+:host-context(body.dark-theme) .map-type-inline-dropdown {
+  background: #1e1e1e;
+  border: 1px solid rgba(129, 199, 132, 0.25);
+  color: #c8e6c9;
+}
+:host-context(body.dark-theme) .region-dropdown:hover,
+:host-context(body.dark-theme) .map-type-inline-dropdown:hover {
+  background-color: #262626;
+  border-color: #81c784;
+}
+
+:host-context(body.dark-theme) .landfill-card,
+:host-context(body.dark-theme) .empty-state-card {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(129, 199, 132, 0.2);
+  color: #c8e6c9;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.6);
+}
+:host-context(body.dark-theme) .landfill-card:hover,
+:host-context(body.dark-theme) .landfill-card.hovered {
+  background-color: #262626;
+  box-shadow: 0 0 14px rgba(129, 199, 132, 0.25);
+}
+
+
+:host-context(body.dark-theme) .custom-tooltip {
+  background-color: #1e1e1e;
+  color: #c8e6c9;
+  border: 1px solid rgba(129, 199, 132, 0.25);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+}
+
+
+:host-context(body.dark-theme) .recenter-btn {
+  background-color: #262626;
+  box-shadow: 0 1px 4px #81c784;
+}
+:host-context(body.dark-theme) .recenter-btn:hover:not(:disabled) {
+  background-color: #333333;
+}
+:host-context(body.dark-theme) .recenter-btn mat-icon {
+  color: #81c784;
+}

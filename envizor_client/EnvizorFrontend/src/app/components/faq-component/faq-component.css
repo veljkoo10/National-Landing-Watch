@@ -103,3 +103,158 @@ mat-expansion-panel {
     font-size: 0.95rem;
   }
 }
+/* Dark section */
+
+:host-context(body.dark-theme) .faq-container {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+:host-context(body.dark-theme) .faq-title {
+  color: #81c784;
+  text-shadow: 0 0 6px rgba(129, 199, 132, 0.4);
+}
+
+:host-context(body.dark-theme) .faq-description {
+  color: #bdbdbd;
+}
+
+:host-context(body.dark-theme) .faq-categories {
+  gap: 1.2rem;
+}
+
+:host-context(body.dark-theme) .category-card {
+  background-color: #1e1e1e;
+  border: 1px solid #2e7d32;
+  box-shadow: 0 0 10px rgba(46, 125, 50, 0.15);
+  transition: all 0.25s ease;
+}
+
+:host-context(body.dark-theme) .category-card:hover {
+  background-color: #263326;
+  border-color: #81c784;
+  box-shadow: 0 0 12px rgba(129, 199, 132, 0.25);
+  transform: translateY(-3px);
+}
+
+:host-context(body.dark-theme) .category-card mat-icon {
+  color: #81c784;
+}
+
+:host-context(body.dark-theme) .category-title {
+  color: #81c784;
+}
+
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel {
+  background: #1e1e1e !important;
+  border: 1px solid rgba(129, 199, 132, 0.2);
+  border-radius: 10px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  color: #e0e0e0;
+}
+
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel-header {
+  color: #e0e0e0 !important;
+  font-weight: 500;
+  transition: background-color 0.25s ease;
+}
+
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel-header:hover {
+  background-color: rgba(129, 199, 132, 0.08);
+}
+
+:host-context(body.dark-theme) .answer {
+  color: #cfcfcf;
+  background-color: #232323;
+  border-radius: 0 0 10px 10px;
+  padding: 1rem;
+  line-height: 1.6;
+}
+
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel-content {
+  transition: all 0.3s ease;
+}
+
+:host-context(body.dark-theme) .faq-section {
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel-header,
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel-header mat-panel-title,
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel-header span,
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel-body,
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel-content,
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel .mat-expansion-panel-body p {
+  color: #ffffff !important;
+}
+
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel-header.mat-expanded {
+  color: #ffffff !important;
+}
+
+:host-context(body.dark-theme) ::ng-deep .mat-expansion-panel-header.mat-expanded mat-panel-title {
+  font-weight: 600;
+  color: #c8e6c9 !important;
+}
+
+.toggle-icon {
+  color: #2e7d32;
+  transition: transform 0.3s ease, color 0.3s ease;
+  margin-left: auto;
+  font-size: 1.5rem;
+}
+
+mat-expansion-panel-header:hover .toggle-icon:not(.minus) {
+  transform: rotate(-90deg);
+}
+
+.toggle-icon.minus {
+  color: #1b5e20;
+  transform: rotate(0deg);
+}
+
+.faq-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.faq-title,
+.faq-description {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+.faq-container {
+  background: none;
+}
+
+.faq-container .card-section {
+  background-color: rgba(255, 255, 255, 0.86);
+  border-radius: 20px;
+  padding: 1rem 1rem 1.2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,.03);
+  margin-bottom: 1.2rem;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.faq-container .card-section:hover {
+  box-shadow: 0 6px 14px rgba(0,0,0,.05);
+  transform: translateY(-2px);
+}
+
+:host-context(body.dark-theme) .faq-container .card-section {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(129, 199, 132, 0.15);
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+:host-context(body.dark-theme) .faq-container .card-section:hover {
+  box-shadow: 0 0 18px rgba(129, 199, 132, 0.25);
+  transform: translateY(-3px);
+}

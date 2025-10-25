@@ -1,11 +1,11 @@
 <div id="map"></div>
 
-<!-- Left Sidebar Button -->
-<div class="map-overlay">
-  <button (click)="toggleSidebar()">
-    <mat-icon>menu</mat-icon>
-  </button>
-</div>
+<!--&lt;!&ndash; Left Sidebar Button &ndash;&gt;-->
+<!--<div class="map-overlay">-->
+<!--  <button (click)="toggleSidebar()">-->
+<!--    <mat-icon>menu</mat-icon>-->
+<!--  </button>-->
+<!--</div>-->
 
 <div class="map-right-sidebar">
   <!-- Map Type (inline, one row) -->
@@ -86,7 +86,7 @@
     <p>{{ 'map.empty.selectSubtitle' | translate }}</p>
   </div>
 
-  <hr *ngIf="selectedRegionData" />
+  <hr *ngIf="selectedRegionData"/>
 
   <!-- Region Details -->
   <div class="sidebar-section region-details" *ngIf="selectedRegionData as region">

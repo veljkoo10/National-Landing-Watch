@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, effect, inject } from '@angular/core';
+import { Component, EventEmitter, Output, effect, inject, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -11,6 +11,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { SidebarCommunicationService, TranslationService } from '../../services';
 import { filter } from 'rxjs/operators';
 import { TranslatePipe } from '../../pipes/translation-pipe';
+import { ViewChild } from '@angular/core';
+import { MatSidenavContainer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-sidebar',
@@ -30,10 +32,12 @@ import { TranslatePipe } from '../../pipes/translation-pipe';
   templateUrl: './sidebar-component.html',
   styleUrl: './sidebar-component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   @Output() sidebarToggled = new EventEmitter<boolean>();
   private sidebarService = inject(SidebarCommunicationService);
   private translationService = inject(TranslationService);
+  private router = inject(Router);
+  @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
 
   isSidebarOpen = false;
   isMapRoute = false;
@@ -41,7 +45,7 @@ export class SidebarComponent {
   isDarkMode = false;
   selectedLang = this.translationService.getLanguage();
 
-  constructor(private router: Router) {
+  constructor() {
     // Sidebar signal reaction
     effect(() => {
       const toggle = this.sidebarService.sidebarToggleSignal();
@@ -52,11 +56,10 @@ export class SidebarComponent {
     this.router.events
       .pipe(filter(event => event instanceof NavigationStart))
       .subscribe((event: NavigationStart) => {
-        if (event.url.includes('/map') || event.url.includes('/landing')) {
-        this.isSidebarOpen = false;
-        } else {
-          this.isSidebarOpen = true;
-        }
+        const url = event.url;
+        this.isLandingPage = url.includes('/landing');
+        this.isMapRoute = url.includes('/map');
+        this.isSidebarOpen = !(this.isMapRoute || this.isLandingPage);
       });
 
     // Detect route (for ngClass)
@@ -66,18 +69,29 @@ export class SidebarComponent {
         this.isMapRoute = event.urlAfterRedirects.includes('/map');
       });
 
-    // Initialize theme from localStorage
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme === 'dark') {
-      this.isDarkMode = true;
-      document.body.classList.add('dark-theme');
-    }
   }
 
   ngOnInit(): void {
-    // Check initial route when component loads
+    this.checkTheme();
+
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.checkTheme();
+      });
+
     const currentUrl = this.router.url;
     this.isMapRoute = currentUrl.includes('/map');
+  }
+
+  private checkTheme() {
+    this.isDarkMode = localStorage.getItem('theme') === 'dark';
+
+    if (this.isDarkMode) {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
   }
 
   navigateToMap() {
@@ -96,16 +110,22 @@ export class SidebarComponent {
     this.translationService.setLanguage(lang);
   }
 
-  // Theme toggle
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
-    const themeClass = 'dark-theme';
+    const body = document.body;
+
     if (this.isDarkMode) {
-      document.body.classList.add(themeClass);
+      body.classList.add('dark-theme');
       localStorage.setItem('theme', 'dark');
     } else {
-      document.body.classList.remove(themeClass);
+      body.classList.remove('dark-theme');
       localStorage.setItem('theme', 'light');
     }
+
+    setTimeout(() => {
+      if (this.sidenavContainer) {
+        this.sidenavContainer.updateContentMargins();
+      }
+    }, 100);
   }
 }
