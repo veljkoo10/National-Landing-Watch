@@ -137,6 +137,34 @@
   "statistics.labels.population": "Populacija",
   "statistics.labels.area": "Površina",
 
+  "blog.page.title": "Ekološke, društvene i upravljačke (ESG) analize",
+  "blog.page.subtitle": "Otkrijte globalne inicijative, naučne uvide i inovacije koje oblikuju održivu planetu.",
+  "blog.readMore": "Pročitaj više →",
+  
+  "blog.articles.esg.title": "Šta je ESG i zašto je važno?",
+  "blog.articles.esg.description": "Ekološko, društveno i upravljanje (ESG) više nije samo lista za investitore — sada je...",
+  
+  "blog.articles.ai.title": "Kako generativna veštačka inteligencija može da izgradi ESG putokaz organizacije",
+  "blog.articles.ai.description": "ESG izveštavanje se pojavilo kao kritična komponenta korporativne strategije i angažovanja zainteresovanih strana...",
+  
+  "blog.articles.climate.title": "Kako klimatske promene utiču na investiranje?",
+  "blog.articles.climate.description": "Klimatske promene nisu samo ekološko pitanje — to je i finansijsko pitanje. Kako se globalne temperature...",
+  
+  "blog.articles.framework.title": "Kako ESG okvir za obelodanjivanje može pomoći vašem poslovanju?",
+  "blog.articles.framework.description": "U današnjem poslovnom okruženju, transparentnost i održivost su važniji nego ikad. Zamislite...",
+  
+  "blog.articles.survey.title": "ESG anketa: Ko treba da bude kažnjen za greenwashing?",
+  "blog.articles.survey.description": "Dobrodošli u naš duboki uvid u rastući problem koji utiče na potrošače širom sveta.",
+  
+  "blog.articles.reporting.title": "Šta je društveno i ekološko izveštavanje?",
+  "blog.articles.reporting.description": "Društveno i ekološko izveštavanje igra ključnu ulogu u pomaganju preduzećima...",
+  
+  "blog.articles.certifications.title": "Šta su ESG sertifikati?",
+  "blog.articles.certifications.description": "Sertifikat u ESG investiranju je rigorozan kvalitet koji označava vaše ekološke...",
+  
+  "blog.articles.personal.title": "Šta lični ESG ima sa zelenim životom?",
+  "blog.articles.personal.description": "Zeleni život je postao više od trenda – to je životni izbor za mnoge...",
+
   "faq.page.title": "Pronađite odgovore na sva vaša pitanja",
   "faq.page.description": "Dobrodošli u <b>centar za pomoć platforme National Landfill Watch</b>. Ovde možete saznati kako da koristite našu platformu — od navigacije interaktivnom mapom, istraživanja regionalne statistike, do čitanja najnovijih informacija o održivosti. Kliknite na pitanje ispod da biste videli odgovor.",
 

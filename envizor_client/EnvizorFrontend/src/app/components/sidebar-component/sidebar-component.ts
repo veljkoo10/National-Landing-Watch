@@ -40,6 +40,7 @@ export class SidebarComponent implements OnInit {
   @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
 
   isSidebarOpen = false;
+  showSidebar = true;
   isMapRoute = false;
   isLandingPage = false;
   isDarkMode = false;
@@ -58,8 +59,7 @@ export class SidebarComponent implements OnInit {
       .subscribe((event: NavigationStart) => {
         const url = event.url;
         this.isLandingPage = url.includes('/landing');
-        this.isMapRoute = url.includes('/map');
-        this.isSidebarOpen = !(this.isMapRoute || this.isLandingPage);
+        this.isSidebarOpen = !(this.isLandingPage);
       });
 
     // Detect route (for ngClass)
@@ -94,13 +94,6 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  navigateToMap() {
-    this.isSidebarOpen = false;
-    setTimeout(() => {
-        this.router.navigate(['/map']);
-      }, 400);
-  }
-
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
@@ -127,5 +120,7 @@ export class SidebarComponent implements OnInit {
         this.sidenavContainer.updateContentMargins();
       }
     }, 100);
+
+    window.location.reload();
   }
 }

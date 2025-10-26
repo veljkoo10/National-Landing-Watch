@@ -103,7 +103,7 @@
 
 /* Dark section */
 :host-context(body.dark-theme) {
-  background-color: #121212;
+  background-color:rgb(28,28,30);
   color: #e0e0e0;
 }
 

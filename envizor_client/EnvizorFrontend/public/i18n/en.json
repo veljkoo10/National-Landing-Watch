@@ -136,6 +136,34 @@
   "statistics.labels.population": "Population",
   "statistics.labels.area": "Area",
 
+  "blog.page.title": "Environmental, Social & Governance (ESG) Insights",
+  "blog.page.subtitle": "Discover global initiatives, scientific insights, and innovations shaping a sustainable planet.",
+  "blog.readMore": "Read More →",
+  
+  "blog.articles.esg.title": "What is ESG and Why is it Important?",
+  "blog.articles.esg.description": "Environmental, Social, and Governance (ESG) isn't just an investor's checklist anymore — it's now a...",
+  
+  "blog.articles.ai.title": "How Generative AI can build an organization's ESG roadmap",
+  "blog.articles.ai.description": "ESG reporting has emerged as a critical component of corporate strategy and stakeholder engagement...",
+  
+  "blog.articles.climate.title": "How Does Climate Change Affect Investing?",
+  "blog.articles.climate.description": "Climate change is not just an environmental issue—it's a financial one too. As global temperatures...",
+  
+  "blog.articles.framework.title": "How Can the ESG Disclosure Framework Help your Business?",
+  "blog.articles.framework.description": "In today's business landscape, transparency and sustainability are more crucial than ever. Imagine...",
+  
+  "blog.articles.survey.title": "ESG Survey: Who Should be Fined for Greenwashing?",
+  "blog.articles.survey.description": "Welcome to our deep dive into a rising issue that impacts consumers worldwide.",
+  
+  "blog.articles.reporting.title": "What is Social and Environmental Reporting?",
+  "blog.articles.reporting.description": "Social and environmental reporting plays a crucial role in helping businesses...",
+  
+  "blog.articles.certifications.title": "What are ESG Certifications?",
+  "blog.articles.certifications.description": "A certificate in ESG investing is a rigorous credential that signifies your environmental...",
+  
+  "blog.articles.personal.title": "What does Personal ESG have to do with Green Living?",
+  "blog.articles.personal.description": "Green living has become more than just a trend – it's a lifestyle choice for many ...",
+
   "faq.page.title": "Find answers to all your questions",
   "faq.page.description": "Welcome to the <b>National Landfill Watch</b> help center. Here you can learn how to use our platform — from navigating the interactive map, exploring regional statistics, to reading the latest sustainability updates. Click on a question below to expand its answer.",
 

@@ -1,64 +1,100 @@
-<mat-sidenav-container class="sidenav-container sidebar-scope">
-  <mat-sidenav #sidenav mode="side" [(opened)]="isSidebarOpen" class="sidenav">
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    [(opened)]="showSidebar"
+    class="sidenav"
+    [ngClass]="{ 'collapsed': !isSidebarOpen }"
+  >
     <div class="sidebar-header">
-      <img src="/images/logo-black-green.png" alt="National Landfill Watch" class="logo" />
+      <img
+        *ngIf="isSidebarOpen"
+        [src]="isDarkMode ? '/images/logo-dark-theme.png' : '/images/logo-light-theme.png'"
+        alt="National Landfill Watch"
+        class="logo"
+      />
+      <button mat-icon-button class="toggle-btn" (click)="toggleSidebar()">
+        <mat-icon>{{ isSidebarOpen ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+      </button>
     </div>
 
     <mat-nav-list>
-      <a mat-list-item (click)="navigateToMap()" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      <a
+        mat-list-item
+        [routerLink]="['/map']"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        matTooltip="{{ 'sidebar.map' | translate }}"
+        matTooltipPosition="right"
+      >
         <mat-icon>public</mat-icon>
-        <span>{{ 'sidebar.map' | translate }}</span>
+        <span *ngIf="isSidebarOpen">{{ 'sidebar.map' | translate }}</span>
       </a>
 
-      <a mat-list-item [routerLink]="['/statistics']" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      <a
+        mat-list-item
+        [routerLink]="['/statistics']"
+        routerLinkActive="active-link"
+        matTooltip="{{ 'sidebar.statistics' | translate }}"
+        matTooltipPosition="right"
+      >
         <mat-icon>bar_chart</mat-icon>
-        <span>{{ 'sidebar.statistics' | translate }}</span>
+        <span *ngIf="isSidebarOpen">{{ 'sidebar.statistics' | translate }}</span>
       </a>
 
-      <a mat-list-item [routerLink]="['/blog']" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      <a
+        mat-list-item
+        [routerLink]="['/blog']"
+        routerLinkActive="active-link"
+        matTooltip="{{ 'sidebar.blog' | translate }}"
+        matTooltipPosition="right"
+      >
         <mat-icon>article</mat-icon>
-        <span>{{ 'sidebar.blog' | translate }}</span>
+        <span *ngIf="isSidebarOpen">{{ 'sidebar.blog' | translate }}</span>
       </a>
 
-      <a mat-list-item [routerLink]="['/faq']" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      <a
+        mat-list-item
+        [routerLink]="['/faq']"
+        routerLinkActive="active-link"
+        matTooltip="{{ 'sidebar.faq' | translate }}"
+        matTooltipPosition="right"
+      >
         <mat-icon>help_outline</mat-icon>
-        <span>{{ 'sidebar.faq' | translate }}</span>
+        <span *ngIf="isSidebarOpen">{{ 'sidebar.faq' | translate }}</span>
       </a>
 
-      <a mat-list-item [routerLink]="['/about']" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+      <a
+        mat-list-item
+        [routerLink]="['/about']"
+        routerLinkActive="active-link"
+        matTooltip="{{ 'sidebar.about' | translate }}"
+        matTooltipPosition="right"
+      >
         <mat-icon>info_outline</mat-icon>
-        <span>{{ 'sidebar.about' | translate }}</span>
+        <span *ngIf="isSidebarOpen">{{ 'sidebar.about' | translate }}</span>
       </a>
     </mat-nav-list>
 
     <div class="sidebar-bottom">
-      <select [(ngModel)]="selectedLang" (change)="changeLanguage(selectedLang)" class="language-picker">
+      <select
+        *ngIf="isSidebarOpen"
+        [(ngModel)]="selectedLang"
+        (change)="changeLanguage(selectedLang)"
+        class="language-picker"
+      >
         <option value="en">EN</option>
         <option value="sr">SR</option>
       </select>
 
-      <button
-        mat-icon-button
-        (click)="toggleTheme()"
-        [matTooltip]="
-          isDarkMode
-            ? ('sidebar.theme.tooltip.light' | translate)
-            : ('sidebar.theme.tooltip.dark' | translate)
-        "
-      >
+      <button mat-icon-button (click)="toggleTheme()">
         <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
       </button>
     </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
-
-    <div class="sidebar-overlay"  *ngIf="!isLandingPage">
-      <button (click)="toggleSidebar()">
-        <mat-icon>menu</mat-icon>
-      </button>
-    </div>
-
     <div [ngClass]="isMapRoute ? 'router-container-map' : 'router-container-default'">
       <router-outlet></router-outlet>
     </div>
