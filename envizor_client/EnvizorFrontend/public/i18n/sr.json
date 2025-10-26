@@ -74,12 +74,12 @@
   "map.landfill.co2": "Ugljen-dioksid (CO₂)",
 
   "map.landfill.type.sanitary": "Sanitarna",
-  "map.landfill.type.unsanitary": "Nesanitarna",
-  "map.landfill.type.wild": "Divlja",
+  "map.landfill.type.non-sanitary": "Nesanitarna",
+  "map.landfill.type.illegal": "Divlja",
 
-  "map.landfill.size.small": "Mala",
-  "map.landfill.size.medium": "Srednja",
-  "map.landfill.size.large": "Velika",
+  "map.landfill.type.Small": "Mala",
+  "map.landfill.type.Medium": "Srednja",
+  "map.landfill.type.Large": "Velika",
 
   "map.empty.selectSubtitle": "Izaberite region da vidite deponije, emisije i statistiku.",
 

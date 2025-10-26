@@ -52,7 +52,7 @@
   "map.region.wastePerCapita": "Waste per Capita",
   "map.region.measure": "t/person",
   "map.region.ch4": "Methane (CH₄)",
-  "map.region.co2": "Carbon Dioxide (CO₂)",
+  "map.region.co2": "Carbon Dioxide(CO₂)",
   "map.region.pollutionLevel": "Pollution Level",
 
   "map.pollution.low": "Low",
@@ -75,12 +75,12 @@
   "map.landfill.co2": "Carbon Dioxide (CO₂)",
 
   "map.landfill.type.sanitary": "Sanitary",
-  "map.landfill.type.unsanitary": "Unsanitary",
-  "map.landfill.type.wild": "Wild",
+  "map.landfill.type.non-sanitary": "Non-sanitary",
+  "map.landfill.type.illegal": "Wild",
 
-  "map.landfill.size.small": "Small",
-  "map.landfill.size.medium": "Medium",
-  "map.landfill.size.large": "Large",
+  "map.landfill.type.Small": "Small",
+  "map.landfill.type.Medium": "Medium",
+  "map.landfill.type.Large": "Large",
 
   "map.tooltip.population": "Total number of people living in this region.",
   "map.tooltip.area": "Total land area of the region, measured in square kilometers.",

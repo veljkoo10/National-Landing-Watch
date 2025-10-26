@@ -1,12 +1,5 @@
 <div id="map"></div>
 
-<!--&lt;!&ndash; Left Sidebar Button &ndash;&gt;-->
-<!--<div class="map-overlay">-->
-<!--  <button (click)="toggleSidebar()">-->
-<!--    <mat-icon>menu</mat-icon>-->
-<!--  </button>-->
-<!--</div>-->
-
 <div class="map-right-sidebar">
   <!-- Map Type (inline, one row) -->
   <div class="map-mode-inline">
@@ -222,13 +215,13 @@
 
     <p class="info-item">
       <strong>{{ 'map.landfill.type' | translate }}:</strong>
-      {{ getLandfillCategoryString(selectedLandfill.category) }}
+      {{ 'map.landfill.type.' + getLandfillCategoryString(selectedLandfill.category) | translate }}
     </p>
 
     <p class="info-item">
       <strong>{{ 'map.landfill.size' | translate }}:</strong>
       <span [style.color]="getLandfillSizeInfo(selectedLandfill.estimatedAreaM2!).color">
-        {{ getLandfillSizeInfo(selectedLandfill.estimatedAreaM2!).label }}
+        {{ 'map.landfill.type.' + getLandfillSizeInfo(selectedLandfill.estimatedAreaM2!).label | translate }}
       </span>
     </p>
 
@@ -367,12 +360,12 @@
       <h4>{{ 'map.landfill.id' | translate }}: {{ lf.id }}</h4>
       <p>
         <strong>{{ 'map.landfill.type' | translate }}:</strong>
-        {{ getLandfillCategoryString(lf.category) }}
+        {{ 'map.landfill.type.' + getLandfillCategoryString(lf.category) | translate }}
       </p>
       <p>
         <strong>{{ 'map.landfill.size' | translate }}:</strong>
         <span [style.color]="getLandfillSizeInfo(lf.estimatedAreaM2!).color">
-          {{ getLandfillSizeInfo(lf.estimatedAreaM2!).label }}
+          {{ 'map.landfill.type.' + getLandfillSizeInfo(lf.estimatedAreaM2!).label | translate }}
         </span>
       </p>
       <p>

@@ -3,37 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_CONFIG } from './api-config';
 import { BaseService } from './base-service';
-import { LandfillSite } from '../DTOs/landfillSiteAll-DTO';
-
-export type WasteByRegionDto = { name: string; totalWaste: number };
-export type LandfillTypeDto = { name: string; count: number };
-export type Ch4OverTimeDto = { years: number[]; ch4ByYear: number[] };
-export type TopLandfillDto = {
-  name: string;
-  region: string;
-  areaM2?: number;
-  yearCreated?: number;
-};
-export interface MostImpactedRegionFullDto {
-  region: string;
-  totalCh4: number;
-  totalCo2eq: number;
-  ch4PerKm2: number;
-  co2eqPerKm2: number;
-  population: number;
-  areaKm2: number;
-}
-export type GrowthRowDto = { year: number; landfillCount: number };
-export type EmissionsPerCapitaDto = { region: string; ch4PerCapita: number };
-export interface TableRow {
-  landfillName: string;
-  regionName: string;
-  year: number;
-  volumeM3: number;
-  wasteTons: number;
-  ch4Tons: number;
-  co2eqTons: number;
-}
+import { 
+  WasteByRegionDto,
+  LandfillTypeDto,
+  LandfillSite,
+  MostImpactedRegionFullDto,
+  GrowthRowDto,
+  EmissionsPerCapitaDto
+} from '../DTOs';
 
 @Injectable({ providedIn: 'root' })
 export class StatisticsService extends BaseService {

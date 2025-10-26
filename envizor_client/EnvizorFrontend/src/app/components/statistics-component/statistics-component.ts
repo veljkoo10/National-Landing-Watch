@@ -6,7 +6,6 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslatePipe } from '../../pipes/translation-pipe';
 import * as Highcharts from 'highcharts';
 import { HighchartsChartComponent } from 'highcharts-angular';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -15,15 +14,17 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import {
-  Ch4OverTimeDto,
-  MostImpactedRegionFullDto,
-} from '../../services';
-import { RegionService, LandfillService, StatisticsService } from '../../services';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { LandfillSite } from '../../DTOs';
-import { SerbianRegion } from '../../DTOs/Enums/SerbianRegion';
+import { TranslatePipe } from '../../pipes/translation-pipe';
+import {
+  StatisticsService,
+  LandfillService,
+  RegionService } from '../../services';
+import {
+  LandfillSite,
+  Ch4OverTimeDto
+   } from '../../DTOs';
 
 type TopLandfillView = {
   name: string;
@@ -72,16 +73,14 @@ type TableRow = {
   styleUrls: ['./statistics-component.css'],
 })
 export class StatisticsComponent implements OnInit {
-  chartRegionWaste: Highcharts.Options = { accessibility: { enabled: false }, series: [] };
-  chartSpeciesPie: Highcharts.Options = { accessibility: { enabled: false }, series: [] };
-  chartEmissionsTrend: Highcharts.Options = { accessibility: { enabled: false }, series: [] };
-  chartPrediction: Highcharts.Options = { accessibility: { enabled: false }, series: [] };
+  chartRegionWaste: Highcharts.Options = {};
+  chartSpeciesPie: Highcharts.Options = {};
+  chartEmissionsTrend: Highcharts.Options = {};
 
   topLargestLandfills: TopLandfillView[] = [];
   mostPollutedRegion?: MostImpactedView;
-  chartRegionLandfills: Highcharts.Options = { accessibility: { enabled: false }, series: [] };
-
-  displayedColumns: string[] = [
+  dataSource = new MatTableDataSource<TableRow>([]);
+  displayedColumns = [
     'landfill',
     'region',
     'year',
@@ -90,17 +89,7 @@ export class StatisticsComponent implements OnInit {
     'ch4Tons',
     'co2eqTons',
   ];
-  dataSource = new MatTableDataSource<TableRow>([]);
-  regionDisplayMap: Record<SerbianRegion, string> = {
-    [SerbianRegion.Vojvodina]: 'Vojvodina',
-    [SerbianRegion.Belgrade]: 'Beograd',
-    [SerbianRegion.WesternSerbia]: 'Zapadna Srbija',
-    [SerbianRegion.SumadijaAndPomoravlje]: 'Šumadija i Pomoravlje',
-    [SerbianRegion.EasternSerbia]: 'Istočna Srbija',
-    [SerbianRegion.SouthernSerbia]: 'Južna Srbija',
-    [SerbianRegion.KosovoAndMetohija]: 'Kosovo i Metohija',
-  };
-  // In your component, already defined:
+
   regionDisplayMap2: Record<string, string> = {
     beograd: 'Beograd',
     vojvodina: 'Vojvodina',
@@ -108,148 +97,132 @@ export class StatisticsComponent implements OnInit {
     sumadijapomoravlje: 'Šumadija i Pomoravlje',
     istocnasrbija: 'Istočna Srbija',
     juznasrbija: 'Južna Srbija',
-    // Add all possible regionTag values here
+    kosovimetohija: 'Kosovo i Metohija',
   };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
   constructor(
     private statisticsService: StatisticsService,
     private landfillService: LandfillService,
     private regionService: RegionService,
-    // private monitoringService: MonitoringService,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    // Chart 1: Total waste by region
-    this.regionService
-      .getAllRegions()
-      .subscribe((rows) => {
-        this.chartRegionWaste = {
-          title: { text: undefined },
-          credits: { enabled: false },
-          accessibility: { enabled: false },
-          chart: { type: 'column' },
-          xAxis: {
-            categories: rows.map((r) => r.name),
-            title: { text: 'Region' },
-            labels: { rotation: -45 },
-          },
-          yAxis: {
-            title: { text: 'Waste (t)' },
-            min: 0,
-          },
-          tooltip: {
-            pointFormat: '{series.name}: <b>{point.y:.0f} t</b>',
-          },
-          series: [
-            {
-              type: 'column',
-              name: 'Waste (t)',
-              data: rows.map((r) => r.totalWaste),
-            },
-          ],
-        };
-        this.cdr.markForCheck();
-      });
+    const base = this.getChartBaseOptions();
 
-    // Chart 2: Landfill types (pie)
+    // Chart 1: Total waste by region
+    this.regionService.getAllRegions().subscribe((rows) => {
+      this.chartRegionWaste = {
+        ...base,
+        chart: { ...base.chart, type: 'column' },
+        xAxis: {
+          ...base.xAxis,
+          categories: rows.map((r) => r.name),
+          title: { text: 'Region', style: { color: (base.xAxis as any).labels.style.color } },
+          labels: { rotation: -45, style: { color: (base.xAxis as any).labels.style.color } },
+        },
+        yAxis: {
+          ...base.yAxis,
+          title: { text: 'Waste (t)', style: { color: (base.yAxis as any).labels.style.color } },
+        },
+        series: [
+          {
+            type: 'column',
+            name: 'Waste (t)',
+            data: rows.map((r) => r.totalWaste),
+          },
+        ],
+      };
+      this.cdr.markForCheck();
+    });
+
+    // Chart 2: Landfill types
     this.landfillService
       .getAllLandfills()
       .pipe(
         map((landfills: LandfillSite[]) => {
-          // Count landfills by type
           const typeCounts: Record<string, number> = {};
           for (const lf of landfills) {
-            // Convert enum value to string label
-            let typeLabel = '';
-            switch (lf.category) {
-              case 0:
-                typeLabel = 'Illegal';
-                break;
-              case 1:
-                typeLabel = 'NonSanitary';
-                break;
-              case 2:
-                typeLabel = 'Sanitary';
-                break;
-              default:
-                typeLabel = 'Unknown';
-            }
+            const typeLabel =
+              lf.category === 0
+                ? 'Illegal'
+                : lf.category === 1
+                ? 'NonSanitary'
+                : lf.category === 2
+                ? 'Sanitary'
+                : 'Unknown';
             typeCounts[typeLabel] = (typeCounts[typeLabel] || 0) + 1;
           }
-          // Convert to chart data format
-          return Object.entries(typeCounts).map(([name, count]) => ({ name, y: count }));
+          return Object.entries(typeCounts).map(([name, y]) => ({ name, y }));
         }),
         catchError(() => of([]))
       )
       .subscribe((data) => {
         this.chartSpeciesPie = {
-          title: { text: undefined },
-          credits: { enabled: false },
-          accessibility: { enabled: false },
-          chart: { type: 'pie' },
+          ...base,
+          chart: { ...base.chart, type: 'pie' },
           series: [
             {
               type: 'pie',
               name: 'Count',
-              data: data,
+              data,
             },
           ],
         };
         this.cdr.markForCheck();
       });
 
-    // Chart 3: CH4 emissions over time & prediction
+    // Chart 3: CH4 emissions over time
     this.statisticsService
       .getCh4EmissionsOverTime()
       .pipe(
         catchError(() => of({ years: [], ch4ByYear: [] } as Ch4OverTimeDto)),
-        map((res) => {
-          const years = Array.isArray(res?.years) ? res.years.map(Number) : [];
-          const ch4 = Array.isArray(res?.ch4ByYear) ? res.ch4ByYear.map(Number) : [];
-          return { years, ch4 };
-        })
+        map((res) => ({
+          years: Array.isArray(res?.years) ? res.years.map(Number) : [],
+          ch4: Array.isArray(res?.ch4ByYear) ? res.ch4ByYear.map(Number) : [],
+        }))
       )
       .subscribe(({ years, ch4 }) => {
         this.chartEmissionsTrend = {
-          title: { text: undefined },
-          credits: { enabled: false },
-          accessibility: { enabled: false },
-          chart: { type: 'line' },
-          xAxis: { categories: years.map(String) },
-          yAxis: { title: { text: 'CH₄ (t)' } },
+          ...base,
+          chart: { ...base.chart, type: 'line' },
+          xAxis: { ...base.xAxis, categories: years.map(String) },
+          yAxis: { ...base.yAxis, title: { text: 'CH₄ (t)' } },
           series: [{ type: 'line', name: 'CH₄', data: ch4 }],
         };
         this.cdr.markForCheck();
       });
 
-    // Top 3 largest landfills
+    // Top 3 Largest Landfills
     this.landfillService
       .getAllLandfills()
       .pipe(
-        map((landfills: LandfillSite[]) => {
-          // Sort by estimatedAreaM2 descending and take top 3
-          return (landfills ?? [])
+        map((landfills: LandfillSite[]) =>
+          (landfills ?? [])
             .filter((lf) => typeof lf.estimatedAreaM2 === 'number')
             .sort((a, b) => (b.estimatedAreaM2 ?? 0) - (a.estimatedAreaM2 ?? 0))
-            .slice(0, 3);
-        }),
+            .slice(0, 3)
+        ),
         catchError(() => of([] as LandfillSite[]))
       )
       .subscribe((rows) => {
         this.topLargestLandfills = rows.map((r) => ({
           name: r?.name ?? 'N/A',
           region:
-            this.regionDisplayMap2[r?.regionTag?.toLowerCase() ?? ''] ?? r?.regionTag ?? 'Unknown',
+            this.regionDisplayMap2[r?.regionTag?.toLowerCase() ?? ''] ??
+            r?.regionTag ??
+            'Unknown',
           totalWaste: Number(r?.estimatedAreaM2 ?? 0),
           areaM2: r?.estimatedAreaM2,
           yearCreated: r?.startYear,
         }));
         this.cdr.markForCheck();
       });
-    // Most impacted region
+
+    // Most Impacted Region
     this.statisticsService
       .getMostImpactedRegion()
       .pipe(
@@ -262,7 +235,7 @@ export class StatisticsComponent implements OnInit {
             co2eqPerKm2: 0,
             population: 0,
             areaKm2: 0,
-          } as MostImpactedRegionFullDto)
+          } as MostImpactedView)
         )
       )
       .subscribe((mp) => {
@@ -270,81 +243,78 @@ export class StatisticsComponent implements OnInit {
         this.cdr.markForCheck();
       });
 
-    // Table: all landfills (replace with your actual data logic)
+    // Table
     this.landfillService
       .getAllLandfills()
       .pipe(
-        catchError(() => of([])), // no landfills = empty table
-        map((landfills) => {
-          return (landfills ?? []).map((lf) => {
+        catchError(() => of([])),
+        map((landfills) =>
+          (landfills ?? []).map((lf) => {
             const landfillName = lf?.name ?? `Landfill ${lf?.id ?? ''}`;
-
             const regionKey = lf?.regionTag?.toLowerCase?.().replace(/\s+/g, '') ?? '';
             const regionName =
               this.regionDisplayMap2[regionKey] ?? lf?.regionTag ?? 'Unknown';
-
             const year = this.toYear(lf?.startYear ?? lf?.createdAt);
-            const volumeM3 = Number(lf?.estimatedVolumeM3 ?? 0);
-            const wasteTons = Number(lf?.estimatedMSW ?? 0);
-            const ch4Tons = Number(lf?.estimatedCH4Tons ?? 0);
-            const co2eqTons = Number(lf?.estimatedCO2eTons ?? 0);
-
             return {
               landfillName,
               regionName,
               year,
-              volumeM3,
-              wasteTons,
-              ch4Tons,
-              co2eqTons,
+              volumeM3: Number(lf?.estimatedVolumeM3 ?? 0),
+              wasteTons: Number(lf?.estimatedMSW ?? 0),
+              ch4Tons: Number(lf?.estimatedCH4Tons ?? 0),
+              co2eqTons: Number(lf?.estimatedCO2eTons ?? 0),
             };
-          });
-        })
+          })
+        )
       )
       .subscribe((rows: TableRow[]) => {
         this.dataSource = new MatTableDataSource<TableRow>(rows ?? []);
-
-        // Sorting: case-insensitive for text, numeric for numbers
-        this.dataSource.sortingDataAccessor = (row: TableRow, columnId: string) => {
-          switch (columnId) {
-            case 'landfill':
-              return (row.landfillName ?? '').toLowerCase();
-            case 'region':
-              return (row.regionName ?? '').toLowerCase();
-            case 'year':
-              return Number(row.year ?? 0);
-            case 'volumeM3':
-              return Number(row.volumeM3 ?? 0);
-            case 'wasteTons':
-              return Number(row.wasteTons ?? 0);
-            case 'ch4Tons':
-              return Number(row.ch4Tons ?? 0);
-            case 'co2eqTons':
-              return Number(row.co2eqTons ?? 0);
-            default:
-              return '';
-          }
-        };
-
-        // Filter across all columns
-        this.dataSource.filterPredicate = (data: TableRow, raw: string) => {
-          const f = (raw ?? '').trim().toLowerCase();
-          if (!f) return true;
-          return (
-            `${data.landfillName ?? ''} ${data.regionName ?? ''} ${data.year ?? ''} ` +
-            `${data.volumeM3 ?? ''} ${data.wasteTons ?? ''} ${data.ch4Tons ?? ''} ${
-              data.co2eqTons ?? ''
-            }`
-          )
-            .toLowerCase()
-            .includes(f);
-        };
-
         if (this.paginator) this.dataSource.paginator = this.paginator;
         if (this.sort) this.dataSource.sort = this.sort;
-
         this.cdr.markForCheck();
       });
+  }
+
+  // Shared chart style for all
+  private getChartBaseOptions(): Partial<Highcharts.Options> {
+    const isDark = localStorage.getItem('theme') === 'dark';
+    const textColor = isDark ? '#e8e8e8' : '#333';
+    const accentColor = isDark ? '#9ef49f' : '#006400';
+    const bgColor = isDark ? 'rgb(42,42,42)' : '#ffffff';
+    const gridColor = isDark ? 'rgba(255,255,255,0.1)' : '#e0e0e0';
+
+    return {
+      credits: { enabled: false },
+      accessibility: { enabled: false },
+      chart: {
+        backgroundColor: bgColor,
+        style: { color: textColor },
+        borderRadius: 12,
+        borderWidth: 0,
+      },
+      title: { text: undefined },
+      legend: {
+        itemStyle: { color: textColor },
+        itemHoverStyle: { color: accentColor },
+      },
+      xAxis: {
+        lineColor: gridColor,
+        gridLineColor: gridColor,
+        labels: { style: { color: textColor } },
+        title: { style: { color: textColor } },
+      },
+      yAxis: {
+        lineColor: gridColor,
+        gridLineColor: gridColor,
+        labels: { style: { color: textColor } },
+        title: { style: { color: textColor } },
+      },
+      tooltip: {
+        backgroundColor: isDark ? '#2c2c2c' : '#fff',
+        borderColor: isDark ? '#444' : '#ccc',
+        style: { color: textColor },
+      },
+    };
   }
 
   private toYear(v: unknown): number {
