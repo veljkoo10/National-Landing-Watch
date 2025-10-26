@@ -1,4 +1,6 @@
-
+### **Link ka video demonstraciji aplikacije**
+Unutar ovog foldera se nalazi video demonstracija projekta i folder sa rezultatima modela.
+https://drive.google.com/drive/folders/1AH3_68-3i9BJnJzVnFlepiAliHneEFT7?usp=sharing
 ---
 
 ### **backend/Enzivor.Api**
@@ -36,35 +38,6 @@ Modeli su podešeni da klasifikuju slike u tri kategorije:
 
 Ovaj prvi korak klasifikacije omogućava da se filtriraju slike koje zaista sadrže deponije, dok se ostale ignorišu.  
 Na osnovu rezultata klasifikacije, slike koje su označene kao deponije dalje se prosleđuju **drugom modelu** koji obavlja **segmentaciju** – odnosno precizno označava granice i površinu deponije na slici.  
-
----
-
-### **model_results/**
-
-Ovaj folder sadrži **rezultate detekcije i analize** koje generišu trenirani **ML modeli**.  
-Rezultati su podeljeni prema vrstama modela i fazama obrade slika.  
-
-Nakon što **prvi model (klasifikacioni)** obradi ulazne slike, on za svaku sliku određuje kojoj klasi pripada — *illegal landfill*, *non-illegal landfill* ili *no landfill*.  
-Slučajevi gde je model prepoznao prisustvo deponije prosleđuju se **drugom modelu** koji vrši segmentaciju i precizno označava konture same deponije.  
-
-U folderu `model_results` nalaze se:  
-- **CSV fajlovi** koji sadrže koordinate, tip deponije, procenjenu površinu (u m²), region i stepen pouzdanosti modela  
-- **Annotirane slike** (output iz YOLO modela) sa obeleženim okvirima i poligonima  
-- **Geo-koordinatni podaci** (centroidi, granice deponije) za prikaz na mapi  
-
-Ovi rezultati predstavljaju most između **mašinskog učenja** i **baze podataka** — svaki podatak iz CSV fajla kasnije se importuje u **PostgreSQL bazu** pomoću backend servisa.  
-Backend zatim koristi te informacije za:  
-- grupisanje deponija po regionima  
-- računanje emisija gasova (CH₄ i CO₂eq)  
-- formiranje zbirne statistike koja se prikazuje u frontend delu aplikacije  
-
-Drugim rečima, `model_results` povezuje **AI izlaz** sa **analitičkim i vizuelnim slojem sistema**, čineći da detekcije sa slika postanu konkretni, upotrebljivi podaci u aplikaciji.  
-
----
-
-### **video/**
-
-Sadrži **video zapis demonstracije aplikacije** — kako izgleda prikaz na mapi, prebacivanje između regiona, pregled grafikona i korišćenje funkcionalnosti kao što su *Recenter* i *Dark mode*.  
 
 ---
 
