@@ -1,16 +1,21 @@
 """
 ## **Envizor – National Landing Watch**
 
-> Projekat National Landing Watch je projekat tima Envizor, čiji je cilj da prikaže kako se savremene tehnologije — mašinsko učenje, web razvoj i baze podataka — mogu kombinovati radi rešavanja stvarnih ekoloških problema.*  
->
-> *Aplikacija omogućava praćenje, detekciju i analizu deponija na teritoriji Srbije pomoću satelitskih snimaka i AI modela.*  
->
-> *Sistem se sastoji iz tri osnovne celine:*  
-> - *Backend (ASP.NET Core)* – upravlja podacima, logikom i izračunavanjem emisija.  
-> - *Frontend (Angular)* – omogućava interaktivan prikaz deponija na mapi i statistika.  
-> - *ML Modeli (Python + YOLO)* – automatski detektuju deponije na satelitskim snimcima.*
+Projekat **National Landing Watch** je projekat tima **Envizor**, čiji je cilj da prikaže kako se savremene tehnologije — *mašinsko učenje, web razvoj i baze podataka* — mogu kombinovati radi rešavanja stvarnih ekoloških problema i praćenja uticaja različitih tipova deponija na okolinu u Republici Srbiji.  
 
----
+Savremeno upravljanje otpadom predstavlja jedan od najvećih izazova savremenog društva. Nelegalne i neuređene deponije imaju značajan uticaj na zagađenje zemljišta, voda i vazduha, kao i na emisiju gasova staklene bašte, posebno metana (CH₄). Projekat Envizor nastoji da pruži **transparentan, interaktivan i tehnološki podržan uvid** u stanje deponija širom zemlje.  
+
+*Aplikacija omogućava praćenje, detekciju i analizu deponija pomoću satelitskih snimaka i ML modela.*  
+Korisnici mogu da pregledaju mape, statistike po regionima, tipove deponija, emisije gasova i trendove promene tokom vremena.  
+
+*Sistem se sastoji iz tri osnovne celine:*  
+- *Backend (ASP.NET Core)* – upravlja podacima, logikom i izračunavanjem emisija.  
+- *Frontend (Angular)* – omogućava interaktivan prikaz deponija na mapi i vizuelizaciju statistika.  
+- *ML Modeli (Python + YOLO)* – automatski detektuju i segmentuju deponije na satelitskim snimcima.  
+
+Projekat ima za cilj da poveže nauku, tehnologiju i ekologiju – pružajući osnovu za analizu, edukaciju i donošenje ekološki odgovornih odluka na lokalnom i nacionalnom nivou.
+"""
+
 
 ### **Link ka video demonstraciji aplikacije**
 
