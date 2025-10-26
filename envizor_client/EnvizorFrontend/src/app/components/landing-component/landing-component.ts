@@ -41,24 +41,38 @@ export class LandingComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
+    if (this.isDarkMode && !document.body.classList.contains('dark-theme')) {
+      document.body.classList.add('dark-theme');
+    }
+
     mapboxgl.accessToken = this.accessToken;
     const map = new mapboxgl.Map({
       container: 'globe',
       style: 'mapbox://styles/mapbox/satellite-v9',
       projection: 'globe',
-      zoom: 1.5,
-      center: [20, 30],
+      zoom: 0.7,
+      center: [-4, 40],
+      pitch: 30,
       interactive: false
     });
 
-    // Slowly spin the globe
-    let rotation = 0;
-    function spinGlobe() {
-      rotation += 0.05;
-      map.setBearing(rotation);
-      requestAnimationFrame(spinGlobe);
-    }
-    spinGlobe();
+    map.on('style.load', () => {
+      map.setLight({ anchor: 'map', intensity: 0.5 });
+
+      let rotation = 0;
+      function animateGlobe() {
+        rotation += 0.05;
+        if (rotation >= 360) rotation = 0;
+
+        map.setCenter([-4 + rotation, 44]);
+        requestAnimationFrame(animateGlobe);
+      }
+      animateGlobe();
+
+      document.body.style.backgroundColor = '';
+      document.body.style.color = '';
+    });
+
   }
 
   goToPage(path: string) {

@@ -1,67 +1,57 @@
-/* ============ Container ============ */
 .sidenav-container {
   height: 100vh;
   background: var(--background, #f7f9f7);
-  font-family: inherit;            /* match app font */
+  font-family: inherit;
 }
-
-/* ============ Drawer / Panel ============ */
 .sidenav {
   width: 250px;
-  background-color: rgba(255, 255, 255, 0.7); /*  slightly transparent */
+  background-color: rgba(255, 255, 255, 0.7);
   border-right: 1px solid rgba(224, 224, 224, 0.6);
   display: flex;
   flex-direction: column;
   height: 100%;
-  backdrop-filter: blur(6px); 
+  backdrop-filter: blur(6px);
 }
-
 :host ::ng-deep .sidenav .mat-drawer-inner-container {
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: hidden;                /* let lists scroll, header/footer fixed */
+  overflow: hidden;
 }
-
-/* ============ Header ============ */
 .sidebar-header {
   padding: 0.9rem 1rem;
   border-bottom: 1px solid #eee;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 .logo {
-  width: 110px;
-  height: 30px;
+  width: 148px;
+  height: 68px;
   display: block;
 }
-
-/* ============ Nav List ============ */
 mat-nav-list {
   overflow-y: auto;
   flex: 1 1 auto;
   padding: 0.25rem 0;
-  scrollbar-width: none;           /* hide scrollbar (Firefox) */
+  scrollbar-width: none;
 }
-mat-nav-list::-webkit-scrollbar {  /* hide scrollbar (WebKit) */
+mat-nav-list::-webkit-scrollbar {
   width: 0;
   background: transparent;
 }
-
-/* Items */
 mat-nav-list a {
   display: flex;
   align-items: center;
-  column-gap: 12px;          /* ⬅️ more space between icon & text */
+  column-gap: 12px;
   padding: 0.6rem 0.9rem;
   border-radius: 10px;
   line-height: 1.2;
   white-space: nowrap;
 }
-
-/* Reserve fixed width for the icon so text never crowds it */
 mat-nav-list a mat-icon {
-  flex: 0 0 30px;            /* ⬅️ lock an icon column width */
+  flex: 0 0 30px;
   width: 22px;
   min-width: 22px;
   height: 22px;
@@ -72,36 +62,20 @@ mat-nav-list a mat-icon {
   align-items: center;
   justify-content: center;
   color: #2e7d32;
-  margin: 0;                 /* remove any side margins from earlier rules */
+  margin: 0 0.9rem 0 0;
 }
-
-mat-nav-list a mat-icon {
-  margin-right: 0.9rem; 
-  min-width: 22px;      /* keeps icons aligned */
-}
-
-mat-nav-list a {
-  align-items: center;
-  display: flex;
-}
-
-/* Optional: make text a bit clearer and aligned */
 mat-nav-list a span,
 mat-nav-list a .mat-list-text {
   font-size: 16px;
   letter-spacing: 0.3px;
 }
-
-/* Hover/Focus parity with region dropdown hover */
 mat-nav-list a:hover,
 mat-nav-list a:focus-visible {
-  background-color: #f1f8e9;       /* same hover bg */
+  background-color: #f1f8e9;
   outline: none;
 }
-
-/* Active item parity with map sidebar “active” feel */
 mat-nav-list a.active-link {
-    background: linear-gradient(90deg, rgba(232, 245, 233, 0.8), rgba(200, 230, 201, 0.7));
+  background: linear-gradient(90deg, rgba(232, 245, 233, 0.8), rgba(200, 230, 201, 0.7));
   border-left: 4px solid #2e7d32;
   border-radius: 0 12px 12px 0;
   box-shadow: inset 0 0 6px rgba(138, 180, 162, 0.3);
@@ -112,14 +86,10 @@ mat-nav-list a.active-link {
 mat-nav-list a.active-link mat-icon {
   color: #2e7d32;
 }
-
-/*  Hover on active item — slightly brighter */
 mat-nav-list a.active-link:hover {
   background: linear-gradient(90deg, rgba(220, 244, 223, 0.9), rgba(200, 230, 201, 0.85));
   box-shadow: inset 0 0 8px rgba(46, 125, 50, 0.3);
 }
-
-/* ============ Top App Bar (kept, but align icon color) ============ */
 .topbar {
   background-color: #2e7d32 !important;
   color: #ffffff;
@@ -127,10 +97,13 @@ mat-nav-list a.active-link:hover {
   top: 0;
   z-index: 2;
 }
-.topbar mat-icon { color: #ffffff !important; }
-.toolbar-title { margin-left: 1rem; font-weight: 600; }
-
-/* ============ Router containers ============ */
+.topbar mat-icon {
+  color: #ffffff !important;
+}
+.toolbar-title {
+  margin-left: 1rem;
+  font-weight: 600;
+}
 .router-container-default {
   height: 100vh;
   overflow-y: auto;
@@ -141,8 +114,6 @@ mat-nav-list a.active-link:hover {
   height: 100vh;
   overflow: hidden;
 }
-
-/* ============ Footer / Bottom actions ============ */
 .sidebar-bottom {
   margin-top: auto;
   padding: 0.9rem 1rem;
@@ -150,29 +121,137 @@ mat-nav-list a.active-link:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
 }
-
-/* Language picker styled like right sidebar inputs */
 .language-picker {
   padding: 6px 10px;
   border-radius: 10px;
-  border: 1px solid #a5d6a7;       /* same green border */
+  border: 1px solid #a5d6a7;
   background-color: #fff;
   color: #2e7d32;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 .language-picker:hover {
   border-color: #66bb6a;
-  background-color: #f1f8e9;       /* same hover bg */
+  background-color: #f1f8e9;
 }
 .language-picker:focus-visible {
   outline: none;
   border-color: #43a047;
-  box-shadow: 0 0 5px rgba(67,160,71,.3);
+  box-shadow: 0 0 5px rgba(67, 160, 71, 0.3);
 }
-
-/* Small utility */
-.flex-spacer { flex: 1 1 auto; }
+.flex-spacer {
+  flex: 1 1 auto;
+}
+.sidebar-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+.sidebar-overlay button {
+  pointer-events: auto;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  border: 1.5px solid #000000;
+  border-radius: 8px;
+  background-color: #fcfcfc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  z-index: 1001;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+  padding: 0.3rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar-overlay button:hover {
+  background-color: #d5d5d5;
+  transform: scale(1.05);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+.sidebar-overlay mat-icon {
+  color: #000000;
+  font-size: 20px;
+}
+mat-sidenav {
+  transition: all 0.3s ease;
+}
+:host-context(body.dark-theme) .sidenav-container {
+  background: var(--background);
+}
+:host-context(body.dark-theme) .sidenav {
+  background-color: rgba(42, 42, 45, 0.7);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+:host-context(body.dark-theme) .sidebar-header {
+  background: rgb(34, 34, 36);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+:host-context(body.dark-theme) .logo {
+  filter: brightness(1.2);
+}
+:host-context(body.dark-theme) mat-nav-list a {
+  color: var(--text);
+}
+:host-context(body.dark-theme) mat-nav-list a mat-icon {
+  color: var(--primary);
+}
+:host-context(body.dark-theme) mat-nav-list a:hover,
+:host-context(body.dark-theme) mat-nav-list a:focus-visible {
+  background-color: rgba(87, 209, 99, 0.1);
+}
+:host-context(body.dark-theme) mat-nav-list a.active-link {
+  background: linear-gradient(90deg, rgba(87, 209, 99, 0.2), rgba(111, 191, 115, 0.1));
+  border-left: 4px solid var(--primary);
+  color: var(--text);
+  box-shadow: inset 0 0 6px rgba(87, 209, 99, 0.2);
+}
+:host-context(body.dark-theme) mat-nav-list a.active-link mat-icon {
+  color: var(--primary);
+}
+:host-context(body.dark-theme) mat-nav-list a.active-link:hover {
+  background: linear-gradient(90deg, rgba(87, 209, 99, 0.25), rgba(111, 191, 115, 0.15));
+  box-shadow: inset 0 0 8px rgba(87, 209, 99, 0.3);
+}
+:host-context(body.dark-theme) .topbar {
+  background-color: var(--surface) !important;
+  color: var(--text);
+}
+:host-context(body.dark-theme) .topbar mat-icon {
+  color: var(--primary) !important;
+}
+:host-context(body.dark-theme) .router-container-default {
+  background-color: var(--background);
+  color: var(--text);
+}
+:host-context(body.dark-theme) .sidebar-bottom {
+  background: rgba(42, 42, 45, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+:host-context(body.dark-theme) .sidebar-overlay button {
+  background-color: var(--surface);
+  border: 1.5px solid var(--primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+:host-context(body.dark-theme) .sidebar-overlay button:hover {
+  background-color: rgba(87, 209, 99, 0.1);
+}
+:host-context(body.dark-theme) .sidebar-overlay mat-icon {
+  color: var(--primary);
+}
+:host-context(body.dark-theme) {
+  .sidenav,
+  .sidebar-bottom,
+  mat-nav-list a,
+  mat-nav-list a span,
+  mat-nav-list a .mat-list-text,
+  mat-nav-list a.active-link {
+    color: #ffffff;
+  }
+}

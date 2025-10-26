@@ -1,13 +1,11 @@
-import { Component, AfterViewInit, HostListener, HostBinding, inject } from '@angular/core';
+import { Component, AfterViewInit, HostListener, HostBinding, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import mapboxgl from 'mapbox-gl';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '../../pipes/translation-pipe';
 import { SidebarCommunicationService, RegionService, LandfillService } from '../../services';
-import { RegionDto, MonitoringDto } from '../../DTOs';
-import { MonitoringService } from '../../services/monitoring-service';
+import { RegionDto, LandfillSite, MonitoringDto } from '../../DTOs';
 import { FormsModule } from '@angular/forms';
-import { LandfillSite } from '../../DTOs/landfillSiteAll-DTO';
 import { LandfillCategory } from '../../DTOs/Enums/LandfillCategory';
 
 @Component({
@@ -27,7 +25,6 @@ export class MapComponent implements AfterViewInit {
   private sidebarService = inject(SidebarCommunicationService);
   private regionService = inject(RegionService);
   private landfillService = inject(LandfillService);
-  private monitoringService = inject(MonitoringService);
 
   // UI state
   @HostBinding('class.sidebar-open') sidebarOpen = true;
@@ -37,7 +34,6 @@ export class MapComponent implements AfterViewInit {
   selectedRegionData: RegionDto | null = null;
   selectedLandfills: LandfillSite[] = [];
   selectedLandfill: LandfillSite | null = null;
-  // latestMonitoring: MonitoringDto | null = null;
   latestMonitorings: Record<number, MonitoringDto> = {};
   mapType: 'satellite' | 'heatmap' = 'satellite';
   markers: mapboxgl.Marker[] = [];
@@ -50,7 +46,7 @@ export class MapComponent implements AfterViewInit {
   minEmission = Math.min(...this.emissions);
   maxEmission = Math.max(...this.emissions);
 
-  // Regions (bounds for zoom). Keys are FE-local; display names map below.
+  // Regions (bounds for zoom)
   regions: Record<string, mapboxgl.LngLatBoundsLike> = {
     WholeSerbia: [
       [18.7, 42.2],
@@ -86,7 +82,7 @@ export class MapComponent implements AfterViewInit {
     ],
   };
 
-  // FE display (Serbian) used for UI only.
+  // Used for UI only
   regionDisplayNames: Record<string, string> = {
     WholeSerbia: 'Srbija',
     Vojvodina: 'Vojvodina',
@@ -99,14 +95,13 @@ export class MapComponent implements AfterViewInit {
   };
 
   typeColors: Record<LandfillCategory | number, string> = {
-    [LandfillCategory.Illegal]: '#FF5B5B', // Red
-    [LandfillCategory.NonSanitary]: '#FF9800', // Orange
-    [LandfillCategory.Sanitary]: '#2196F3', // Blue
+    [LandfillCategory.Illegal]: '#FF5B5B',
+    [LandfillCategory.NonSanitary]: '#FF9800',
+    [LandfillCategory.Sanitary]: '#2196F3',
   };
 
   regionKeys = Object.keys(this.regions);
 
-  // Use this to build translation keys and to derive the API key from the display name.
   getRegionKey(name: string): string {
     // Normalize: lowercase, strip spaces, fold common diacritics
     return name
@@ -137,12 +132,6 @@ export class MapComponent implements AfterViewInit {
     mapboxgl.accessToken = this.accessToken;
     this.landfillService.getAllLandfills().subscribe((landfills) => {
       this.allLandfills = landfills;
-      // Fetch latest monitoring for all landfills
-      // landfills.forEach((lf) => {
-      //   // this.monitoringService.getLatestMonitoring(lf.id).subscribe((monitoring) => {
-      //   //   this.latestMonitorings[lf.id] = monitoring;
-      //   // });
-      // });
       this.initializeMap();
     });
   }
@@ -157,7 +146,6 @@ export class MapComponent implements AfterViewInit {
 
     this.map.on('load', () => {
       this.landfillService.getAllLandfills().subscribe((landfills) => {
-        // this.selectedLandfills = landfills;
         this.initializeLandfills();
       });
       this.map.setFog({
@@ -179,10 +167,10 @@ export class MapComponent implements AfterViewInit {
     this.sidebarService.toggleSidebar();
   }
 
-  /** Map FE regionKey -> display name -> API key (canonical). */
+  // Map regionKey -> display name -> API key (canonical).
   private regionKeyForApi(feKey: string): string {
-    const display = this.regionDisplayNames[feKey] ?? feKey; // e.g. "Beograd"
-    return this.getRegionKey(display); // e.g. "beograd"
+    const display = this.regionDisplayNames[feKey] ?? feKey;
+    return this.getRegionKey(display);
   }
 
   onRegionDropdownClick(event: Event): void {
@@ -198,12 +186,11 @@ export class MapComponent implements AfterViewInit {
     if (!feKey) return;
     this.selectedRegionKey = feKey;
     this.zoomToRegion(feKey);
-    const apiKey = this.regionKeyForApi(feKey); // e.g. "beograd"
+    const apiKey = this.regionKeyForApi(feKey);
 
-    const displayName = this.regionDisplayNames[feKey] ?? feKey; // e.g. "Beograd"
+    const displayName = this.regionDisplayNames[feKey] ?? feKey;
 
     this.selectedLandfill = null;
-    // this.latestMonitoring = null;
     this.selectedRegionData = null;
 
     if (feKey === 'WholeSerbia') {
@@ -212,7 +199,6 @@ export class MapComponent implements AfterViewInit {
         if (this.mapType === 'satellite') {
           this.initializeLandfills();
         }
-        // If heatmap, let updateMapType handle rendering
       });
     } else {
       const apiKey = this.regionKeyForApi(feKey);
@@ -226,7 +212,6 @@ export class MapComponent implements AfterViewInit {
         if (this.mapType === 'satellite') {
           this.initializeLandfills();
         }
-        // If heatmap, let updateMapType handle rendering
       });
     }
   }
@@ -238,15 +223,9 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
-  // Place markers for currently selected landfills (call this after selectedLandfills updates if you want markers)
   private initializeLandfills(): void {
-    // for (const landfill of this.selectedLandfills) {
-    //   this.monitoringService.getLatestMonitoring(landfill.id).subscribe((monitoring) => {
-    //     this.latestMonitorings[landfill.id] = monitoring;
-    //   });
-    // }
     for (const landfill of this.selectedLandfills) {
-      const color = this.typeColors[landfill.category] || '#FF5B5B'; // fallback to red
+      const color = this.typeColors[landfill.category] || '#FF5B5B';
 
       const marker = new mapboxgl.Marker({ color })
         .setLngLat([landfill.pointLon!, landfill.pointLat!])
@@ -273,7 +252,6 @@ export class MapComponent implements AfterViewInit {
     this.mapType = type;
     this.isDropdownOpen = false;
 
-    // If you already have onMapTypeChange logic, call it here:
     const evt = { target: { value: type } } as unknown as Event;
     this.onMapTypeChange(evt);
   }
@@ -342,7 +320,7 @@ export class MapComponent implements AfterViewInit {
               500,
               1,
               1300,
-              1, // covers your extreme
+              1,
             ],
             'heatmap-color': [
               'interpolate',
@@ -381,11 +359,11 @@ export class MapComponent implements AfterViewInit {
 
   getLandfillSizeInfo(size: number): { label: string; color: string } {
     if (size < 10000) {
-      return { label: 'Small', color: '#4CAF50' }; // Green
+      return { label: 'Small', color: '#4CAF50' };
     } else if (size < 50000) {
-      return { label: 'Medium', color: '#FFC107' }; // Amber
+      return { label: 'Medium', color: '#FFC107' };
     } else {
-      return { label: 'Large', color: '#F44336' }; // Red
+      return { label: 'Large', color: '#F44336' };
     }
   }
   getLandfillCategoryString(category: LandfillCategory | number): string {
@@ -425,7 +403,7 @@ export class MapComponent implements AfterViewInit {
 
   private landfillZoomIn(nwLat: number, nwLng: number, seLat: number, seLng: number) {
     if (nwLat === seLat && nwLng === seLng) {
-      this.map.flyTo({ center: [seLng, seLat], zoom: 18, speed: 0.8, curve: 1.2 });
+      this.map.flyTo({ center: [seLng, seLat], zoom: 16, speed: 0.8, curve: 1.2 });
       return;
     }
 

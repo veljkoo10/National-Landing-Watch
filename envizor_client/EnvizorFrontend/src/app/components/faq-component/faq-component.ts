@@ -1,17 +1,21 @@
 import { Component } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { NgFor } from '@angular/common';
+import {NgClass, NgFor} from '@angular/common';
 import { TranslatePipe } from '../../pipes/translation-pipe';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-faq-component',
   standalone: true,
-  imports: [MatExpansionModule, MatIconModule, NgFor, TranslatePipe],
+  imports: [MatExpansionModule, MatIconModule, NgFor, NgClass, TranslatePipe],
   templateUrl: './faq-component.html',
   styleUrls: ['./faq-component.css']
 })
 export class FaqComponent {
+  constructor(private router: Router) {
+  }
+
   categories = [
     {
       id: 'map',
@@ -60,10 +64,21 @@ export class FaqComponent {
     }
   ];
 
-  scrollToCategory(id: string): void {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  navigateTo(id: string): void {
+    switch (id) {
+      case 'map':
+        this.router.navigate(['/map']);
+        break;
+      case 'statistics':
+        this.router.navigate(['/statistics']);
+        break;
+      case 'info':
+        this.router.navigate(['/about']);
+        break;
+      default:
+        const element = document.getElementById(id);
+        if (element) element.scrollIntoView({behavior: 'smooth', block: 'start'});
+        break;
     }
   }
 }

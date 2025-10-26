@@ -5,7 +5,7 @@
   position: relative;
 }
 
-/* ===== Map canvas ===== */
+/* Map canvas */
 #map {
   position: absolute;
   inset: 0;
@@ -15,7 +15,7 @@
   transition: width 0.3s ease, height 0.3s ease;
 }
 
-/* ===== Floating left menu button ===== */
+/* Floating left menu button */
 .map-overlay {
   position: absolute;
   inset: 0;
@@ -35,20 +35,17 @@
 }
 .map-overlay button:hover { transform: scale(1.05); }
 
-/* ===== Simple utility / colors ===== */
+/* Colors for type and size*/
 .region-details span { font-weight: bold; }
 .low { color: #2e7d32; }
 .medium { color: #f9a825; }
 .high { color: #c62828; }
 
-/* =======================================================================
-   INLINE MAP TYPE DROPDOWN (replaces old segmented control & old dropdown)
-   ======================================================================= */
 .map-mode-inline {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 0.5rem;             /* matches .region-selector-section padding */
+  padding: 0.5rem;
   margin-bottom: 0.5rem;
 }
 
@@ -64,6 +61,7 @@
 .map-type-inline-label mat-icon {
   font-size: 18px;
   color: #2e7d32;
+  margin-top: 5px;
 }
 
 .map-type-inline-dropdown {
@@ -71,7 +69,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 24px;            /* similar height to region select */
+  min-height: 24px;
   padding: 4px 10px;
   border: 1px solid #a5d6a7;
   border-radius: 10px;
@@ -80,7 +78,6 @@
   font-weight: 400;
   cursor: pointer;
   transition: all 0.25s ease;
-  /* allow it to shrink/grow nicely next to label */
   min-width: 120px;
 }
 .map-type-inline-dropdown:hover {
@@ -154,7 +151,7 @@
 }
 
 .empty-state-card mat-icon {
-  font-size: 48px; /* slightly larger */
+  font-size: 48px;
   width: 48px;
   height: 48px;
   color: #2e7d32;
@@ -180,21 +177,21 @@
 }
 
 
-/* ===== Right sidebar ===== */
+/* Right sidebar */
 .map-right-sidebar {
   position: absolute;
   top: 0;
   right: 0;
   width: 250px;
   height: 100%;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255);
   z-index: 5;
   padding: 0.2rem 1rem;
   overflow-y: auto;
   backdrop-filter: blur(8px);
   transition: all 0.3s ease;
 }
-/* hide scrollbars */
+
 .map-right-sidebar::-webkit-scrollbar { width: 0; background: transparent; }
 .map-right-sidebar { scrollbar-width: none; }
 
@@ -257,7 +254,7 @@ hr {
   margin: 0.8rem 0;
 }
 
-/* ===== Bottom landfill cards ===== */
+/* Bottom landfill cards */
 .landfill-cards-container {
   position: absolute;
   bottom: 0.3rem;
@@ -338,7 +335,7 @@ hr {
   animation: tooltipFade 0.2s ease-out;
 }
 
-/* ===== Animations & responsive ===== */
+/* Animations & responsive */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -386,7 +383,90 @@ hr {
   cursor: not-allowed;
 }
 .recenter-btn mat-icon {
-  color: #237628; /* Material green */
+  color: #237628;
 }
 
+/* Dark section */
+:host-context(body.dark-theme) {
+  background-color: #121212;
+  color: #e0e0e0;
+}
 
+:host-context(body.dark-theme) #map {
+  background-color: #121212 !important;
+  filter: brightness(0.95) contrast(1.05);
+  transition: background-color 0.3s ease;
+}
+
+:host-context(body.dark-theme) .map-right-sidebar {
+  background: #1e1e1e;
+  border-left: 1px solid rgba(129, 199, 132, 0.25);
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.6);
+}
+
+:host-context(body.dark-theme) .sidebar-section p{
+  color: white
+}
+
+:host-context(body.dark-theme) .mapboxgl-popup-content strong{
+  color: black;
+}
+
+:host-context(body.dark-theme) .region-label,
+:host-context(body.dark-theme) .map-type-inline-label,
+:host-context(body.dark-theme) .sidebar-section h3 {
+  color: #81c784;
+  text-shadow: 0 0 6px rgba(129, 199, 132, 0.3);
+}
+
+:host-context(body.dark-theme) .region-dropdown,
+:host-context(body.dark-theme) .map-type-inline-dropdown {
+  background: #1e1e1e;
+  border: 1px solid rgba(129, 199, 132, 0.25);
+  color: #c8e6c9;
+}
+:host-context(body.dark-theme) .region-dropdown:hover,
+:host-context(body.dark-theme) .map-type-inline-dropdown:hover {
+  background-color: #262626;
+  border-color: #81c784;
+}
+
+:host-context(body.dark-theme) .landfill-card,
+:host-context(body.dark-theme) .empty-state-card {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(129, 199, 132, 0.2);
+  color: white;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.6);
+}
+
+:host-context(body.dark-theme) .landfill-card p {
+  color: white;
+}
+
+:host-context(body.dark-theme) .empty-state-card p {
+  color: #2e7d32
+}
+
+:host-context(body.dark-theme) .landfill-card:hover,
+:host-context(body.dark-theme) .landfill-card.hovered {
+  background-color: #262626;
+  box-shadow: 0 0 14px rgba(129, 199, 132, 0.25);
+}
+
+:host-context(body.dark-theme) .custom-tooltip {
+  background-color: #1e1e1e;
+  color: #c8e6c9;
+  border: 1px solid rgba(129, 199, 132, 0.25);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+}
+
+:host-context(body.dark-theme) .recenter-btn {
+  background-color: #262626;
+  box-shadow: 0 1px 4px #81c784;
+}
+:host-context(body.dark-theme) .recenter-btn:hover:not(:disabled) {
+  background-color: #333333;
+}
+:host-context(body.dark-theme) .recenter-btn mat-icon {
+  color: #81c784;
+}

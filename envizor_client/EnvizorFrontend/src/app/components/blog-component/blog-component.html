@@ -1,15 +1,15 @@
 <div class="blog-container">
-  <h1 class="blog-title">Environmental, Social & Governance (ESG) Insights</h1>
-  <p class="blog-subtitle">Discover global initiatives, scientific insights, and innovations shaping a sustainable planet.</p>
+  <h1 class="blog-title">{{ 'blog.page.title' | translate }}</h1>
+  <p class="blog-subtitle">{{ 'blog.page.subtitle' | translate }}</p>
 
   <div class="blog-grid">
     <div class="blog-card" *ngFor="let blog of blogs">
-      <img [src]="blog.image" alt="{{ blog.title }}" class="blog-image" />
+      <img [src]="blog.image" [alt]="blog.title | translate" class="blog-image" />
       <div class="blog-content">
-        <h2>{{ blog.title }}</h2>
-        <p>{{ blog.description }}</p>
+        <h2>{{ blog.title | translate }}</h2>
+        <p>{{ blog.description | translate }}</p>
         <a [href]="blog.link" target="_blank" rel="noopener" class="read-more">
-          Read More →
+          {{ 'blog.readMore' | translate }}
         </a>
       </div>
     </div>

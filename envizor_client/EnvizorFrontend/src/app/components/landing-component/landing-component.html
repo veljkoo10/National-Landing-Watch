@@ -2,14 +2,15 @@
   <!-- Navbar -->
   <nav class="landing-navbar">
     <div class="navbar-left">
-      <img src="/images/logo-black-green.png" alt="Envizor Logo" class="navbar-logo" />
-      <span class="navbar-title">{{ 'landing.nav.title' | translate }}</span>
+      <img [src]="isDarkMode ? '/images/logo-dark-theme.png' : '/images/logo-light-theme.png'" alt="Envizor Logo" class="navbar-logo" />
     </div>
 
     <div class="navbar-center">
       <a class="nav-link" (click)="goToPage('/map')">{{ 'landing.nav.map' | translate }}</a>
+      <a class="nav-link" (click)="goToPage('/statistics')">{{ 'landing.nav.statistics' | translate }}</a>
       <a class="nav-link" (click)="goToPage('/blog')">{{ 'landing.nav.blog' | translate }}</a>
       <a class="nav-link" (click)="goToPage('/faq')">{{ 'landing.nav.faq' | translate }}</a>
+      <a class="nav-link" (click)="goToPage('/about')">{{ 'landing.nav.aboutus' | translate }}</a>
     </div>
 
     <div class="navbar-right">

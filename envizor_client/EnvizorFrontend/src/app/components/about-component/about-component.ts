@@ -26,7 +26,7 @@ export class AboutComponent {
       role: 'about.team.member1.role',
       phone: 'about.team.member1.phone',
       email: 'about.team.member1.email',
-      img: '/images/team/viktor.jpg',
+      img: '/images/team/viktor.jpeg',
       linkedin: 'https://www.linkedin.com/in/viktor-bari%C4%87-3370122a0/',
       instagram: 'https://www.instagram.com/baricv_?igsh=MWkycGxxYjZyNjNsMQ=='
     },
@@ -35,7 +35,7 @@ export class AboutComponent {
       role: 'about.team.member2.role',
       phone: 'about.team.member2.phone',
       email: 'about.team.member2.email',
-      img: '/images/team/andjela.jpg',
+      img: '/images/team/andjela.jpeg',
       linkedin: 'https://www.linkedin.com/in/an%C4%91ela-mr%C4%91a-793885280',
       instagram: 'https://www.instagram.com/_andjelamrdja_'
     },
@@ -44,7 +44,7 @@ export class AboutComponent {
       role: 'about.team.member3.role',
       phone: 'about.team.member3.phone',
       email: 'about.team.member3.email',
-      img: '/images/team/milica.jpg',
+      img: '/images/team/milica.jpeg',
       linkedin: 'https://www.linkedin.com/in/milica-mi%C5%A1an-3ab47b296/',
       instagram: 'https://www.instagram.com/misanmilica'
     },
@@ -53,7 +53,7 @@ export class AboutComponent {
       role: 'about.team.member4.role',
       phone: 'about.team.member4.phone',
       email: 'about.team.member4.email',
-      img: '/images/team/veljko.jpg',
+      img: '/images/team/veljko.jpeg',
       linkedin: 'https://www.linkedin.com/in/veljkoo/',
       instagram: 'https://www.instagram.com/randjelovic__03/'
     }
@@ -90,7 +90,7 @@ export class AboutComponent {
     );
   }
 
-  // Initialize contact form 
+  // Initialize contact form
   private initializeForm(): void {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
