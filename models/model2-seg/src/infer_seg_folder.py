@@ -5,105 +5,78 @@ import torch
 from ultralytics import YOLO
 from PIL import Image
 
-# ==============================
-# 1) Osnovna podešavanja
-# ==============================
-IMAGES_DIR   = "../real_images"            # 📂 folder sa realnim GE/produkcionim slikama
-BEST_WEIGHTS = "../outputs/runs/seg_best.pt"
-IMG_SIZE     = 640
+# 1) General settings
+IMAGES_DIR   = "/app/real_images"                  
+BEST_WEIGHTS = "/app/outputs/runs/seg_best.pt"     
+IMG_SIZE     = 1024
 CONF_THRES   = 0.25
 IOU_THRES    = 0.50
-SAVE_VISUALS = True                        # sačuvaj rendere sa iscrtanim poligonima
+SAVE_VISUALS = True                                
 
-PROJECT_OUT  = "../outputs/preds"
-RUN_NAME     = "seg_folder_infer"          # podfolder sa rezultatima
-CSV_NAME     = "folder_predictions_polygons.csv"
+PROJECT_OUT  = "/app/outputs/preds"
+RUN_NAME     = "seg_infer_real"
+CSV_NAME     = "predictions_real.csv"
 
 device = 0 if torch.cuda.is_available() else "cpu"
-print(f"✅ Uređaj: {'CUDA' if device == 0 else 'CPU'}")
+print(f" Using device: {'CUDA' if device == 0 else 'CPU'}")
 
-# ==============================
-# 2) Provere
-# ==============================
+
+# 2) Checks
 if not os.path.exists(BEST_WEIGHTS):
-    raise FileNotFoundError(
-        f"❌ Nije pronađen model na {BEST_WEIGHTS}. Pokreni train_seg.py da napraviš seg_best.pt."
-    )
+    raise FileNotFoundError(f" Model not found at: {BEST_WEIGHTS}")
 
 if not os.path.isdir(IMAGES_DIR):
-    raise FileNotFoundError(
-        f"❌ Nije pronađen folder sa slikama: {IMAGES_DIR}"
-    )
+    raise FileNotFoundError(f" Images directory not found: {IMAGES_DIR}")
 
-# (opciono) proveri da folder sadrži barem jednu sliku
-has_image = any(
-    f.lower().endswith((".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff"))
-    for f in os.listdir(IMAGES_DIR)
-)
+# Check if there are any images
+has_image = any(f.lower().endswith((".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff"))
+                for f in os.listdir(IMAGES_DIR))
 if not has_image:
-    raise RuntimeError(f"⚠️ U {IMAGES_DIR} nema slika (.png/.jpg/.jpeg/.bmp/.tif)")
+    raise RuntimeError(f" No images found in: {IMAGES_DIR}")
 
-# ==============================
-# 3) Učitavanje modela
-# ==============================
+
+# 3) Load model
 model = YOLO(BEST_WEIGHTS)
 
-# ==============================
-# 4) Inference nad folderom
-# ==============================
+
+# 4) Inference
 pred_dir = Path(PROJECT_OUT) / RUN_NAME
 pred_dir.mkdir(parents=True, exist_ok=True)
 csv_path = pred_dir / CSV_NAME
 
-print(f"▶️ Pokrećem predikcije nad: {IMAGES_DIR}")
+print(f" Running inference on: {IMAGES_DIR}")
 results = model.predict(
     source=IMAGES_DIR,
     imgsz=IMG_SIZE,
     device=device,
     conf=CONF_THRES,
     iou=IOU_THRES,
-    save=SAVE_VISUALS,          # čuva rendere sa iscrtanim maskama/poligonima
+    save=SAVE_VISUALS,
     project=PROJECT_OUT,
     name=RUN_NAME,
     save_txt=False,
     verbose=True
 )
 
-# ==============================
-# 5) Parsiranje rezultata → CSV
-# ==============================
-rows = []  # image_name, confidence, polygon_px
 
+# 5) Saving results in a CSV file
+rows = []
 for r in results:
-    img_path = r.path
-    img_name = os.path.basename(img_path)
-
-    # Ako nema maski, zabeleži red bez poligona (po potrebi)
+    img_name = os.path.basename(r.path)
     if r.masks is None:
-        # rows.append([img_name, 0.0, ""])  # otkomentariši ako želiš "no detections" u CSV
         continue
 
-    # r.masks.xy → lista poligona (svaki je ndarray Nx2 u pikselima)
     xy_list = r.masks.xy
-    confs = r.boxes.conf.cpu().tolist() if r.boxes is not None else [None] * len(xy_list)
+    confs = r.boxes.conf.cpu().tolist() if r.boxes is not None else [0.0] * len(xy_list)
 
     for poly_xy, conf in zip(xy_list, confs):
-        flat = []
-        for x, y in poly_xy:
-            flat.extend([float(x), float(y)])
+        flat = [f"{float(x):.2f},{float(y):.2f}" for x, y in poly_xy]
+        rows.append([img_name, conf, ";".join(flat)])
 
-        # čuvamo poligon kao "x1,y1; x2,y2; ..."
-        rows.append([
-            img_name,
-            float(conf) if conf is not None else 0.0,
-            ";".join(f"{v:.2f}" for v in flat)
-        ])
-
-# upis u CSV
 with open(csv_path, "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
     writer.writerow(["image_name", "confidence", "polygon_px"])
     writer.writerows(rows)
 
-print(f"💾 CSV sa poligonima (px) sačuvan: {csv_path}")
-print(f"🖼️ Renderi (ako je SAVE_VISUALS=True) su u: {pred_dir}")
+print(f" CSV with polygons saved: {csv_path}")
+print(f" Renderings and visuals are in: {pred_dir}")

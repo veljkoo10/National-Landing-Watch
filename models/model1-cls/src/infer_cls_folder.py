@@ -5,31 +5,27 @@ from torchvision import transforms, models
 from PIL import Image
 import pandas as pd
 
-# ==============================
-# 1️⃣  Podešavanja
-# ==============================
-IMAGES_DIR = "../real_images"           # 📂 Folder sa stvarnim slikama (npr. iz GE)
-MODEL_PATH = "../outputs/runs/landfill_classifier.pth"
-OUTPUT_CSV = "../outputs/preds/real_predictions.csv"
+# 1️)  General settings
+IMAGES_DIR = "/app/real_images"
+MODEL_PATH = "/app/outputs/runs/landfill_classifier.pth"
+OUTPUT_CSV = "/app/outputs/preds/real_predictions.csv"
 IMG_SIZE = 224
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"✅ Koristimo uređaj: {device}")
+print(f" Using device: {device}")
 
-# ==============================
-# 2️⃣  Transformacije (MORAJU biti iste kao kod treniranja!)
-# ==============================
+
+# 2️) Transformations
 transform = transforms.Compose([
     transforms.Resize((IMG_SIZE, IMG_SIZE)),
     transforms.ToTensor(),
-    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    transforms.Normalize([0.485, 0.456, 0.406],
+                         [0.229, 0.224, 0.225])
 ])
 
-# ==============================
-# 3️⃣  Učitavanje modela
-# ==============================
-# Klase moraju biti u istom redosledu kao tokom treniranja!
-class_names = ["illegal", "non_illegal", "no_landfill"]
+
+# 3️) Model
+class_names = ["illegal", "no_landfill", "non_illegal"]
 num_classes = len(class_names)
 
 model = models.resnet18(pretrained=False)
@@ -38,9 +34,8 @@ model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 model = model.to(device)
 model.eval()
 
-# ==============================
-# 4️⃣  Predikcija nad folderom slika
-# ==============================
+
+# 4️) Prediction
 results = []
 
 for filename in os.listdir(IMAGES_DIR):
@@ -59,7 +54,7 @@ for filename in os.listdir(IMAGES_DIR):
     predicted_label = class_names[pred_class.item()]
     confidence = confidence.item()
 
-    print(f"🖼️ {filename} → {predicted_label} ({confidence*100:.2f}%)")
+    print(f" {filename} → {predicted_label} ({confidence*100:.2f}%)")
 
     results.append({
         "image_name": filename,
@@ -67,10 +62,9 @@ for filename in os.listdir(IMAGES_DIR):
         "confidence": confidence
     })
 
-# ==============================
-# 5️⃣  Sačuvaj rezultate u CSV
-# ==============================
+
+# 5️) Saving results in a CSV file
 os.makedirs(os.path.dirname(OUTPUT_CSV), exist_ok=True)
 df = pd.DataFrame(results)
 df.to_csv(OUTPUT_CSV, index=False)
-print(f"📁 Rezultati sačuvani u: {OUTPUT_CSV}")
+print(f" Results saved to: {OUTPUT_CSV}")

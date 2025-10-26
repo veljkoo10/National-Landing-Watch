@@ -1,0 +1,110 @@
+services:
+
+  #  Classification - training
+  cls_trainer:
+    build: ./model1-cls
+    container_name: cls_trainer
+    command: ["python3", "src/train_cls.py"]
+    volumes:
+      - ./outputs:/app/outputs
+      - /home/team-3/dataset1/classification:/app/dataset/classification
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+  #  Classification (real images)
+  cls_infer:
+    build: ./model1-cls
+    container_name: cls_infer
+    command: ["python3", "src/infer_cls_folder.py"]
+    volumes:
+      - ./real_images:/app/real_images
+      - ./outputs:/app/outputs
+      - ./outputs/runs:/app/outputs/runs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+  #  Classification (test dataset)
+  cls_infer_test:
+    build: ./model1-cls
+    container_name: cls_infer_test
+    command: ["python3", "src/infer_cls.py"]
+    volumes:
+      - ./outputs:/app/outputs
+      - ./outputs/runs:/app/outputs/runs
+      - /home/team-3/dataset1/classification:/app/dataset/classification
+      - /home/team-3/models/test:/app/dataset/test
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+ #  Segmentation - training
+  seg_trainer:
+    build: ./model2-seg
+    container_name: seg_trainer
+    command: ["python3", "src/train_seg.py"]
+    shm_size: "8gb"       
+    volumes:
+      - ./outputs:/app/outputs
+      - /home/team-3/dataset1/segmentation:/app/dataset/segmentation
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    runtime: nvidia
+
+  #  Segmentation (real images)
+  seg_infer:
+    build: ./model2-seg
+    container_name: seg_infer
+    command: ["python3", "src/infer_seg_folder.py"]
+    volumes:
+      - ./real_images:/app/real_images
+      - ./outputs:/app/outputs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+  #  Segmentation (test dataset)
+  seg_infer_test:
+    build: ./model2-seg
+    container_name: seg_infer_test
+    command: ["python3", "src/infer_seg.py"]
+    shm_size: "8gb"
+    volumes:
+      - ./outputs:/app/outputs
+      - ./outputs/runs:/app/outputs/runs
+      - /home/team-3/dataset1/segmentation:/app/dataset/segmentation
+      - /home/team-3/models/test:/app/dataset/test
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    runtime: nvidia
