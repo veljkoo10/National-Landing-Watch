@@ -1,7 +1,23 @@
-### **Link ka video demonstraciji aplikacije**
-Unutar ovog foldera se nalazi video demonstracija projekta i folder sa rezultatima modela.
-https://drive.google.com/drive/folders/1AH3_68-3i9BJnJzVnFlepiAliHneEFT7?usp=sharing
+"""
+## **Envizor – National Landing Watch**
+
+> Projekat National Landing Watch je projekat tima Envizor, čiji je cilj da prikaže kako se savremene tehnologije — mašinsko učenje, web razvoj i baze podataka — mogu kombinovati radi rešavanja stvarnih ekoloških problema.*  
+>
+> *Aplikacija omogućava praćenje, detekciju i analizu deponija na teritoriji Srbije pomoću satelitskih snimaka i AI modela.*  
+>
+> *Sistem se sastoji iz tri osnovne celine:*  
+> - *Backend (ASP.NET Core)* – upravlja podacima, logikom i izračunavanjem emisija.  
+> - *Frontend (Angular)* – omogućava interaktivan prikaz deponija na mapi i statistika.  
+> - *ML Modeli (Python + YOLO)* – automatski detektuju deponije na satelitskim snimcima.*
+
 ---
+
+### **Link ka video demonstraciji aplikacije**
+
+Unutar ovog foldera se nalazi video demonstracija projekta i folder sa rezultatima modela.  
+🔗 https://drive.google.com/drive/folders/1AH3_68-3i9BJnJzVnFlepiAliHneEFT7?usp=sharing
+"""
+
 
 ### **backend/Enzivor.Api**
 
