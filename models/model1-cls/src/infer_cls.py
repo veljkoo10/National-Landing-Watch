@@ -1,95 +1,70 @@
 import os
 import torch
 import torch.nn as nn
-from torchvision import datasets, transforms, models
-from torch.utils.data import DataLoader
-from sklearn.metrics import classification_report, confusion_matrix
-import matplotlib.pyplot as plt
-import numpy as np
+from torchvision import transforms, models
+from PIL import Image
 import pandas as pd
+import numpy as np
 
-# ==============================
-# 1️⃣  Basic podešavanja
-# ==============================
-DATA_DIR = "../dataset_cls/test"         # test skup
-MODEL_PATH = "../outputs/runs/landfill_classifier.pth"
-BATCH_SIZE = 32
+
+# 1️) General settings
+DATA_DIR = "/app/dataset/test" 
+MODEL_PATH = "/app/outputs/runs/landfill_classifier.pth"
+OUTPUT_CSV = "/app/outputs/preds/test_predictions.csv"
 IMG_SIZE = 224
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"✅ Koristimo uređaj: {device}")
+class_names = ["illegal", "no_landfill", "non_illegal"]
+num_classes = len(class_names)
 
-# ==============================
-# 2️⃣  Transformacije (moraju biti iste kao kod treniranja!)
-# ==============================
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f" Using device: {device}")
+
+
+# 2️) Transformations
 transform = transforms.Compose([
     transforms.Resize((IMG_SIZE, IMG_SIZE)),
     transforms.ToTensor(),
-    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    transforms.Normalize([0.485, 0.456, 0.406],
+                         [0.229, 0.224, 0.225])
 ])
 
-# ==============================
-# 3️⃣  Dataset i DataLoader
-# ==============================
-test_dataset = datasets.ImageFolder(DATA_DIR, transform=transform)
-test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
-class_names = test_dataset.classes
-num_classes = len(class_names)
-print(f"📁 Test skup: {len(test_dataset)} slika, klase: {class_names}")
-
-# ==============================
-# 4️⃣  Učitavanje modela
-# ==============================
+# 3️) Model
 model = models.resnet18(pretrained=False)
 model.fc = nn.Linear(model.fc.in_features, num_classes)
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 model = model.to(device)
 model.eval()
 
-# ==============================
-# 5️⃣  Predikcije i evaluacija
-# ==============================
-all_preds = []
-all_labels = []
-all_paths = []
+# 4️) Inference
+results = []
 
-with torch.no_grad():
-    for inputs, labels in test_loader:
-        inputs, labels = inputs.to(device), labels.to(device)
-        outputs = model(inputs)
-        _, preds = torch.max(outputs, 1)
-        all_preds.extend(preds.cpu().numpy())
-        all_labels.extend(labels.cpu().numpy())
+image_files = [f for f in os.listdir(DATA_DIR) if f.lower().endswith((".jpg", ".jpeg", ".png"))]
+if not image_files:
+    print(f" Nema slika u folderu: {DATA_DIR}")
+    exit(1)
 
-# ==============================
-# 6️⃣  Izveštaji o performansama
-# ==============================
-print("\n📈 Classification Report:")
-print(classification_report(all_labels, all_preds, target_names=class_names))
+for filename in sorted(image_files):
+    img_path = os.path.join(DATA_DIR, filename)
+    image = Image.open(img_path).convert("RGB")
+    image = transform(image).unsqueeze(0).to(device)
 
-cm = confusion_matrix(all_labels, all_preds)
-plt.figure(figsize=(6, 5))
-plt.imshow(cm, cmap="Blues")
-plt.title("Confusion Matrix")
-plt.colorbar()
-plt.xticks(np.arange(num_classes), class_names, rotation=45)
-plt.yticks(np.arange(num_classes), class_names)
-plt.xlabel("Predicted")
-plt.ylabel("True")
-plt.tight_layout()
-plt.show()
+    with torch.no_grad():
+        outputs = model(image)
+        probs = torch.softmax(outputs, dim=1)
+        confidence, pred_class = torch.max(probs, 1)
 
-# ==============================
-# 7️⃣  (Opciono) Sačuvaj predikcije u CSV
-# ==============================
-# Ovo ti može kasnije pomoći da vidiš koje slike model greši
-image_paths = [path[0] for path in test_dataset.samples]
-df = pd.DataFrame({
-    "image_path": image_paths,
-    "true_label": [class_names[i] for i in all_labels],
-    "predicted_label": [class_names[i] for i in all_preds]
-})
-os.makedirs("../outputs/preds", exist_ok=True)
-csv_path = "../outputs/preds/test_predictions.csv"
-df.to_csv(csv_path, index=False)
-print(f"📁 Predikcije sačuvane u: {csv_path}")
+    predicted_label = class_names[pred_class.item()]
+    confidence = confidence.item()
+    print(f" {filename} → {predicted_label} ({confidence*100:.2f}%)")
+
+    results.append({
+        "image_name": filename,
+        "predicted_label": predicted_label,
+        "confidence": confidence
+    })
+
+# 5️) Saving results in a CSV file
+os.makedirs(os.path.dirname(OUTPUT_CSV), exist_ok=True)
+df = pd.DataFrame(results)
+df.to_csv(OUTPUT_CSV, index=False)
+print(f" Results saved to: {OUTPUT_CSV}")

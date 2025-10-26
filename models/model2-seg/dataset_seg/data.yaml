@@ -1,8 +1,9 @@
 path: ../dataset_seg
 
-train: ../dataset_seg/train/images
-val: ../dataset_seg/val/images
-test: ../dataset_seg/test/images
+train: /app/dataset/segmentation/train/images
+val: /app/dataset/segmentation/valid/images
+test: /app/dataset/test
+
 
 names:
   0: landfill
