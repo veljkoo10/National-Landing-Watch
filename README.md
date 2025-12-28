@@ -1,127 +1,146 @@
-"""
-## **Envizor – National Landing Watch**
+# **Envizor – National Landing Watch**
 
-Projekat **National Landing Watch** je projekat tima **Envizor**, čiji je cilj da prikaže kako se savremene tehnologije — *mašinsko učenje, web razvoj i baze podataka* — mogu kombinovati radi rešavanja stvarnih ekoloških problema i praćenja uticaja različitih tipova deponija na okolinu u Republici Srbiji.  
+The **National Landing Watch** project is developed by the **Envizor** team, with the goal of demonstrating how modern technologies — *machine learning, web development, and databases* — can be combined to address real environmental problems and monitor the impact of different types of landfills on the environment in the Republic of Serbia.
 
-Savremeno upravljanje otpadom predstavlja jedan od najvećih izazova savremenog društva. Nelegalne i neuređene deponije imaju značajan uticaj na zagađenje zemljišta, voda i vazduha, kao i na emisiju gasova staklene bašte, posebno metana (CH₄). Projekat Envizor nastoji da pruži **transparentan, interaktivan i tehnološki podržan uvid** u stanje deponija širom zemlje.  
+Modern waste management represents one of the greatest challenges of today’s society. Illegal and unregulated landfills have a significant impact on soil, water, and air pollution, as well as on greenhouse gas emissions, especially methane (CH₄).  
+The Envizor project aims to provide a **transparent, interactive, and technology-driven insight** into the state of landfills across the country.
 
-*Aplikacija omogućava praćenje, detekciju i analizu deponija pomoću satelitskih snimaka i ML modela.*  
-Korisnici mogu da pregledaju mape, statistike po regionima, tipove deponija, emisije gasova i trendove promene tokom vremena.  
+*The application enables monitoring, detection, and analysis of landfills using satellite imagery and ML models.*  
+Users can explore maps, regional statistics, landfill types, gas emissions, and change trends over time.
 
-*Sistem se sastoji iz tri osnovne celine:*  
-- *Backend (ASP.NET Core)* – upravlja podacima, logikom i izračunavanjem emisija.  
-- *Frontend (Angular)* – omogućava interaktivan prikaz deponija na mapi i vizuelizaciju statistika.  
-- *ML Modeli (Python + YOLO)* – automatski detektuju i segmentuju deponije na satelitskim snimcima.  
+---
 
-Projekat ima za cilj da poveže nauku, tehnologiju i ekologiju – pružajući osnovu za analizu, edukaciju i donošenje ekološki odgovornih odluka na lokalnom i nacionalnom nivou.
-"""
+## **System Architecture**
 
+The system consists of three main components:
 
-### **Link ka video demonstraciji aplikacije**
+- **Backend (ASP.NET Core)** – manages data, business logic, and emission calculations  
+- **Frontend (Angular)** – provides an interactive map view and statistical visualizations  
+- **ML Models (Python + YOLO)** – automatically detect and segment landfills from satellite images  
 
-Unutar ovog foldera se nalazi video demonstracija projekta i folder sa rezultatima modela.  
+The project connects science, technology, and ecology, providing a foundation for analysis, education, and environmentally responsible decision-making at both local and national levels.
+
+---
+
+## **Application Video Demonstration**
+
+This repository includes a video demonstration of the project along with a folder containing model results.
+
 🔗 https://drive.google.com/drive/folders/1AH3_68-3i9BJnJzVnFlepiAliHneEFT7?usp=sharing
-"""
-
-
-### **backend/Enzivor.Api**
-
-Sadrži backend logiku napisanu u **ASP.NET Core-u**.  
-Koristi **Entity Framework Core** za komunikaciju sa **PostgreSQL bazom**.  
-
-Ovde se nalaze modeli, servisi, repozitorijumi i kontroleri koji upravljaju podacima o deponijama, regionima i izračunatim emisijama gasova.  
-Backend takođe ima sloj za izračunavanje **metanskih i CO₂ emisija**, kao i agregaciju statistika po regionima.  
 
 ---
 
-### **envizor_client/EnvizorFrontend**
+## **backend/Envizor.Api**
 
-Ovo je **frontend aplikacija** napravljena u **Angular-u**, sa modernim korisničkim interfejsom.  
-Koristi **Mapbox GL** za prikaz interaktivne mape Srbije na kojoj su prikazane lokacije deponija, dok su grafikoni i statistike urađeni pomoću **Highcharts-a** i **Angular Material** komponenti.  
+Contains backend logic written in **ASP.NET Core**.  
+Uses **Entity Framework Core** to communicate with a **PostgreSQL database**.
 
-Korisnik može da pretražuje po regionima, menja režim prikaza (svetli/tamni) i pregleda dodatne podatke o svakoj deponiji.  
-
----
-
-### **models/**
-
-Ovaj folder sadrži **Python skripte i YOLO modele** koji su korišćeni za prepoznavanje deponija na satelitskim slikama.  
-Treniranje je rađeno na datasetovima sa platforme **Roboflow**, uz dodatne slike preuzete iz **Google Earth-a** i drugih javno dostupnih izvora.  
-
-Sistem koristi **dva modela**, od kojih **prvi model radi klasifikaciju**.  
-Njegov zadatak je da, na osnovu nepoznate slike, **odredi kojoj klasi pripada posmatrana lokacija** — odnosno da li se na slici nalazi deponija i koje je ona vrste.  
-Ako model zaključi da deponija **nije prisutna**, takva slika se tretira kao **negativna slika** (oznaka *no landfill*), čime se sprečava pogrešno označavanje površina koje zapravo nisu deponije.  
-
-Modeli su podešeni da klasifikuju slike u tri kategorije:  
-- **no landfill** – slika bez prisustva deponije (negativna slika)  
-- **non-illegal landfill** – uređena ili legalna deponija  
-- **illegal landfill** – nelegalna ili neuređena deponija  
-
-Ovaj prvi korak klasifikacije omogućava da se filtriraju slike koje zaista sadrže deponije, dok se ostale ignorišu.  
-Na osnovu rezultata klasifikacije, slike koje su označene kao deponije dalje se prosleđuju **drugom modelu** koji obavlja **segmentaciju** – odnosno precizno označava granice i površinu deponije na slici.  
+Includes models, services, repositories, and controllers responsible for managing landfill data, regions, and calculated gas emissions.  
+The backend also contains logic for calculating **methane and CO₂ emissions** and aggregating regional statistics.
 
 ---
 
-## **Glavne funkcionalnosti**
+## **envizor_client/EnvizorFrontend**
 
-- Mapa Srbije sa svim registrovanim i detektovanim deponijama  
-- Filtriranje po regionima i prikaz broja deponija, površine i emisija  
-- Statistički prikazi emisija metana (CH₄) i CO₂ po regionima i periodima  
-- Pregled najzagađenijih regiona (Top regions)  
-- Detalji o svakoj deponiji – ime, lokacija, veličina, tip, emisije  
-- Blog sekcija sa edukativnim sadržajem  
-- *Recenter* dugme – vraća mapu u početni prikaz  
-- *Dark mode* – tamni vizuelni režim  
+The **frontend application** is built using **Angular** and features a modern UI.  
+It uses **Mapbox GL** to display an interactive map of Serbia with landfill locations, while charts and statistics are implemented using **Highcharts** and **Angular Material** components.
 
----
-
-## **Kako sistem funkcioniše**
-
-1. **Python model** analizira satelitske slike i generiše rezultate o detektovanim deponijama.  
-2. Ti rezultati (koordinate, površina, procene) se učitavaju u **PostgreSQL bazu** putem **.NET API-ja**.  
-3. **Backend** računa emisije gasova (CH₄, CO₂eq) koristeći međunarodne faktore i formule iz **IPCC vodiča**.  
-4. **Angular frontend** preuzima podatke preko API-ja i prikazuje ih na **Mapbox mapi** i kroz grafikone.  
-5. Korisnik može da izabere region, pregleda statistike i vizuelno sagleda stanje deponija u Srbiji.  
+Users can:
+- search by region  
+- switch between light and dark mode  
+- view detailed information about each landfill  
 
 ---
 
-## **Analiza podataka i formule**
+## **models/**
 
-Za procenu emisije gasova koriste se uprošćene verzije formula iz **IPCC (Intergovernmental Panel on Climate Change)** smernica.  
-Metan (CH₄) se računa prema količini otpada, tipu deponije i faktorima degradacije.  
-Zatim se CH₄ pretvara u CO₂-ekvivalent pomoću faktora 25 (jer je metan 25 puta jači gas staklene bašte od CO₂).  
+This folder contains **Python scripts and YOLO models** used for landfill detection from satellite images.
 
-**Formule:**  
+Training was performed using datasets from **Roboflow**, supplemented with images from **Google Earth** and other publicly available sources.
+
+### **Model Pipeline**
+
+The system uses **two ML models**:
+
+#### **1. Classification Model**
+Determines whether a landfill is present in an image and identifies its type.
+
+Image classes:
+- **no landfill** – image without landfill (negative sample)
+- **non-illegal landfill** – regulated/legal landfill
+- **illegal landfill** – illegal or unregulated landfill
+
+If no landfill is detected, the image is ignored to prevent false positives.
+
+#### **2. Segmentation Model**
+Images classified as landfills are passed to the second model, which performs **segmentation** to precisely identify landfill boundaries and surface area.
+
+---
+
+## **Key Features**
+
+- Interactive map of Serbia with all registered and detected landfills  
+- Region-based filtering with landfill count, surface area, and emissions  
+- Statistical visualization of methane (CH₄) and CO₂ emissions by region and time  
+- Overview of the most polluted regions (*Top regions*)  
+- Detailed landfill data (name, location, size, type, emissions)  
+- Educational blog section  
+- *Recenter* button to reset map position  
+- *Dark mode* support  
+
+---
+
+## **How the System Works**
+
+1. **Python ML models** analyze satellite images and generate landfill detection results  
+2. Results (coordinates, surface area, estimates) are stored in a **PostgreSQL database** via the **.NET API**  
+3. The **backend** calculates gas emissions (CH₄, CO₂eq) using formulas from **IPCC guidelines**  
+4. The **Angular frontend** fetches data through the API and displays it using **Mapbox** and charts  
+5. Users explore regions, view statistics, and assess landfill impact across Serbia  
+
+---
+
+## **Emission Analysis and Formulas**
+
+Gas emissions are calculated using simplified formulas based on **IPCC (Intergovernmental Panel on Climate Change)** guidelines.
+
+Methane (CH₄) is calculated using waste amount, landfill type, and degradation factors.  
+CH₄ is converted to CO₂ equivalent using a factor of 25, as methane is 25 times more potent than CO₂.
+
+### **Formulas**
+
 CH₄ = MSW × DOC × DOCf × MCF × F × 16/12
 CO₂eq = CH₄ × 25
 
-
-Ovi podaci omogućavaju da se vidi koji regioni imaju najveći uticaj na zagađenje i koliko bi se emisije smanjile boljim upravljanjem deponijama.  
-
----
-
-## **Demonstracija aplikacije**
-
-U folderu `video/` nalazi se snimak rada aplikacije koji prikazuje:  
-- učitavanje početne mape  
-- označavanje deponija  
-- prikaz detalja i grafikona po regionima  
-- promenu teme (dark/light)  
-- način rada funkcija poput *Recenter* i *Top regions*  
-
-Na osnovu snimka može se steći kompletan utisak o izgledu i funkcionalnosti projekta.  
+These calculations help identify high-impact regions and estimate potential emission reductions through improved landfill management.
 
 ---
 
-## **Tim Envizor**
+## **Application Demonstration**
 
-Projekat je nastao kroz timski rad **četiri studenta**, koji su podelili zadatke po oblastima:  
-- razvoj **backend logike i API endpointa**  
-- razvoj **frontend aplikacije i UI dizajna**  
-- **treniranje AI modela** i analiza podataka  
-- priprema **baze podataka** i integracija komponenti  
+The `video/` folder contains a recording demonstrating:
+- initial map loading  
+- landfill visualization  
+- regional statistics and charts  
+- dark/light theme switching  
+- features such as *Recenter* and *Top regions*  
 
-Cilj tima je bio da prikaže kako se kroz zajednički rad i kombinovanje znanja može realizovati kompletna **full-stack aplikacija** koja rešava konkretan problem i ima društveni značaj.  
+The demo provides a complete overview of the application’s functionality and design.
 
+---
 
+## **Envizor Team**
 
+- [veljkoo10](https://github.com/veljkoo10)
+- [Baric03](https://github.com/Baric03)
+- [andjelamrdja](https://github.com/andjelamrdja)
+- [milicammm](https://github.com/milicammm)
+  
+The project was developed by a team of **four students**, with responsibilities divided across:
+
+- **Backend development and API design**
+- **Frontend development and UI/UX**
+- **AI model training and data analysis**
+- **Database design and system integration**
+
+The goal was to demonstrate how collaborative teamwork and combined expertise can produce a complete **full-stack application** that addresses a real-world problem with meaningful social and environmental impact.
